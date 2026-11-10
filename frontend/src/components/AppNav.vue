@@ -2,7 +2,9 @@
      Desktop: wordmark left · glass pill center.
      Phone: glass pill at the bottom; tucks away while scrolling down, returns on scroll up and at the footer.
      Home: fades in with the opening.
-     Back to top: a glass button fixed bottom-right, shown once the first screen is scrolled past. -->
+     Back to top: a glass button fixed bottom-right, shown once the first screen is scrolled past.
+     translateZ(0) on the phone pill and the button: own compositing layer, so iOS Safari can't hand their
+     taps to an iframe underneath (Info's Google Map). -->
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
@@ -67,7 +69,7 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
 
   <!-- Phone -->
   <nav
-    class="pointer-events-none fixed inset-x-0 z-40 flex justify-center transition-[translate,opacity] duration-500 ease-[cubic-bezier(.2,.8,.2,1)] md:hidden"
+    class="pointer-events-none fixed inset-x-0 z-40 flex justify-center [transform:translateZ(0)] transition-[translate,opacity] duration-500 ease-[cubic-bezier(.2,.8,.2,1)] md:hidden"
     :class="tucked && 'translate-y-[150%] opacity-0'"
     style="bottom: calc(0.75rem + env(safe-area-inset-bottom))"
     aria-label="Main"
@@ -78,7 +80,7 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
   <!-- Back to top -->
   <button
     type="button"
-    class="fixed right-3 z-40 grid size-11 place-items-center rounded-full border border-white/12 bg-navy-950/55 text-white/85 shadow-[0_10px_40px_-12px_rgb(0_0_0/0.8),inset_0_1px_0_rgb(255_255_255/0.06)] backdrop-blur-xl transition-[translate,opacity,color,border-color] duration-500 ease-[cubic-bezier(.2,.8,.2,1)] hover:border-white/40 hover:text-white active:scale-95 max-md:bottom-[calc(0.75rem+env(safe-area-inset-bottom))] md:right-6 md:bottom-6 md:size-12"
+    class="fixed right-3 z-40 grid size-11 [transform:translateZ(0)] place-items-center rounded-full border border-white/12 bg-navy-950/55 text-white/85 shadow-[0_10px_40px_-12px_rgb(0_0_0/0.8),inset_0_1px_0_rgb(255_255_255/0.06)] backdrop-blur-xl transition-[translate,opacity,color,border-color] duration-500 ease-[cubic-bezier(.2,.8,.2,1)] hover:border-white/40 hover:text-white active:scale-95 max-md:bottom-[calc(0.75rem+env(safe-area-inset-bottom))] md:right-6 md:bottom-6 md:size-12"
     :class="!showTop && 'pointer-events-none translate-y-4 opacity-0'"
     :tabindex="showTop ? 0 : -1"
     aria-label="Back to top"

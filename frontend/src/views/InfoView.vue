@@ -1,5 +1,5 @@
-<!-- Info: the banner (site atmosphere; lockup Everything to / KNOW in chrome / before you go; the ribbon sweeps
-     up the right without a loop), then venue + map in one glass card, travel tips as glass cards with chrome
+<!-- Info: the banner (site atmosphere; lockup Everything to / KNOW in chrome / before you go; two ribbons braid
+     across the horizon), then venue + map in one glass card, travel tips as glass cards with chrome
      numerals, the FAQ as a glass accordion, and the contact in the invitation-card style. No scroll fade-ins. -->
 <script setup>
 import Ribbon from '../components/Ribbon.vue'
@@ -25,16 +25,30 @@ const glints = [
     <div class="hero-spot intro-glow absolute top-0 left-1/2 -z-10 h-[60svh] w-[90vw] -translate-x-1/2" aria-hidden="true" />
     <div class="hero-beam hero-beam--l intro-glow absolute -top-[10svh] left-1/2 -z-10 h-[70svh] w-[38vw]" aria-hidden="true" />
     <div class="hero-beam hero-beam--r intro-glow absolute -top-[10svh] left-1/2 -z-10 h-[70svh] w-[38vw]" aria-hidden="true" />
-    <Ribbon
-      draw
-      :delay="700"
-      :duration="2600"
-      class="absolute inset-x-[-40vw] bottom-6 -z-10 h-[min(12rem,22svh)] md:inset-x-[-6vw] lg:inset-x-0 lg:h-[min(18rem,34svh)]"
-      viewBox="0 0 1200 300"
-      d="M -60 260 C 260 300, 600 240, 840 200 S 1120 110, 1260 10"
-      :width="16"
-      :twists="2.5"
-    />
+    <!-- two ribbons enter from opposite sides and braid across the horizon (a double helix), crossing three
+         times; the back one is slimmer and dimmer for depth -->
+    <div class="absolute inset-x-[-30vw] bottom-4 -z-10 h-[min(8rem,14svh)] md:inset-x-[-6vw] lg:inset-x-0 lg:h-[min(10rem,18svh)]" aria-hidden="true">
+      <Ribbon
+        draw
+        :delay="900"
+        :duration="2600"
+        class="absolute inset-0 opacity-60"
+        viewBox="0 0 1200 300"
+        d="M 1260 230 C 1100 80, 930 80, 900 150 C 870 220, 760 260, 600 150 C 440 40, 330 80, 300 150 C 270 220, 100 230, -60 70"
+        :width="10"
+        :twists="3"
+      />
+      <Ribbon
+        draw
+        :delay="600"
+        :duration="2600"
+        class="absolute inset-0"
+        viewBox="0 0 1200 300"
+        d="M -60 230 C 100 80, 270 80, 300 150 C 330 220, 440 260, 600 150 C 760 40, 870 80, 900 150 C 930 220, 1100 230, 1260 70"
+        :width="16"
+        :twists="3"
+      />
+    </div>
     <HorizonGlow class="-z-10" intro />
 
     <p class="intro-after flex items-center justify-center gap-4 text-xs font-medium tracking-[0.36em] text-white/80 uppercase">

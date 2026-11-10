@@ -77,6 +77,39 @@ const onStrip = () => {
   stripP.value = el.scrollLeft / Math.max(1, el.scrollWidth - el.clientWidth)
 }
 const slide = (dir) => strip.value.scrollBy({ left: dir * Math.min(strip.value.clientWidth * 0.8, 520), behavior: 'smooth' })
+// mouse drag (touch already swipes natively): snap is off while dragging, then the strip glides to the
+// nearest frame, nudged one frame on in the direction of a real flick; a drag never counts as a click
+let drag = null
+const dragStart = (e) => {
+  if (e.pointerType !== 'mouse' || e.button !== 0) return
+  drag = { x: e.clientX, left: strip.value.scrollLeft, moved: false }
+  strip.value.style.scrollSnapType = 'none'
+}
+const dragMove = (e) => {
+  if (!drag) return
+  const dx = e.clientX - drag.x
+  if (Math.abs(dx) > 5 && !drag.moved) { drag.moved = true; strip.value.setPointerCapture(e.pointerId) }
+  if (drag.moved) strip.value.scrollLeft = drag.left - dx
+}
+const dragEnd = () => {
+  if (!drag) return
+  const el = strip.value
+  const { moved, left } = drag
+  drag = null
+  if (!moved) return (el.style.scrollSnapType = '')
+  const pad = parseFloat(getComputedStyle(el).scrollPaddingLeft) || 0
+  const base = el.getBoundingClientRect().left
+  const stops = [...el.querySelectorAll('.snap-start')].map((c) => c.getBoundingClientRect().left - base + el.scrollLeft - pad)
+  const dir = Math.sign(el.scrollLeft - left)
+  const near = stops.reduce((a, b) => (Math.abs(b - el.scrollLeft) < Math.abs(a - el.scrollLeft) ? b : a))
+  const flick = stops.find((x) => (dir > 0 ? x > el.scrollLeft : false)) ?? stops.findLast((x) => (dir < 0 ? x < el.scrollLeft : false))
+  el.scrollTo({ left: Math.abs(el.scrollLeft - left) > 40 && flick !== undefined ? flick : near, behavior: 'smooth' })
+  setTimeout(() => (el.style.scrollSnapType = ''), 450)
+  // swallow the click that follows a drag (e.g. on the "See the itinerary" frame)
+  const eat = (ev) => { ev.preventDefault(); ev.stopPropagation() }
+  el.addEventListener('click', eat, { capture: true, once: true })
+  setTimeout(() => el.removeEventListener('click', eat, { capture: true }), 300)
+}
 
 // Finale: one screen that holds the page while it reveals. Coming down, once 40% of it is in view the page
 // glides onto it and scrolling pauses while the whole reveal plays (finaleP 0 → 1, driving the same --p
@@ -378,8 +411,13 @@ const sparks = Array.from({ length: 14 }, (_, i) => {
 
       <div
         ref="strip"
-        class="snap-x snap-mandatory scroll-pl-6 overflow-x-auto overscroll-x-contain [scrollbar-width:none] md:scroll-pl-[8vw] [&::-webkit-scrollbar]:hidden"
+        class="snap-x snap-mandatory scroll-pl-6 overflow-x-auto overscroll-x-contain [scrollbar-width:none] select-none md:scroll-pl-[8vw] md:cursor-grab md:active:cursor-grabbing [&::-webkit-scrollbar]:hidden"
         @scroll.passive="onStrip"
+        @pointerdown="dragStart"
+        @pointermove="dragMove"
+        @pointerup="dragEnd"
+        @pointercancel="dragEnd"
+        @dragstart.prevent
       >
         <div class="flex w-max items-start [--frame-h:min(52vw,21rem)]">
           <div class="w-6 shrink-0 md:w-[8vw]" aria-hidden="true" />
