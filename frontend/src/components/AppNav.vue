@@ -1,50 +1,62 @@
-<!-- Desktop: slim top bar. Mobile: fixed bottom tab bar. Same 4 links. -->
+<!-- Navigation floats over the page instead of sitting in a bar.
+     Desktop: wordmark left · glass pill center.
+     Phone: glass pill at the bottom; tucks away while scrolling down, returns on scroll up and at the footer.
+     Home: fades in with the opening. -->
 <script setup>
+import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { useRoute } from 'vue-router'
+import NavPill from './NavPill.vue'
+import wordmark from '../assets/brand/silver-horizons-wordmark.webp'
+
 const links = [
-  { to: '/', label: 'Home', icon: 'M4 11.5 12 5l8 6.5V20a1 1 0 0 1-1 1h-4.5v-6h-5v6H5a1 1 0 0 1-1-1z' },
-  { to: '/itinerary', label: 'Itinerary', icon: 'M6 4.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM18 15.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM6 8.5v3a3 3 0 0 0 3 3h6a3 3 0 0 1 3 3' },
-  { to: '/gala', label: 'Gala', icon: 'M12 3c.6 5.4 2.6 7.4 8 8-5.4.6-7.4 2.6-8 8-.6-5.4-2.6-7.4-8-8 5.4-.6 7.4-2.6 8-8z' },
-  { to: '/info', label: 'Info', icon: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 11v5.5M12 7.6v.1' },
+  { to: '/', label: 'Home' },
+  { to: '/itinerary', label: 'Itinerary' },
+  // { to: '/gala', label: 'Gala' },  // hidden for now
+  { to: '/info', label: 'Info' },
 ]
+
+// fade in with the opening only when the visit starts on Home
+const intro = window.location.pathname === import.meta.env.BASE_URL
+
+// phone pill: hide while scrolling down past the first screen, show on any scroll up
+const tucked = ref(false)
+let lastY = 0
+// on Home's opening the big logo is on screen: the nav wordmark waits until it has scrolled away
+const route = useRoute()
+const pastHero = ref(false)
+const showMark = computed(() => route.path !== '/' || pastHero.value)
+const onScroll = () => {
+  const y = window.scrollY
+  pastHero.value = y > window.innerHeight * 0.6
+  // the last stretch of the page (the footer) keeps the pill out: there is nowhere further down to go
+  const atEnd = y + window.innerHeight > document.documentElement.scrollHeight - 400
+  if (atEnd) tucked.value = false
+  if (Math.abs(y - lastY) < 6) return
+  tucked.value = y > lastY && y > 240 && !atEnd
+  lastY = y
+}
+onMounted(() => window.addEventListener('scroll', onScroll, { passive: true }))
+onUnmounted(() => window.removeEventListener('scroll', onScroll))
 </script>
 
 <template>
-  <header class="fixed inset-x-0 top-0 z-40 hidden border-b border-white/5 bg-navy-950/95 backdrop-blur-md md:block">
-    <nav class="mx-auto flex h-16 max-w-6xl items-center justify-between px-8" aria-label="Main">
-      <RouterLink to="/" class="flex items-baseline gap-2.5" aria-label="Silver Horizons home">
-        <span class="silver-text font-display text-xl font-semibold tracking-wide">SILVER</span>
-        <span class="text-[11px] tracking-[0.35em] text-ink/80">HORIZONS</span>
+  <!-- Desktop -->
+  <header class="pointer-events-none fixed inset-x-0 top-4 z-40 hidden md:block" :class="intro && 'intro-after'">
+    <nav class="mx-auto flex max-w-6xl items-center justify-between px-6" aria-label="Main">
+      <RouterLink to="/" class="pointer-events-auto block transition-opacity duration-500" :class="!showMark && 'pointer-events-none opacity-0'" aria-label="Silver Horizons home">
+        <img :src="wordmark" alt="" class="h-11 w-auto drop-shadow-[0_2px_12px_rgb(0_0_0/0.6)]" />
       </RouterLink>
-      <ul class="flex gap-10">
-        <li v-for="l in links" :key="l.to">
-          <RouterLink
-            :to="l.to"
-            class="eyebrow relative py-2 transition hover:text-ink"
-            exact-active-class="text-ink! after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:bg-linear-to-r after:from-transparent after:via-white after:to-transparent"
-          >{{ l.label }}</RouterLink>
-        </li>
-      </ul>
+      <div class="pointer-events-auto absolute left-1/2 -translate-x-1/2"><NavPill :links="links" /></div>
     </nav>
   </header>
 
+  <!-- Phone -->
   <nav
-    class="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-navy-950/95 backdrop-blur-lg md:hidden"
-    style="padding-bottom: env(safe-area-inset-bottom)"
+    class="pointer-events-none fixed inset-x-0 z-40 flex justify-center transition-[translate,opacity] duration-500 ease-[cubic-bezier(.2,.8,.2,1)] md:hidden"
+    :class="tucked && 'translate-y-[150%] opacity-0'"
+    style="bottom: calc(0.75rem + env(safe-area-inset-bottom))"
     aria-label="Main"
   >
-    <ul class="grid grid-cols-4">
-      <li v-for="l in links" :key="l.to">
-        <RouterLink
-          :to="l.to"
-          class="relative flex min-h-16 flex-col items-center justify-center gap-1 text-muted transition"
-          exact-active-class="text-ink! before:absolute before:top-0 before:left-1/2 before:h-px before:w-10 before:-translate-x-1/2 before:bg-linear-to-r before:from-transparent before:via-white before:to-transparent"
-        >
-          <svg viewBox="0 0 24 24" class="size-5.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path :d="l.icon" />
-          </svg>
-          <span class="text-[10.5px] tracking-[0.18em] uppercase">{{ l.label }}</span>
-        </RouterLink>
-      </li>
-    </ul>
+    <div class="pointer-events-auto" :class="intro && 'intro-after'"><NavPill :links="links" compact /></div>
   </nav>
 </template>

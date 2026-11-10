@@ -2,6 +2,9 @@
 import AppNav from './components/AppNav.vue'
 import logo from './assets/brand/silver-horizons-logo.webp'
 import { contact } from './content/info.js'
+import { itinerary } from './content/itinerary.js'
+
+const credits = itinerary.map((d) => d.credit).filter(Boolean)
 </script>
 
 <template>
@@ -14,5 +17,8 @@ import { contact } from './content/info.js'
     <img :src="logo" alt="Silver Horizons" class="mx-auto h-auto w-56 opacity-90" loading="lazy" />
     <p class="mx-auto mt-8 max-w-md text-sm text-muted">{{ contact.line }}</p>
     <p class="mt-6 text-xs tracking-[0.2em] text-muted/70 uppercase">© 2026 Firefly Electric and Lighting Corporation</p>
+    <p v-if="credits.length" class="mx-auto mt-4 max-w-2xl text-[11px] leading-relaxed text-muted/60">
+      Photos via Wikimedia Commons: {{ credits.join(' · ') }}
+    </p>
   </footer>
 </template>

@@ -3,27 +3,29 @@ import { createRouter, createWebHistory } from 'vue-router'
 import './style.css'
 import App from './App.vue'
 
+// The site is a story that starts at its opening: a reload always starts at the top. Browsers restore the
+// old position at different moments (Firefox after load, the back/forward cache on pageshow), so reset at each.
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual'
+const toTop = () => window.scrollTo(0, 0)
+toTop()
+window.addEventListener('load', () => requestAnimationFrame(toTop))
+window.addEventListener('pageshow', (e) => e.persisted && toTop())
+
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     { path: '/', component: () => import('./views/HomeView.vue') },
     { path: '/itinerary', component: () => import('./views/ItineraryView.vue') },
-    { path: '/gala', component: () => import('./views/GalaView.vue') },
+    // ponytail: Gala hidden for now (catch-all sends /gala home); restore this route + nav item + Home's "The Night" button
+    // { path: '/gala', component: () => import('./views/GalaView.vue') },
     { path: '/info', component: () => import('./views/InfoView.vue') },
     { path: '/:pathMatch(.*)*', redirect: '/' },
   ],
-  scrollBehavior: (to, from, saved) => saved || { top: 0 },
+  // back/forward between pages restores where you were; the first navigation of a load (a refresh, where
+  // Vue Router would replay the position it saved before unload) always starts at the top
+  scrollBehavior: (to, from, saved) => (from.matched.length && saved) || { top: 0 },
 })
-
-// v-reveal: fade/rise once when element scrolls into view (CSS handles reduced motion)
-const io = new IntersectionObserver(
-  (entries) => entries.forEach((e) => {
-    if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target) }
-  }),
-  { threshold: 0.15 },
-)
 
 createApp(App)
   .use(router)
-  .directive('reveal', { mounted: (el) => { el.classList.add('reveal'); io.observe(el) } })
   .mount('#app')
