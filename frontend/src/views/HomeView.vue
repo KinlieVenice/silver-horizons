@@ -1,8 +1,8 @@
-<!-- Home as a scroll story (Resn-style): 4 scroll scenes plus a sideways film-strip slider, scroll = timeline; idle visitors get autoplay (useAutoplay).
+<!-- Home as a scroll story (Resn-style): 3 scroll scenes, a sideways film-strip slider, then a one-screen finale that plays by itself; idle visitors get autoplay (useAutoplay).
      Each [data-scene] is a tall section with a sticky stage; useScenes() feeds --p (0→1).
      Element timing: class="seg" + style="--a:start;--d:duration" (fractions of the scene). -->
 <script setup>
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import logo from '../assets/brand/silver-horizons-logo.webp'
 import Countdown from '../components/Countdown.vue'
 import Ribbon from '../components/Ribbon.vue'
@@ -78,7 +78,27 @@ const onStrip = () => {
 }
 const slide = (dir) => strip.value.scrollBy({ left: dir * Math.min(strip.value.clientWidth * 0.8, 520), behavior: 'smooth' })
 
-// Scene 5: one-time sparkle burst near the end
+// Finale: one screen, no scroll needed. Once most of it is in view the whole reveal plays by itself,
+// once: finaleP runs 0 → 1 over a few seconds and drives the same --p timings the scenes use.
+const finaleEl = ref()
+const finaleP = ref(0)
+let finaleIO
+onMounted(() => {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return (finaleP.value = 1)
+  finaleIO = new IntersectionObserver(([e]) => {
+    if (!e.isIntersecting) return
+    finaleIO.disconnect()
+    const t0 = performance.now()
+    const step = (now) => {
+      const t = Math.min(1, (now - t0) / 3400)
+      finaleP.value = 1 - (1 - t) ** 2 // ease out
+      if (t < 1) requestAnimationFrame(step)
+    }
+    requestAnimationFrame(step)
+  }, { threshold: 0.6 })
+  finaleIO.observe(finaleEl.value)
+})
+onUnmounted(() => finaleIO?.disconnect())
 // Finale: glints on the chrome SILVER MOMENT (% of the lettering box), a ribbon that draws along the
 // returning horizon as the scene ends, and a few stars in the sky
 const chromeGlints = [
@@ -89,14 +109,14 @@ const chromeGlints = [
   { x: 79, y: 80, s: 14, d: 2.3 },
   { x: 97, y: 12, s: 22, d: 1.3 },
 ]
-const finaleRibbon = computed(() => seg(progress.finale ?? 0, 0.55, 0.35))
+const finaleRibbon = computed(() => seg(finaleP.value, 0.55, 0.35))
 const stars = [
   { x: 12, y: 16, s: 10, d: 0 }, { x: 22, y: 34, s: 6, d: 1.4 }, { x: 81, y: 14, s: 12, d: 0.7 },
   { x: 90, y: 38, s: 7, d: 2.1 }, { x: 68, y: 9, s: 6, d: 1.1 }, { x: 34, y: 10, s: 8, d: 2.6 },
 ]
 
 const burst = ref(false)
-watch(() => progress.finale, (p) => { if (p > 0.8) burst.value = true })
+watch(finaleP, (p) => { if (p > 0.8) burst.value = true })
 const sparks = Array.from({ length: 14 }, (_, i) => {
   const ang = (i / 14) * Math.PI * 2
   const r = 140 + (i % 3) * 60
@@ -322,7 +342,7 @@ const sparks = Array.from({ length: 14 }, (_, i) => {
         @scroll.passive="onStrip"
       >
         <div class="flex w-max items-start [--frame-h:min(52vw,21rem)]">
-          <div class="film-cell w-6 md:w-[8vw]" aria-hidden="true"><div class="film-window film-leader" /></div>
+          <div class="w-6 shrink-0 md:w-[8vw]" aria-hidden="true" />
 
           <article v-for="(d, i) in itinerary" :key="d.date" class="w-[80vw] max-w-[30rem] shrink-0 snap-start md:w-[32rem]">
             <div class="film-cell">
@@ -357,7 +377,7 @@ const sparks = Array.from({ length: 14 }, (_, i) => {
             </div>
           </div>
 
-          <div class="film-cell w-6 md:w-[8vw]" aria-hidden="true"><div class="film-window film-leader" /></div>
+          <div class="w-6 shrink-0 md:w-[8vw]" aria-hidden="true" />
         </div>
       </div>
 
@@ -370,8 +390,8 @@ const sparks = Array.from({ length: 14 }, (_, i) => {
     <!-- 5 · Finale: a glow rises from the bottom edge and floods the screen in brand blue; the headline's
          first line is sharp from the start, the second resolves out of a blur as the light takes over;
          then the date, venue, countdown and actions settle on the blue -->
-    <section data-scene="finale" data-play="5200" class="relative h-[260svh] bg-navy-950">
-      <div class="sticky top-0 flex h-svh flex-col items-center justify-center-safe overflow-hidden px-6 pt-16 pb-24 text-center md:pb-10">
+    <section ref="finaleEl" data-stop="1" class="relative h-svh bg-navy-950" :style="`--p:${finaleP}`">
+      <div class="flex h-svh flex-col items-center justify-center-safe overflow-hidden px-6 pt-16 pb-24 text-center md:pb-10">
         <!-- the flood: a huge soft disc centred behind the words, growing until it covers the screen -->
         <div
           class="seg finale-flood pointer-events-none absolute"
