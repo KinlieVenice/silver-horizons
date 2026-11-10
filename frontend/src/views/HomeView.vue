@@ -391,7 +391,8 @@ const sparks = Array.from({ length: 14 }, (_, i) => {
          first line is sharp from the start, the second resolves out of a blur as the light takes over;
          then the date, venue, countdown and actions settle on the blue -->
     <section ref="finaleEl" data-stop="1" class="relative h-svh bg-navy-950" :style="`--p:${finaleP}`">
-      <div class="flex h-svh flex-col items-center justify-center-safe overflow-hidden px-6 pt-16 pb-24 text-center md:pb-10">
+      <!-- relative: the stage must be the containing block, or its overflow-hidden won't clip the flood disc -->
+      <div class="relative flex h-svh flex-col items-center justify-center-safe overflow-hidden px-6 pt-16 pb-24 text-center md:pb-10">
         <!-- the flood: a huge soft disc centred behind the words, growing until it covers the screen -->
         <div
           class="seg finale-flood pointer-events-none absolute"
