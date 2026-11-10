@@ -19,8 +19,10 @@ export function useAutoplay(rootRef, { idle = 700, firstIdle = 4500, hop = 1100 
     const from = window.scrollY
     const t0 = performance.now()
     const step = (now) => {
-      // the page moved somewhere we didn't put it (scrollbar drag, etc.): visitor took over
-      if (expectY !== null && Math.abs(window.scrollY - expectY) > 3) return touched()
+      // the page jumped far from where we put it (a scrollbar drag): visitor took over. Taps, swipes,
+      // wheels and keys are caught by their own listeners; the wide margin is for iOS Safari, whose
+      // scrollY drifts from what we set while its address bar collapses (a tight check stopped the glide)
+      if (expectY !== null && Math.abs(window.scrollY - expectY) > 120) return touched()
       const t = Math.min(1, (now - t0) / Math.max(1, ms))
       const e = linear ? t : t < 0.5 ? 2 * t * t : 1 - (-2 * t + 2) ** 2 / 2
       expectY = Math.round(from + (to - from) * e)

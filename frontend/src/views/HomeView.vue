@@ -1,4 +1,4 @@
-<!-- Home as a scroll story (Resn-style): 5 scenes, scroll = timeline; idle visitors get autoplay (useAutoplay).
+<!-- Home as a scroll story (Resn-style): 4 scroll scenes plus a sideways film-strip slider, scroll = timeline; idle visitors get autoplay (useAutoplay).
      Each [data-scene] is a tall section with a sticky stage; useScenes() feeds --p (0→1).
      Element timing: class="seg" + style="--a:start;--d:duration" (fractions of the scene). -->
 <script setup>
@@ -68,6 +68,15 @@ const beat = computed(() => {
 const beatInfo = computed(() => beats.find((b) => b.id === beat.value))
 
 const dayWords = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven']
+
+// Journey: a plain sideways slider; the bar under it follows how far along it is
+const strip = ref()
+const stripP = ref(0)
+const onStrip = () => {
+  const el = strip.value
+  stripP.value = el.scrollLeft / Math.max(1, el.scrollWidth - el.clientWidth)
+}
+const slide = (dir) => strip.value.scrollBy({ left: dir * Math.min(strip.value.clientWidth * 0.8, 520), behavior: 'smooth' })
 
 // Scene 5: one-time sparkle burst near the end
 // Finale: glints on the chrome SILVER MOMENT (% of the lettering box), a ribbon that draws along the
@@ -282,23 +291,43 @@ const sparks = Array.from({ length: 14 }, (_, i) => {
       </div>
     </section>
 
-    <!-- 4 · The journey: days slide past like film frames -->
-    <section data-scene="journey" data-play="9000" class="relative h-[420svh] bg-navy-950">
-      <div class="sticky top-0 flex h-svh flex-col justify-center overflow-hidden">
-        <div class="mb-6 px-6 md:mb-10 md:px-[8vw]">
+    <!-- 4 · The journey: an ordinary sideways slider (swipe / trackpad / arrows), not tied to the page scroll
+         or autoplay. A 35mm film strip: sprocket rails, edge printing, frames snap into place. -->
+    <section class="relative bg-navy-950 py-20 md:py-28" aria-labelledby="journey-h">
+      <div class="mb-6 flex items-end justify-between gap-6 px-6 md:mb-10 md:px-[8vw]">
+        <div>
           <p class="eyebrow">The Journey</p>
-          <h2 class="silver-text mt-2 font-display text-4xl font-semibold md:text-6xl">{{ dayWords[itinerary.length] ?? itinerary.length }} days in Manila</h2>
+          <h2 id="journey-h" class="silver-text mt-2 font-display text-4xl font-semibold md:text-6xl">{{ dayWords[itinerary.length] ?? itinerary.length }} days in Manila</h2>
         </div>
+        <div class="hidden gap-2 md:flex">
+          <button
+            v-for="dir in [-1, 1]"
+            :key="dir"
+            type="button"
+            class="grid size-11 place-items-center rounded-full border border-white/25 text-white/85 transition hover:border-white hover:bg-white/10 active:translate-y-px disabled:pointer-events-none disabled:opacity-30"
+            :disabled="dir < 0 ? stripP < 0.01 : stripP > 0.99"
+            :aria-label="dir < 0 ? 'Previous day' : 'Next day'"
+            @click="slide(dir)"
+          >
+            <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path :d="dir < 0 ? 'M19 12H6M11.5 6.5 6 12l5.5 5.5' : 'M5 12h13M12.5 6.5 18 12l-5.5 5.5'" />
+            </svg>
+          </button>
+        </div>
+      </div>
 
-        <!-- 35mm film strip: continuous band, sprocket rails, edge printing; frames touch like real film.
-             Leader film at both ends so the strip never visibly starts or stops. -->
-        <div class="journey-track flex w-max items-start [--frame-h:min(52vw,21rem)]" style="transform: translateX(calc(var(--p, 0) * (100vw - 100%)))">
-          <div class="film-cell w-[20vw] md:w-[12vw]" aria-hidden="true"><div class="film-window film-leader" /></div>
+      <div
+        ref="strip"
+        class="snap-x snap-mandatory scroll-pl-6 overflow-x-auto overscroll-x-contain [scrollbar-width:none] md:scroll-pl-[8vw] [&::-webkit-scrollbar]:hidden"
+        @scroll.passive="onStrip"
+      >
+        <div class="flex w-max items-start [--frame-h:min(52vw,21rem)]">
+          <div class="film-cell w-6 md:w-[8vw]" aria-hidden="true"><div class="film-window film-leader" /></div>
 
-          <article v-for="(d, i) in itinerary" :key="d.date" class="w-[80vw] max-w-[30rem] shrink-0 md:w-[32rem]">
+          <article v-for="(d, i) in itinerary" :key="d.date" class="w-[80vw] max-w-[30rem] shrink-0 snap-start md:w-[32rem]">
             <div class="film-cell">
               <div class="film-window">
-                <img v-if="d.image" :src="d.image" :alt="d.title" class="absolute inset-0 size-full object-cover" loading="lazy" />
+                <img v-if="d.image" :src="d.image" :alt="d.title" class="absolute inset-0 size-full object-cover" loading="lazy" draggable="false" />
                 <span v-else class="absolute inset-0 grid place-items-center pb-10 text-xs text-white/45">[Photo: {{ d.title }}]</span>
                 <!-- still-frame overlay: number + date up top, title along the bottom -->
                 <div class="absolute inset-x-0 top-0 flex items-start justify-between bg-linear-to-b from-black/60 to-transparent p-4 pb-10">
@@ -315,7 +344,7 @@ const sparks = Array.from({ length: 14 }, (_, i) => {
             <p class="px-4 pt-4 text-[15px] leading-relaxed text-ink/85">{{ d.blurb }}</p>
           </article>
 
-          <div class="w-[60vw] max-w-[20rem] shrink-0 md:w-[22rem]">
+          <div class="w-[60vw] max-w-[20rem] shrink-0 snap-start md:w-[22rem]">
             <div class="film-cell">
               <RouterLink to="/itinerary" class="film-window group grid place-items-center text-center">
                 <span>
@@ -328,12 +357,13 @@ const sparks = Array.from({ length: 14 }, (_, i) => {
             </div>
           </div>
 
-          <div class="film-cell w-[30vw] md:w-[16vw]" aria-hidden="true"><div class="film-window film-leader" /></div>
+          <div class="film-cell w-6 md:w-[8vw]" aria-hidden="true"><div class="film-window film-leader" /></div>
         </div>
+      </div>
 
-        <div class="mx-6 mt-8 h-px bg-white/10 md:mx-[8vw]" aria-hidden="true">
-          <div class="h-px origin-left bg-white shadow-[0_0_10px_rgb(180_205_255/0.9)]" style="transform: scaleX(var(--p, 0))" />
-        </div>
+      <!-- how far along the strip you are -->
+      <div class="mx-6 mt-8 h-px bg-white/10 md:mx-[8vw]" aria-hidden="true">
+        <div class="h-px origin-left bg-white shadow-[0_0_10px_rgb(180_205_255/0.9)] transition-transform duration-150" :style="`transform: scaleX(${stripP})`" />
       </div>
     </section>
 

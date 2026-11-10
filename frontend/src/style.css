@@ -406,7 +406,6 @@ body {
   /* Scenes become plain stacked sections shown at their end state */
   [data-scene] { height: auto !important; --p: 1 !important; }
   [data-scene] > .sticky { position: relative; height: auto; min-height: 100svh; padding-block: 4rem; }
-  .journey-track { transform: none !important; width: auto !important; flex-wrap: wrap; justify-content: center; }
   .begin-arrow, .burst > * { animation: none; }
   html { scroll-behavior: auto; }
 }
