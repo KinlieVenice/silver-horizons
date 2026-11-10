@@ -1,0 +1,146 @@
+@import "tailwindcss";
+
+@theme {
+  --color-navy-950: #040B24;
+  --color-navy-900: #0A1A45;
+  --color-navy-800: #12285F;
+  --color-glow: #3D6BC4;
+  --color-ink: #E6EBF5;
+  --color-muted: #9AA8C4;
+  --color-felco: #F5A623;  --font-display: "Bodoni Moda", "Didot", Georgia, serif;
+  --font-sans: "Jost", "Gill Sans", "Segoe UI", sans-serif;
+}
+
+html { background: var(--color-navy-950); color-scheme: dark; }
+body {
+  @apply bg-navy-950 font-sans font-light text-ink antialiased;
+  font-size: 17px;
+  line-height: 1.65;
+}
+::selection { background: rgb(61 107 196 / 0.5); }
+:focus-visible { outline: 2px solid #DDE3EE; outline-offset: 3px; border-radius: 4px; }
+
+/* Silver metallic text fill; darkest stop #8F9BB2 still > 6:1 on navy-950 */
+.silver-text {
+  background: linear-gradient(180deg, #FFFFFF 0%, #E3E8F1 38%, #8F9BB2 72%, #DCE2EC 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.silver-text-dim {
+  background: linear-gradient(180deg, #C9D1DE 0%, #7D889C 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Small uppercase label, echoing "HORIZONS" / tagline lettering */
+.eyebrow {
+  @apply text-xs font-normal uppercase text-muted;
+  letter-spacing: 0.32em;
+}
+
+/* Hairline silver rule */
+.rule {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #B8C2D3 50%, transparent);
+}
+
+/* Section backdrop: navy gradient, never flat */
+.night {
+  background: radial-gradient(120% 70% at 50% 0%, #0E2257 0%, transparent 60%),
+    linear-gradient(180deg, var(--color-navy-900) 0%, var(--color-navy-950) 100%);
+}
+
+/* Card with silver hairline */
+.card {
+  @apply rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm transition;
+}
+.card:hover { border-color: rgb(220 226 236 / 0.35); background: rgb(255 255 255 / 0.05); }
+
+/* ---- Timeline theme vars (dark) ---- */
+:root {
+  --section-bg: #040B24;
+  --accent: rgb(220 226 236 / 0.7);
+  --accent-text: #AEB9CF;
+  --ink-strong: #FFFFFF;
+  --ink-soft: #C3CDE0;
+  --ink-body: #E6EBF5;
+  --card-bg: linear-gradient(180deg, #141F45, #0A1434);
+  --card-border: rgb(255 255 255 / 0.1);
+  --card-shadow: none;
+  --spine-glow: 0 0 12px 1px rgb(120 160 255 / 0.35);
+  --med-glow: 0 0 22px rgb(110 150 240 / 0.35);
+}
+/* Timeline line: left on mobile (under 2.5rem medallion column), centered on desktop */
+.spine { position: relative; }
+.spine::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 1.25rem;
+  width: 2px;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, transparent, var(--accent) 6%, var(--accent) 90%, transparent);
+  box-shadow: var(--spine-glow);
+}
+@media (min-width: 768px) { .spine::before { left: 50%; } }
+
+/* Big time numerals: silver */
+.time-text {
+  background: linear-gradient(180deg, #FFFFFF 0%, #E3E8F1 38%, #8F9BB2 72%, #DCE2EC 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Outlined display numeral */
+.numeral { color: transparent; -webkit-text-stroke: 1.5px var(--accent); }
+
+/* ---- Filipino heritage motifs, drawn in brand silver/blue on navy ---- */
+/* Capiz window: silver mullions, faint pearl highlight per pane */
+.capiz {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44'%3E%3Crect x='1.5' y='1.5' width='41' height='41' rx='2' fill='none' stroke='%23B8C8F0' stroke-opacity='.16' stroke-width='3'/%3E%3Ccircle cx='17' cy='15' r='11' fill='%23ffffff' fill-opacity='.04'/%3E%3C/svg%3E");
+  -webkit-mask-image: radial-gradient(75% 80% at 50% 0%, #000 0%, transparent 80%);
+  mask-image: radial-gradient(75% 80% at 50% 0%, #000 0%, transparent 80%);
+}
+
+/* Banig weave strip: white / horizon blue / silver diamonds */
+.banig {
+  height: 12px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='12'%3E%3Cpath d='M0 6L6 0L12 6L6 12Z' fill='%23FFFFFF' fill-opacity='.7'/%3E%3Cpath d='M12 6L18 0L24 6L18 12Z' fill='%237F9CE0' fill-opacity='.75'/%3E%3Cpath d='M24 6L30 0L36 6L30 12Z' fill='%23B8C2D3' fill-opacity='.4'/%3E%3C/svg%3E");
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 20%, #000 80%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 20%, #000 80%, transparent);
+}
+
+/* Postage stamp: silver plate, navy dotted border = perforations (section must be bg-navy-950) */
+.stamp {
+  background: linear-gradient(160deg, #F4F6FA, #B8C2D3 60%, #E3E8F1);
+  border: 8px dotted var(--color-navy-950);
+  padding: 8px;
+  box-shadow: 0 0 36px rgb(140 175 255 / 0.25);
+}
+
+.baybayin { font-family: "Noto Sans Tagalog", sans-serif; }
+
+.day-enter-active, .day-leave-active { transition: opacity .35s ease, transform .35s ease; }
+.day-enter-from { opacity: 0; transform: translateY(14px); }
+.day-leave-to { opacity: 0; }
+
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity 1s ease, transform 1s cubic-bezier(.2,.7,.2,1); }
+.reveal.is-visible { opacity: 1; transform: none; }
+
+/* Ribbon "draws" left→right via clip wipe (stroke-dash breaks with non-scaling-stroke) */
+@keyframes draw { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 -5% 0 0); } }
+.draw { animation: draw 2.6s cubic-bezier(.6,.05,.2,1) .3s both; }
+@keyframes twinkle { 0%, 100% { opacity: .55; transform: scale(.85); } 50% { opacity: 1; transform: scale(1); } }
+.twinkle { animation: twinkle 3.6s ease-in-out infinite; transform-origin: center; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .twinkle { animation: none; }
+  .draw { animation: none !important; }
+  .day-enter-active, .day-leave-active { transition: none; }
+  html { scroll-behavior: auto; }
+}
