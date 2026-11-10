@@ -69,21 +69,35 @@ const beatInfo = computed(() => beats.find((b) => b.id === beat.value))
 
 const dayWords = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven']
 
-// Journey: a plain sideways slider; the bar under it follows how far along it is
+// Journey: a sideways slider; the bar under it follows how far along it is
 const strip = ref()
 const stripP = ref(0)
 const onStrip = () => {
   const el = strip.value
   stripP.value = el.scrollLeft / Math.max(1, el.scrollWidth - el.clientWidth)
 }
-const slide = (dir) => strip.value.scrollBy({ left: dir * Math.min(strip.value.clientWidth * 0.8, 520), behavior: 'smooth' })
-// mouse drag (touch already swipes natively): snap is off while dragging, then the strip glides to the
+// frame positions (each day's left edge, aligned with the heading); the strip has no CSS snap so the
+// drift can stop anywhere and a hold freezes it in place
+const stops = () => {
+  const el = strip.value
+  const pad = parseFloat(getComputedStyle(el).scrollPaddingLeft) || 0
+  const base = el.getBoundingClientRect().left
+  return [...el.querySelectorAll('.snap-start')].map((c) => c.getBoundingClientRect().left - base + el.scrollLeft - pad)
+}
+const slide = (dir) => {
+  pauseDrift(3000)
+  const el = strip.value
+  const x = el.scrollLeft
+  const st = stops()
+  const to = dir > 0 ? (st.find((v) => v > x + 10) ?? el.scrollWidth) : (st.findLast((v) => v < x - 10) ?? 0)
+  el.scrollTo({ left: to, behavior: 'smooth' })
+}
+// mouse drag (touch already swipes natively): when let go the strip glides to the
 // nearest frame, nudged one frame on in the direction of a real flick; a drag never counts as a click
 let drag = null
 const dragStart = (e) => {
   if (e.pointerType !== 'mouse' || e.button !== 0) return
   drag = { x: e.clientX, left: strip.value.scrollLeft, moved: false }
-  strip.value.style.scrollSnapType = 'none'
 }
 const dragMove = (e) => {
   if (!drag) return
@@ -96,20 +110,68 @@ const dragEnd = () => {
   const el = strip.value
   const { moved, left } = drag
   drag = null
-  if (!moved) return (el.style.scrollSnapType = '')
-  const pad = parseFloat(getComputedStyle(el).scrollPaddingLeft) || 0
-  const base = el.getBoundingClientRect().left
-  const stops = [...el.querySelectorAll('.snap-start')].map((c) => c.getBoundingClientRect().left - base + el.scrollLeft - pad)
+  if (!moved) return
+  const st = stops()
   const dir = Math.sign(el.scrollLeft - left)
-  const near = stops.reduce((a, b) => (Math.abs(b - el.scrollLeft) < Math.abs(a - el.scrollLeft) ? b : a))
-  const flick = stops.find((x) => (dir > 0 ? x > el.scrollLeft : false)) ?? stops.findLast((x) => (dir < 0 ? x < el.scrollLeft : false))
+  const near = st.reduce((a, b) => (Math.abs(b - el.scrollLeft) < Math.abs(a - el.scrollLeft) ? b : a))
+  const flick = st.find((x) => (dir > 0 ? x > el.scrollLeft : false)) ?? st.findLast((x) => (dir < 0 ? x < el.scrollLeft : false))
   el.scrollTo({ left: Math.abs(el.scrollLeft - left) > 40 && flick !== undefined ? flick : near, behavior: 'smooth' })
-  setTimeout(() => (el.style.scrollSnapType = ''), 450)
   // swallow the click that follows a drag (e.g. on the "See the itinerary" frame)
   const eat = (ev) => { ev.preventDefault(); ev.stopPropagation() }
   el.addEventListener('click', eat, { capture: true, once: true })
   setTimeout(() => el.removeEventListener('click', eat, { capture: true }), 300)
 }
+
+// auto drift: while on screen the strip rolls slowly sideways like film through a gate. Holding it (mouse
+// or finger) stops it at once; after a release, swipe, wheel or arrow it waits, then drifts on from there.
+// At the end it pauses, glides back to day one, and rolls again.
+const SPEED = 45 // px per second
+let held = false
+let resumeAt = 0
+let acc = null // drift position (float; scrollLeft rounds)
+let lastT = 0
+let driftRaf = 0
+let stripVisible = false
+let stripIO
+let rewind = null // { from, t0 }: gliding back to day one
+const pauseDrift = (ms = 2500) => {
+  acc = null
+  rewind = null
+  resumeAt = performance.now() + ms
+}
+const drift = (now) => {
+  driftRaf = requestAnimationFrame(drift)
+  const dt = Math.min(0.05, (now - (lastT || now)) / 1000)
+  lastT = now
+  const el = strip.value
+  if (!el || !stripVisible || held || drag || document.hidden || now < resumeAt) return
+  if (acc !== null && Math.abs(el.scrollLeft - Math.round(acc)) > 2) return pauseDrift() // moved by the visitor
+  if (acc === null) acc = el.scrollLeft
+  if (rewind) { // our own ease (a smooth scrollTo here was sometimes dropped by the browser)
+    const t = Math.min(1, (now - rewind.t0) / 1200)
+    acc = rewind.from * (1 - (t < 0.5 ? 2 * t * t : 1 - (-2 * t + 2) ** 2 / 2))
+    el.scrollLeft = Math.round(acc)
+    if (t >= 1) { rewind = null; resumeAt = now + 800 }
+    return
+  }
+  const max = el.scrollWidth - el.clientWidth
+  if (acc >= max - 1) { // the end: rest a moment, then glide back
+    resumeAt = now + 1500
+    rewind = { from: acc, t0: now + 1500 }
+    return
+  }
+  acc = Math.min(max, acc + SPEED * dt)
+  el.scrollLeft = Math.round(acc)
+}
+const stripDown = (e) => { held = true; pauseDrift(); dragStart(e) }
+const stripUp = (e) => { dragEnd(e); held = false; pauseDrift() }
+onMounted(() => {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+  stripIO = new IntersectionObserver(([e]) => (stripVisible = e.isIntersecting), { threshold: 0.5 })
+  stripIO.observe(strip.value)
+  driftRaf = requestAnimationFrame(drift)
+})
+onUnmounted(() => { stripIO?.disconnect(); cancelAnimationFrame(driftRaf) })
 
 // Finale: one screen that holds the page while it reveals. Coming down, once 40% of it is in view the page
 // glides onto it and scrolling pauses while the whole reveal plays (finaleP 0 → 1, driving the same --p
@@ -384,7 +446,7 @@ const sparks = Array.from({ length: 14 }, (_, i) => {
       </div>
     </section>
 
-    <!-- 4 · The journey: an ordinary sideways slider (swipe / trackpad / arrows), not tied to the page scroll;
+    <!-- 4 · The journey: a sideways slider (swipe / drag / trackpad / arrows) that drifts by itself until held;
          autoplay rests here (data-stop) before going on to the finale. A 35mm film strip: sprocket rails, edge printing, frames snap into place. -->
     <section data-stop="8000" class="relative bg-navy-950 py-20 md:py-28" aria-labelledby="journey-h">
       <div class="mb-6 flex items-end justify-between gap-6 px-6 md:mb-10 md:px-[8vw]">
@@ -411,12 +473,13 @@ const sparks = Array.from({ length: 14 }, (_, i) => {
 
       <div
         ref="strip"
-        class="snap-x snap-mandatory scroll-pl-6 overflow-x-auto overscroll-x-contain [scrollbar-width:none] select-none md:scroll-pl-[8vw] md:cursor-grab md:active:cursor-grabbing [&::-webkit-scrollbar]:hidden"
+        class="journey-strip scroll-pl-6 overflow-x-auto overscroll-x-contain [scrollbar-width:none] select-none md:scroll-pl-[8vw] md:cursor-grab md:active:cursor-grabbing [&::-webkit-scrollbar]:hidden"
         @scroll.passive="onStrip"
-        @pointerdown="dragStart"
+        @pointerdown="stripDown"
         @pointermove="dragMove"
-        @pointerup="dragEnd"
-        @pointercancel="dragEnd"
+        @pointerup="stripUp"
+        @pointercancel="stripUp"
+        @wheel.passive="() => pauseDrift()"
         @dragstart.prevent
       >
         <div class="flex w-max items-start [--frame-h:min(52vw,21rem)]">
