@@ -3,7 +3,9 @@ import { onMounted, onUnmounted } from 'vue'
 // Hybrid scroll story: scenes always follow the scroll position. If the visitor stops scrolling,
 // the page glides on by itself: a short hop to the next [data-scene], straight into playing it at an
 // even pace, then on to the next, until the visitor touches anything again.
-// Scene pace: data-play="ms" = time to play the whole scene. Off for reduced motion.
+// Scene pace: data-play="ms" = time to play the whole scene. A section marked data-stop="ms" (a plain
+// section, e.g. a slider) is a resting point: the glide brings its top into view, then waits that long
+// after the visitor's last touch before moving on. Off for reduced motion.
 // Returns next(): glide on right now (e.g. a "Begin" button).
 export function useAutoplay(rootRef, { idle = 700, firstIdle = 4500, hop = 1100 } = {}) {
   let last = performance.now()
@@ -36,14 +38,19 @@ export function useAutoplay(rootRef, { idle = 700, firstIdle = 4500, hop = 1100 
   // Next move from the current position; `force` skips the idle wait.
   const advance = (force) => {
     if (raf || document.hidden || !rootRef.value) return
-    const scenes = [...rootRef.value.querySelectorAll('[data-scene]')]
+    const scenes = [...rootRef.value.querySelectorAll('[data-scene], [data-stop]')]
     if (!scenes.length) return
     const y = window.scrollY
     const vh = window.innerHeight
-    const wait = y < scenes[0].offsetTop - 2 ? firstIdle : idle
+    const resting = scenes.find((el) => el.dataset.stop && Math.abs(y - el.offsetTop) <= 40) // loose: iOS drift
+    const wait = y < scenes[0].offsetTop - 2 ? firstIdle : resting ? Number(resting.dataset.stop || 8000) : idle
     if (!force && performance.now() - last < wait) return
     for (const el of scenes) {
       const start = el.offsetTop
+      if (el.dataset.stop) {
+        if (y < start - 40) return glide(start, hop, false) // arrive, then rest (the idle wait above)
+        continue
+      }
       const end = start + el.offsetHeight - vh
       // hop to the scene, then play it straight away (no idle pause in between)
       if (y < start - 2) return glide(start, hop, false, () => advance(true))

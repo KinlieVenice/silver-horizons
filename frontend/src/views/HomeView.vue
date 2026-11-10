@@ -291,9 +291,9 @@ const sparks = Array.from({ length: 14 }, (_, i) => {
       </div>
     </section>
 
-    <!-- 4 · The journey: an ordinary sideways slider (swipe / trackpad / arrows), not tied to the page scroll
-         or autoplay. A 35mm film strip: sprocket rails, edge printing, frames snap into place. -->
-    <section class="relative bg-navy-950 py-20 md:py-28" aria-labelledby="journey-h">
+    <!-- 4 · The journey: an ordinary sideways slider (swipe / trackpad / arrows), not tied to the page scroll;
+         autoplay rests here (data-stop) before going on to the finale. A 35mm film strip: sprocket rails, edge printing, frames snap into place. -->
+    <section data-stop="8000" class="relative bg-navy-950 py-20 md:py-28" aria-labelledby="journey-h">
       <div class="mb-6 flex items-end justify-between gap-6 px-6 md:mb-10 md:px-[8vw]">
         <div>
           <p class="eyebrow">The Journey</p>
