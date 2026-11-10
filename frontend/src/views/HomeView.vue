@@ -80,8 +80,8 @@ const slide = (dir) => strip.value.scrollBy({ left: dir * Math.min(strip.value.c
 
 // Finale: one screen that holds the page while it reveals. Coming down, once 40% of it is in view the page
 // glides onto it and scrolling pauses while the whole reveal plays (finaleP 0 → 1, driving the same --p
-// timings the scenes use). Scrolling back up rewinds it with the scroll, like the other scenes; once it is
-// fully rewound, coming down again plays it again.
+// timings the scenes use). Scrolling back up leaves it revealed; once it has left the screen, it resets
+// so coming down again plays it again.
 const finaleEl = ref()
 const finaleP = ref(0)
 const REVEAL = 3400
@@ -128,10 +128,9 @@ const onFinaleScroll = () => {
       if (top < vh * START && top > -vh * 0.5) reveal()
       return
     }
-    // played: scrolling back up above it rewinds with the scroll; all the way back re-arms it
-    const p = Math.min(1, Math.max(0, 1 - top / (vh * START)))
-    finaleP.value = p
-    if (p === 0) played = false
+    // played: it stays revealed while you scroll back up; once it is wholly out of view (you went back up
+    // past it) it resets unseen, so coming down again plays it fresh
+    if (top >= vh) { finaleP.value = 0; played = false }
   })
 }
 onMounted(() => {
@@ -157,7 +156,7 @@ const stars = [
 ]
 
 const burst = ref(false)
-watch(finaleP, (p) => { if (p > 0.8) burst.value = true; else if (p < 0.5) burst.value = false }) // replays after a rewind
+watch(finaleP, (p) => { if (p > 0.8) burst.value = true; else if (p < 0.5) burst.value = false }) // replays after a reset
 const sparks = Array.from({ length: 14 }, (_, i) => {
   const ang = (i / 14) * Math.PI * 2
   const r = 140 + (i % 3) * 60
