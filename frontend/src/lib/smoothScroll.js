@@ -9,7 +9,9 @@ export const scrollLock = { on: false }
 
 export const lenis = window.matchMedia('(prefers-reduced-motion: reduce)').matches
   ? null
-  : new Lenis({ autoRaf: true, lerp: 0.09, virtualScroll: () => !scrollLock.on })
+  // lerp: how fast it catches up (0.09 felt sluggish through the long map scene); wheelMultiplier: a bit
+  // more distance per wheel step so the tall scroll scenes don't drag
+  : new Lenis({ autoRaf: true, lerp: 0.16, wheelMultiplier: 1.25, virtualScroll: () => !scrollLock.on })
 
 // stop any glide in progress right where it is (before the page moves itself)
 export const settle = () => lenis?.scrollTo(window.scrollY, { immediate: true, force: true })
