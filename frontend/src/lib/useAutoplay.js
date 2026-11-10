@@ -1,4 +1,5 @@
 import { onMounted, onUnmounted } from 'vue'
+import { lenis } from './smoothScroll.js'
 
 // Hybrid scroll story: scenes always follow the scroll position. If the visitor stops scrolling,
 // the page glides on by itself: a short hop to the next [data-scene], straight into playing it at an
@@ -37,7 +38,7 @@ export function useAutoplay(rootRef, { idle = 700, firstIdle = 4500, hop = 1100 
 
   // Next move from the current position; `force` skips the idle wait.
   const advance = (force) => {
-    if (raf || document.hidden || !rootRef.value) return
+    if (raf || document.hidden || !rootRef.value || lenis?.isScrolling) return // let a wheel glide finish
     const scenes = [...rootRef.value.querySelectorAll('[data-scene], [data-stop]')]
     if (!scenes.length) return
     const y = window.scrollY

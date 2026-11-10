@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import './style.css'
 import App from './App.vue'
+import { lenis } from './lib/smoothScroll.js'
 
 // The site is a story that starts at its opening: a reload always starts at the top. Browsers restore the
 // old position at different moments (Firefox after load, the back/forward cache on pageshow), so reset at each.
@@ -23,7 +24,11 @@ const router = createRouter({
   ],
   // back/forward between pages restores where you were; the first navigation of a load (a refresh, where
   // Vue Router would replay the position it saved before unload) always starts at the top
-  scrollBehavior: (to, from, saved) => (from.matched.length && saved) || { top: 0 },
+  scrollBehavior: (to, from, saved) => {
+    const pos = (from.matched.length && saved) || { top: 0 }
+    lenis?.scrollTo(pos.top ?? 0, { immediate: true, force: true }) // drop any glide from the last page
+    return pos
+  },
 })
 
 createApp(App)

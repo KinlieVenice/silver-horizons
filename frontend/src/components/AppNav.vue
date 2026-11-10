@@ -10,6 +10,7 @@ import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 import NavPill from './NavPill.vue'
 import wordmark from '../assets/brand/silver-horizons-wordmark.webp'
+import { lenis } from '../lib/smoothScroll.js'
 
 const links = [
   { to: '/', label: 'Home' },
@@ -43,6 +44,7 @@ const onScroll = () => {
 // glide to the top in a fixed 600ms (a browser smooth scroll over a long page can outlast Home's
 // autoplay idle wait, which would then pull the page back down mid-way)
 const toTop = () => {
+  if (lenis) return lenis.scrollTo(0, { duration: 1.1 })
   const from = window.scrollY
   const t0 = performance.now()
   const step = (now) => {

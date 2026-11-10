@@ -15,6 +15,7 @@ import { branches, groups, hub } from '../content/branches.js'
 import { formatDay } from '../lib/schedule.js'
 import { useScenes, seg } from '../lib/useScenes.js'
 import { useAutoplay } from '../lib/useAutoplay.js'
+import { scrollLock, settle } from '../lib/smoothScroll.js'
 
 const root = ref()
 const progress = useScenes(root)
@@ -185,6 +186,8 @@ let revealing = false
 const block = (e) => e.preventDefault()
 const blockKeys = (e) => ['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', ' ', 'Home', 'End'].includes(e.key) && e.preventDefault()
 const hold = (on) => {
+  scrollLock.on = on
+  if (on) settle()
   const f = on ? 'addEventListener' : 'removeEventListener'
   window[f]('wheel', block, { passive: false })
   window[f]('touchmove', block, { passive: false })
@@ -480,6 +483,7 @@ const sparks = Array.from({ length: 14 }, (_, i) => {
         @pointerup="stripUp"
         @pointercancel="stripUp"
         @wheel.passive="() => pauseDrift()"
+        data-lenis-prevent-horizontal
         @dragstart.prevent
       >
         <div class="flex w-max items-start [--frame-h:min(52vw,21rem)]">
