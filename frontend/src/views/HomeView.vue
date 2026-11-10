@@ -78,27 +78,40 @@ const onStrip = () => {
 }
 const slide = (dir) => strip.value.scrollBy({ left: dir * Math.min(strip.value.clientWidth * 0.8, 520), behavior: 'smooth' })
 
-// Finale: one screen, no scroll needed. Once most of it is in view the whole reveal plays by itself,
-// once: finaleP runs 0 → 1 over a few seconds and drives the same --p timings the scenes use.
+// Finale: one screen that holds the page while it reveals. As it comes up, the page settles on it and
+// scrolling pauses until the whole reveal has played (finaleP 0 → 1, driving the same --p timings the
+// scenes use); then scrolling is free again. Plays once.
 const finaleEl = ref()
 const finaleP = ref(0)
+const REVEAL = 3400
 let finaleIO
+const block = (e) => e.preventDefault()
+const blockKeys = (e) => ['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', ' ', 'Home', 'End'].includes(e.key) && e.preventDefault()
+const hold = (on) => {
+  const f = on ? 'addEventListener' : 'removeEventListener'
+  window[f]('wheel', block, { passive: false })
+  window[f]('touchmove', block, { passive: false })
+  window[f]('keydown', blockKeys)
+}
 onMounted(() => {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return (finaleP.value = 1)
   finaleIO = new IntersectionObserver(([e]) => {
     if (!e.isIntersecting) return
     finaleIO.disconnect()
+    hold(true)
+    window.scrollTo({ top: finaleEl.value.offsetTop, behavior: 'smooth' })
     const t0 = performance.now()
     const step = (now) => {
-      const t = Math.min(1, (now - t0) / 3400)
+      const t = Math.min(1, (now - t0) / REVEAL)
       finaleP.value = 1 - (1 - t) ** 2 // ease out
       if (t < 1) requestAnimationFrame(step)
+      else hold(false)
     }
     requestAnimationFrame(step)
-  }, { threshold: 0.6 })
+  }, { threshold: 0.4 })
   finaleIO.observe(finaleEl.value)
 })
-onUnmounted(() => finaleIO?.disconnect())
+onUnmounted(() => { finaleIO?.disconnect(); hold(false) })
 // Finale: glints on the chrome SILVER MOMENT (% of the lettering box), a ribbon that draws along the
 // returning horizon as the scene ends, and a few stars in the sky
 const chromeGlints = [
