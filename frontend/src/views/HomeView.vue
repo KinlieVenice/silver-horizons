@@ -78,13 +78,15 @@ const onStrip = () => {
 }
 const slide = (dir) => strip.value.scrollBy({ left: dir * Math.min(strip.value.clientWidth * 0.8, 520), behavior: 'smooth' })
 
-// Finale: one screen that holds the page while it reveals. As it comes up, the page settles on it and
-// scrolling pauses until the whole reveal has played (finaleP 0 → 1, driving the same --p timings the
-// scenes use); then scrolling is free again. Plays once.
+// Finale: one screen that holds the page while it reveals. Coming down, once 40% of it is in view the page
+// glides onto it and scrolling pauses while the whole reveal plays (finaleP 0 → 1, driving the same --p
+// timings the scenes use). Scrolling back up rewinds it with the scroll, like the other scenes; once it is
+// fully rewound, coming down again plays it again.
 const finaleEl = ref()
 const finaleP = ref(0)
 const REVEAL = 3400
-let finaleIO
+let played = false
+let revealing = false
 const block = (e) => e.preventDefault()
 const blockKeys = (e) => ['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', ' ', 'Home', 'End'].includes(e.key) && e.preventDefault()
 const hold = (on) => {
@@ -93,25 +95,51 @@ const hold = (on) => {
   window[f]('touchmove', block, { passive: false })
   window[f]('keydown', blockKeys)
 }
+const reveal = () => {
+  played = revealing = true
+  hold(true)
+  const done = () => { if (revealing) { revealing = false; hold(false) } }
+  setTimeout(done, REVEAL + 300) // never hold longer than the reveal, even if frames stall
+  // glide onto the finale frame by frame (iOS Safari drops a smooth scrollTo while a finger is down),
+  // then keep it parked there until the reveal ends, so a half-visible finale can never stay locked
+  const top = finaleEl.value.offsetTop
+  const from = window.scrollY
+  const t0 = performance.now()
+  const step = (now) => {
+    const g = Math.min(1, (now - t0) / 600)
+    const y = g < 1 ? from + (top - from) * (1 - (1 - g) ** 3) : top
+    if (revealing && Math.abs(window.scrollY - y) > 1) window.scrollTo(0, y)
+    const t = Math.min(1, (now - t0) / REVEAL)
+    finaleP.value = 1 - (1 - t) ** 2 // ease out
+    if (t < 1) requestAnimationFrame(step)
+    else done()
+  }
+  requestAnimationFrame(step)
+}
+const START = 0.6 // the finale's top at 60% of the screen height = 40% of it in view
+let ticking = 0
+const onFinaleScroll = () => {
+  ticking ||= requestAnimationFrame(() => {
+    ticking = 0
+    if (revealing || !finaleEl.value) return
+    const top = finaleEl.value.getBoundingClientRect().top
+    const vh = window.innerHeight
+    if (!played) {
+      if (top < vh * START && top > -vh * 0.5) reveal()
+      return
+    }
+    // played: scrolling back up above it rewinds with the scroll; all the way back re-arms it
+    const p = Math.min(1, Math.max(0, 1 - top / (vh * START)))
+    finaleP.value = p
+    if (p === 0) played = false
+  })
+}
 onMounted(() => {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return (finaleP.value = 1)
-  finaleIO = new IntersectionObserver(([e]) => {
-    if (!e.isIntersecting) return
-    finaleIO.disconnect()
-    hold(true)
-    window.scrollTo({ top: finaleEl.value.offsetTop, behavior: 'smooth' })
-    const t0 = performance.now()
-    const step = (now) => {
-      const t = Math.min(1, (now - t0) / REVEAL)
-      finaleP.value = 1 - (1 - t) ** 2 // ease out
-      if (t < 1) requestAnimationFrame(step)
-      else hold(false)
-    }
-    requestAnimationFrame(step)
-  }, { threshold: 0.4 })
-  finaleIO.observe(finaleEl.value)
+  window.addEventListener('scroll', onFinaleScroll, { passive: true })
+  onFinaleScroll()
 })
-onUnmounted(() => { finaleIO?.disconnect(); hold(false) })
+onUnmounted(() => { window.removeEventListener('scroll', onFinaleScroll); hold(false) })
 // Finale: glints on the chrome SILVER MOMENT (% of the lettering box), a ribbon that draws along the
 // returning horizon as the scene ends, and a few stars in the sky
 const chromeGlints = [
@@ -129,7 +157,7 @@ const stars = [
 ]
 
 const burst = ref(false)
-watch(finaleP, (p) => { if (p > 0.8) burst.value = true })
+watch(finaleP, (p) => { if (p > 0.8) burst.value = true; else if (p < 0.5) burst.value = false }) // replays after a rewind
 const sparks = Array.from({ length: 14 }, (_, i) => {
   const ang = (i / 14) * Math.PI * 2
   const r = 140 + (i % 3) * 60
