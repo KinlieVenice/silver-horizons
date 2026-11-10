@@ -82,7 +82,7 @@ const glints = [
     <div class="star-dust absolute inset-0 -z-10 opacity-60" aria-hidden="true" />
     <div class="gala-glow absolute top-[40svh] left-1/2 -z-10 h-[120svh] w-[110vw] -translate-x-1/2" aria-hidden="true" />
   <!-- the invitation card -->
-  <section class="relative px-5 pt-4 pb-20 font-normal md:px-8 md:pb-28" aria-label="Date and venue">
+  <section class="relative px-5 pt-12 pb-20 font-normal md:px-8 md:pb-28 lg:pt-20" aria-label="Date and venue">
     <div class="invite-card mx-auto grid max-w-4xl overflow-hidden rounded-3xl md:grid-cols-[auto_1fr_1fr]">
       <div class="flex items-center gap-5 p-7 md:flex-col md:items-start md:justify-center md:gap-1 md:border-r md:border-white/10 md:px-10 md:py-9">
         <span class="chrome-num text-7xl leading-none md:text-8xl">{{ dayNum }}</span>

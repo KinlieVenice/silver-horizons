@@ -63,7 +63,7 @@ const glints = [
     <div class="star-dust absolute inset-0 -z-10 opacity-60" aria-hidden="true" />
 
     <!-- Venue: details and map in one glass card -->
-    <section class="px-5 pt-6 pb-20 md:px-8 md:pb-28" aria-labelledby="venue-h">
+    <section class="px-5 pt-12 pb-20 md:px-8 md:pb-28 lg:pt-20" aria-labelledby="venue-h">
       <div class="mx-auto max-w-5xl">
         <SectionHead id="venue-h" eyebrow="Venue" :title="event.venue" />
         <div class="invite-card mt-10 grid overflow-hidden rounded-3xl md:grid-cols-[1fr_1.5fr]">
