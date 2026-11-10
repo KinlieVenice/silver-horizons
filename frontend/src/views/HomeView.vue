@@ -66,7 +66,6 @@ const beat = computed(() => {
   if (p >= 0.88) return 'done'
   return groups.find((g) => p >= GROUP_WIN[g.id][0] && p < GROUP_WIN[g.id][1])?.id ?? ''
 })
-const beatInfo = computed(() => beats.find((b) => b.id === beat.value))
 
 const dayWords = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven']
 
@@ -335,7 +334,7 @@ const sparks = Array.from({ length: 14 }, (_, i) => {
     </section>
 
     <!-- 2 · Twenty-five years -->
-    <section data-scene="years" data-play="3800" class="relative h-[200svh] bg-navy-950">
+    <section data-scene="years" data-play="3800" class="relative h-[170svh] bg-navy-950">
       <div class="sticky top-0 grid h-svh place-items-center overflow-hidden px-6">
         <p class="sr-only">25 years, 2001 to 2026. 25 years behind us. New horizons ahead.</p>
         <!-- glow brightens as the years fill -->
@@ -378,23 +377,23 @@ const sparks = Array.from({ length: 14 }, (_, i) => {
     </section>
 
     <!-- 3 · From every branch, one destination -->
-    <section data-scene="converge" data-play="6500" class="relative h-[260svh] bg-navy-950">
+    <section data-scene="converge" data-play="6500" class="relative h-[200svh] bg-navy-950">
       <div class="sticky top-0 grid h-svh overflow-hidden px-6 py-[10svh] md:grid-cols-2 md:items-center md:gap-10 md:px-[8vw]">
         <div class="relative z-10 text-center md:text-left">
           <p class="seg fade-up eyebrow" style="--a:0;--d:0.15">Silver Horizons · Manila</p>
           <h2 class="seg fade-up silver-text mt-3 font-display text-4xl leading-[1.05] font-semibold md:text-6xl" style="--a:0.05;--d:0.2">From {{ branches.length }} branches,<br />one destination.</h2>
           <!-- the beat in hand: which island group is landing, then (after the last) the welcome line -->
-          <div class="mt-5 min-h-[7.5rem] md:mt-8 md:min-h-[11rem]" aria-live="off">
-            <Transition name="beat" mode="out-in">
-              <div v-if="beatInfo" :key="beatInfo.id">
-                <p class="text-xs font-medium tracking-[0.3em] text-muted uppercase">{{ beats.indexOf(beatInfo) + 1 }} / {{ beats.length }} · {{ beatInfo.names.length }} branches</p>
-                <p class="silver-text mt-1 font-display text-5xl leading-none font-semibold md:text-7xl">{{ beatInfo.name }}</p>
-                <p class="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-ink/80 md:mx-0">{{ beatInfo.names.join(' · ') }}</p>
-              </div>
-              <p v-else-if="beat === 'done'" key="done" class="mx-auto max-w-md text-[15px] text-ink/85 md:mx-0 md:text-lg">
-                Throughout the year, we’ve celebrated the people, partnerships, challenges, and milestones that brought FELCO to 25. Now we come together in Manila.
-              </p>
-            </Transition>
+          <!-- every beat and the closing line share one grid cell (only the current one shows), so the box is
+               always as tall as the tallest and the map below never shifts between groups -->
+          <div class="mt-5 grid md:mt-8" aria-live="off">
+            <div v-for="(b, i) in beats" :key="b.id" class="beat-item [grid-area:1/1]" :class="beat === b.id && 'is-on'" :aria-hidden="beat !== b.id">
+              <p class="text-xs font-medium tracking-[0.3em] text-muted uppercase">{{ i + 1 }} / {{ beats.length }} · {{ b.names.length }} branches</p>
+              <p class="silver-text mt-1 font-display text-5xl leading-none font-semibold md:text-7xl">{{ b.name }}</p>
+              <p class="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-ink/80 md:mx-0">{{ b.names.join(' · ') }}</p>
+            </div>
+            <p class="beat-item mx-auto max-w-md text-[15px] text-ink/85 [grid-area:1/1] md:mx-0 md:text-lg" :class="beat === 'done' && 'is-on'" :aria-hidden="beat !== 'done'">
+              Throughout the year, we’ve celebrated the people, partnerships, challenges, and milestones that brought FELCO to 25. Now we come together in Manila.
+            </p>
           </div>
         </div>
 

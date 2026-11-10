@@ -260,9 +260,9 @@ body {
 /* a ring pulses out of Manila as each group lands */
 .manila-ring { transform-box: fill-box; transform-origin: center; transform: scale(calc(1 + var(--t) * 4)); opacity: calc(min(var(--t) * 12, 1) * (1 - var(--t))); }
 /* the group title swaps per beat */
-.beat-enter-active, .beat-leave-active { transition: opacity 0.35s ease, transform 0.45s cubic-bezier(.2,.8,.2,1), filter 0.45s ease; }
-.beat-enter-from { opacity: 0; transform: translateY(16px); filter: blur(4px); }
-.beat-leave-to { opacity: 0; transform: translateY(-12px); filter: blur(4px); }
+/* map beats: all stacked in one cell; the current one rises in out of a blur after the last has left */
+.beat-item { opacity: 0; transform: translateY(-12px); filter: blur(4px); transition: opacity 0.3s ease, transform 0.35s ease, filter 0.35s ease; }
+.beat-item.is-on { opacity: 1; transform: none; filter: none; transition: opacity 0.35s ease 0.25s, transform 0.45s cubic-bezier(.2,.8,.2,1) 0.25s, filter 0.45s ease 0.25s; }
 
 /* ---- 35mm film strip (Home · Journey) ----
    .film-cell: a stretch of film base with sprocket holes punched into the top and bottom rails
@@ -401,7 +401,7 @@ body {
   .intro-horizon, .intro-glow, .intro-logo, .intro-after { animation: none; }
   .day-enter-active, .day-leave-active { transition: none; }
   .branch-dot.is-on .halo { animation: none; }
-  .beat-enter-active, .beat-leave-active { transition: none; }
+  .beat-item, .beat-item.is-on { transition: none; }
   /* Scenes become plain stacked sections shown at their end state */
   [data-scene] { height: auto !important; --p: 1 !important; }
   [data-scene] > .sticky { position: relative; height: auto; min-height: 100svh; padding-block: 4rem; }
