@@ -43,7 +43,7 @@ const loopTo = computed(() => seg(progress.years ?? 0, 0.04, 0.28))
 // Three beats, one island group each (Luzon → Visayas → Mindanao): the group's lines streak into Manila
 // together, a ring pulses out of Manila as they land, then the group holds before the next one starts.
 // Each window is [start, end) of the scene's progress; the group's title shows for its whole window.
-const GROUP_WIN = { luzon: [0.03, 0.35], visayas: [0.35, 0.61], mindanao: [0.61, 0.88] }
+const GROUP_WIN = { luzon: [0.03, 0.3], visayas: [0.3, 0.53], mindanao: [0.53, 0.76] }
 const LINE = 0.1 // each line's draw time
 const routes = branches.map((b) => {
   const mx = (b.x + hub.x) / 2
@@ -54,7 +54,7 @@ const routes = branches.map((b) => {
   const mates = branches.filter((o) => o.group === b.group)
   const j = mates.indexOf(b)
   // words first: a group's name and chips settle before its lines launch
-  const a = GROUP_WIN[b.group][0] + 0.09 + j * (mates.length > 4 ? 0.008 : 0.02)
+  const a = GROUP_WIN[b.group][0] + 0.09 + j * (mates.length > 4 ? 0.008 : 0.012)
   return { ...b, d: `M${b.x} ${b.y} Q ${cx.toFixed(1)} ${cy.toFixed(1)} ${hub.x} ${hub.y}`, a }
 })
 const beats = groups.map((g) => {
@@ -66,7 +66,7 @@ const landAt = Object.fromEntries(routes.map((r) => [r.name, r.a + LINE]))
 const lit = (name) => (progress.converge ?? 0) >= landAt[name]
 const beat = computed(() => {
   const p = progress.converge ?? 0
-  if (p >= 0.88) return 'done'
+  if (p >= 0.76) return 'done'
   // headline first (0 → 0.06), then Luzon's words from 0.03, then its lines
   return groups.find((g) => p >= GROUP_WIN[g.id][0] && p < GROUP_WIN[g.id][1])?.id ?? ''
 })
@@ -380,7 +380,7 @@ const sparks = Array.from({ length: 14 }, (_, i) => {
     </section>
 
     <!-- 3 · From every branch, one destination -->
-    <section data-scene="converge" data-play="10500" class="relative h-[200svh] bg-navy-950">
+    <section data-scene="converge" data-play="8500" class="relative h-[200svh] bg-navy-950">
       <!-- a night chart: star dust behind; text and map centred together so no dead gap opens between them.
            Phones: the map takes whatever height the text leaves (up to 46svh), so it never runs off small screens -->
       <div class="sticky top-0 isolate grid h-svh grid-rows-[auto_minmax(0,1fr)] overflow-hidden px-6 py-[8svh] md:grid-rows-1 md:py-[10svh] md:grid-cols-[minmax(0,34rem)_auto] md:items-center md:justify-center md:gap-16 md:px-[6vw]">
@@ -400,9 +400,16 @@ const sparks = Array.from({ length: 14 }, (_, i) => {
                 <li v-for="n in b.names" :key="n" class="branch-chip" :class="lit(n) && 'is-lit'">{{ n }}</li>
               </ul>
             </div>
-            <div class="beat-item mx-auto max-w-md self-center [grid-area:1/1] md:mx-0 md:self-start" :class="beat === 'done' && 'is-on'" :aria-hidden="beat !== 'done'">
-              <p class="text-[15px] leading-relaxed text-ink/85 md:text-lg">Throughout the year, we’ve celebrated the people, partnerships, challenges, and milestones that brought FELCO to 25.</p>
-            </div>
+            <!-- the end: all three island groups, lit one after another as Manila flares -->
+            <ul class="beat-item mx-auto w-fit self-center [grid-area:1/1] md:mx-0 md:self-start" :class="beat === 'done' && 'is-on'" :aria-hidden="beat !== 'done'">
+              <li v-for="(b, k) in beats" :key="b.id" class="isle flex items-baseline justify-between gap-6 border-b border-white/10 py-1.5 last:border-0 md:gap-10 md:py-2" :style="{ '--k': k }">
+                <span class="relative font-display text-[2.1rem] leading-none font-semibold md:text-6xl">
+                  <span class="chrome-shadow" aria-hidden="true">{{ b.name }}</span>
+                  <span class="chrome-text">{{ b.name }}</span>
+                </span>
+                <span class="text-[11px] font-medium tracking-[0.24em] whitespace-nowrap text-muted uppercase md:text-xs"><span class="chrome-num text-lg md:text-2xl">{{ b.names.length }}</span> branches</span>
+              </li>
+            </ul>
           </div>
         </div>
 
@@ -458,8 +465,8 @@ const sparks = Array.from({ length: 14 }, (_, i) => {
             :cx="hub.x" :cy="hub.y" r="10" fill="none" stroke="#FFFFFF" stroke-width="1.5"
           />
           <!-- finale: once every group has landed, Manila flares and a wide ring sweeps out over the islands -->
-          <circle class="seg manila-flare" style="--a:0.88;--d:0.12" :cx="hub.x" :cy="hub.y" r="16" fill="none" stroke="#FFFFFF" stroke-width="2" />
-          <circle class="seg" style="--a:0.86;--d:0.06" :cx="hub.x" :cy="hub.y" r="54" fill="#9DB6F0" filter="url(#glow)" :style="'opacity:calc(var(--t) * 0.55)'" />
+          <circle class="seg manila-flare" style="--a:0.76;--d:0.14" :cx="hub.x" :cy="hub.y" r="16" fill="none" stroke="#FFFFFF" stroke-width="2" />
+          <circle class="seg" style="--a:0.74;--d:0.06" :cx="hub.x" :cy="hub.y" r="54" fill="#9DB6F0" filter="url(#glow)" :style="'opacity:calc(var(--t) * 0.55)'" />
           <g class="seg" style="--a:0.02;--d:0.06">
             <circle :cx="hub.x" :cy="hub.y" r="24" fill="#7F9CE0" filter="url(#glow)" :style="'opacity:calc(var(--t) * 0.7)'" />
             <circle :cx="hub.x" :cy="hub.y" r="6" fill="#FFFFFF" :style="'opacity:var(--t)'" />
