@@ -270,6 +270,22 @@ body {
 .branch-dot.is-on .halo { opacity: 0.85; animation: halo 1.6s ease-in-out infinite; }
 @keyframes halo { 0%, 100% { opacity: 0.85; } 50% { opacity: 0.45; } }
 /* a ring pulses out of Manila as each group lands */
+/* finale flare: one wide ring sweeping out of Manila over the islands */
+.manila-flare { transform-box: fill-box; transform-origin: center; transform: scale(calc(1 + var(--t) * 14)); opacity: calc(min(var(--t) * 10, 1) * (1 - var(--t)) * 0.9); }
+/* branch chips: dim glass until the branch's line lands, then lit silver with a glowing dot */
+.branch-chip {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.3rem 0.7rem; border-radius: 9999px;
+  font-size: 12px; font-weight: 500; letter-spacing: 0.04em;
+  color: rgb(195 205 224 / 0.55);
+  border: 1px solid rgb(255 255 255 / 0.08);
+  background: rgb(255 255 255 / 0.02);
+  transition: color 0.4s ease, border-color 0.4s ease, background-color 0.4s ease, box-shadow 0.4s ease;
+}
+.branch-chip::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: rgb(255 255 255 / 0.25); transition: background-color 0.4s ease, box-shadow 0.4s ease; }
+.branch-chip.is-lit { color: #fff; border-color: rgb(255 255 255 / 0.4); background: rgb(80 120 220 / 0.18); box-shadow: 0 0 18px -6px rgb(150 185 255 / 0.8); }
+.branch-chip.is-lit::before { background: #fff; box-shadow: 0 0 6px 1px rgb(170 200 255 / 0.9); }
+@media (max-width: 767px) { .branch-chip { padding: 0.22rem 0.55rem; font-size: 11px; gap: 0.3rem; } }
 .manila-ring { transform-box: fill-box; transform-origin: center; transform: scale(calc(1 + var(--t) * 4)); opacity: calc(min(var(--t) * 12, 1) * (1 - var(--t))); }
 /* the group title swaps per beat */
 /* map beats: all stacked in one cell; the current one rises in out of a blur after the last has left */

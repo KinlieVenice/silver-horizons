@@ -60,6 +60,9 @@ const beats = groups.map((g) => {
   const mine = routes.filter((r) => r.group === g.id)
   return { ...g, names: mine.map((r) => r.name), land: Math.max(...mine.map((r) => r.a)) + LINE - 0.01 }
 })
+// a branch's chip lights up as its line lands in Manila
+const landAt = Object.fromEntries(routes.map((r) => [r.name, r.a + LINE]))
+const lit = (name) => (progress.converge ?? 0) >= landAt[name]
 const beat = computed(() => {
   const p = progress.converge ?? 0
   if (p >= 0.88) return 'done'
@@ -376,29 +379,51 @@ const sparks = Array.from({ length: 14 }, (_, i) => {
 
     <!-- 3 · From every branch, one destination -->
     <section data-scene="converge" data-play="6500" class="relative h-[200svh] bg-navy-950">
-      <div class="sticky top-0 grid h-svh overflow-hidden px-6 py-[10svh] md:grid-cols-2 md:items-center md:gap-10 md:px-[8vw]">
+      <!-- a night chart: star dust behind; text and map centred together so no dead gap opens between them.
+           Phones: the map takes whatever height the text leaves (up to 46svh), so it never runs off small screens -->
+      <div class="sticky top-0 isolate grid h-svh grid-rows-[auto_minmax(0,1fr)] overflow-hidden px-6 py-[8svh] md:grid-rows-1 md:py-[10svh] md:grid-cols-[minmax(0,34rem)_auto] md:items-center md:justify-center md:gap-16 md:px-[6vw]">
+        <div class="star-dust absolute inset-0 -z-10 opacity-70" aria-hidden="true" />
         <div class="relative z-10 text-center md:text-left">
           <p class="seg fade-up eyebrow" style="--a:0;--d:0.15">Silver Horizons · Manila</p>
-          <h2 class="seg fade-up silver-text mt-3 font-display text-4xl leading-[1.05] font-semibold md:text-6xl" style="--a:0.05;--d:0.2">From {{ branches.length }} branches,<br />one destination.</h2>
+          <h2 class="seg fade-up silver-text mt-3 font-display text-[2rem] leading-[1.05] font-semibold sm:text-4xl md:text-6xl" style="--a:0.05;--d:0.2">From <span class="chrome-num inline-block align-[-0.04em] text-[1.3em] leading-none">{{ branches.length }}</span> branches,<br />one destination.</h2>
           <!-- the beat in hand: which island group is landing, then (after the last) the welcome line -->
           <!-- every beat and the closing line share one grid cell (only the current one shows), so the box is
                always as tall as the tallest and the map below never shifts between groups -->
-          <div class="mt-5 grid md:mt-8" aria-live="off">
+          <div class="mt-4 grid md:mt-8" aria-live="off">
             <div v-for="(b, i) in beats" :key="b.id" class="beat-item [grid-area:1/1]" :class="beat === b.id && 'is-on'" :aria-hidden="beat !== b.id">
               <p class="text-xs font-medium tracking-[0.3em] text-muted uppercase">{{ i + 1 }} / {{ beats.length }} · {{ b.names.length }} branches</p>
-              <p class="silver-text mt-1 font-display text-5xl leading-none font-semibold md:text-7xl">{{ b.name }}</p>
-              <p class="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-ink/80 md:mx-0">{{ b.names.join(' · ') }}</p>
+              <p class="silver-text mt-1 font-display text-4xl leading-none font-semibold sm:text-5xl md:text-7xl">{{ b.name }}</p>
+              <!-- each branch a glass chip that lights up as its line lands -->
+              <ul class="mx-auto mt-3 flex max-w-md flex-wrap justify-center gap-1 sm:gap-1.5 md:mx-0 md:mt-4 md:justify-start">
+                <li v-for="n in b.names" :key="n" class="branch-chip" :class="lit(n) && 'is-lit'">{{ n }}</li>
+              </ul>
             </div>
-            <p class="beat-item mx-auto max-w-md text-[15px] text-ink/85 [grid-area:1/1] md:mx-0 md:text-lg" :class="beat === 'done' && 'is-on'" :aria-hidden="beat !== 'done'">
-              Throughout the year, we’ve celebrated the people, partnerships, challenges, and milestones that brought FELCO to 25. Now we come together in Manila.
-            </p>
+            <div class="beat-item mx-auto max-w-md [grid-area:1/1] md:mx-0" :class="beat === 'done' && 'is-on'" :aria-hidden="beat !== 'done'">
+              <p class="text-[15px] leading-relaxed text-ink/85 md:text-lg">Throughout the year, we’ve celebrated the people, partnerships, challenges, and milestones that brought FELCO to 25.</p>
+              <p class="mt-4 font-display text-3xl leading-tight font-semibold text-white md:text-5xl">
+                Now, together in
+                <span class="relative inline-block">
+                  <span class="chrome-shadow" aria-hidden="true">Manila.</span>
+                  <span class="chrome-text">Manila.</span>
+                </span>
+              </p>
+            </div>
           </div>
         </div>
 
-        <svg :viewBox="`0 0 ${phMap.width} ${phMap.height}`" class="mx-auto h-[46svh] w-auto overflow-visible md:h-[78svh]" aria-hidden="true">
+        <svg :viewBox="`0 0 ${phMap.width} ${phMap.height}`" class="mx-auto mt-4 h-full max-h-[46svh] w-auto overflow-visible md:mt-0 md:h-[84svh] md:max-h-none" aria-hidden="true">
           <defs>
             <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4" /></filter>
+            <radialGradient id="sea-glow"><stop offset="0" stop-color="#3D63C9" stop-opacity="0.42" /><stop offset="1" stop-color="#3D63C9" stop-opacity="0" /></radialGradient>
+            <radialGradient id="grid-fade"><stop offset="0.25" stop-color="#fff" /><stop offset="1" stop-color="#000" /></radialGradient>
+            <mask id="grid-mask"><rect x="-140" y="-60" :width="phMap.width + 280" :height="phMap.height + 120" fill="url(#grid-fade)" /></mask>
+            <pattern id="chart-grid" width="46" height="46" patternUnits="userSpaceOnUse"><path d="M46 0H0V46" fill="none" stroke="#9DB6F0" stroke-opacity="0.2" stroke-width="0.6" /></pattern>
           </defs>
+          <!-- night chart: a pool of blue light over the sea and a faint latitude/longitude grid, fading at the edges -->
+          <g class="seg" style="--a:0;--d:0.14;opacity:var(--t)">
+            <ellipse :cx="phMap.width / 2" :cy="phMap.height / 2" :rx="phMap.width * 0.8" :ry="phMap.height * 0.62" fill="url(#sea-glow)" />
+            <rect x="-140" y="-60" :width="phMap.width + 280" :height="phMap.height + 120" fill="url(#chart-grid)" mask="url(#grid-mask)" />
+          </g>
           <!-- Philippines: coastline draws itself, then fills with a faint silver -->
           <path class="seg" style="--a:0.12;--d:0.2;opacity:var(--t)" :d="phMap.d" fill="#B8C8F0" fill-opacity="0.13" fill-rule="evenodd" />
           <!-- coastline revealed north → south by a sweeping line of light (no stroke-dash: Chrome restarts
@@ -437,6 +462,9 @@ const sparks = Array.from({ length: 14 }, (_, i) => {
             :style="`--a:${b.land};--d:0.07`"
             :cx="hub.x" :cy="hub.y" r="10" fill="none" stroke="#FFFFFF" stroke-width="1.5"
           />
+          <!-- finale: once every group has landed, Manila flares and a wide ring sweeps out over the islands -->
+          <circle class="seg manila-flare" style="--a:0.88;--d:0.12" :cx="hub.x" :cy="hub.y" r="16" fill="none" stroke="#FFFFFF" stroke-width="2" />
+          <circle class="seg" style="--a:0.86;--d:0.06" :cx="hub.x" :cy="hub.y" r="54" fill="#9DB6F0" filter="url(#glow)" :style="'opacity:calc(var(--t) * 0.55)'" />
           <g class="seg" style="--a:0.16;--d:0.1">
             <circle :cx="hub.x" :cy="hub.y" r="24" fill="#7F9CE0" filter="url(#glow)" :style="'opacity:calc(var(--t) * 0.7)'" />
             <circle :cx="hub.x" :cy="hub.y" r="6" fill="#FFFFFF" :style="'opacity:var(--t)'" />
