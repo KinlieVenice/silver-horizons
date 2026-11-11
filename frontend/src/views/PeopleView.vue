@@ -19,12 +19,6 @@ const glints = [
   { x: 95, y: 12, s: 20, d: 0.5 },
 ]
 
-const intro = {
-  attending: 'Everyone registered for the same events as you. Search by name or branch.',
-  hosts: 'Your hosts, guides and the people taking the stage to speak.',
-  performers: 'Who’s performing, and when in the programme to catch them.',
-  committee: 'The team behind each event. Reach out to them with any question.',
-}
 // only tabs with someone in at least one of your events
 const tabs = [
   { id: 'attending', label: 'Who’s attending', short: 'Attending', sub: 'Who’s going with you' },
@@ -166,11 +160,10 @@ const initials = (name) => { const w = name.split(' '); return w[0][0] + (w.leng
     <div ref="top" class="min-w-0" :style="{ '--dir': dir }">
     <Transition name="day" mode="out-in" :duration="{ enter: 1100, leave: 220 }">
       <div :key="tab">
-        <p style="--i: 0" class="cascade max-w-xl text-[15px] leading-relaxed text-ink/80">{{ intro[tab] }}</p>
 
         <!-- the events with entries in this tab (only one: just its name). Sticky on a frosted strip just under
              the tab capsule (phones, tablets) or the nav (desktop), so the list scrolls beneath it -->
-        <div v-if="tabEvents.length > 1" style="--i: 1" class="cascade event-strip sticky top-[4.5rem] z-20 -mx-5 mt-6 md:top-[8.25rem] md:-mx-3 lg:top-[4.5rem]">
+        <div v-if="tabEvents.length > 1" style="--i: 1" class="cascade event-strip sticky top-[4.5rem] z-20 -mx-5 md:top-[8.25rem] md:-mx-3 lg:top-[4.5rem]">
         <div class="flex gap-2 overflow-x-auto px-5 py-2 [scrollbar-width:none] md:flex-wrap md:px-3 [&::-webkit-scrollbar]:hidden" role="group" aria-label="Event">
           <button
             v-for="e in tabEvents"

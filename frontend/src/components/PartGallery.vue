@@ -42,7 +42,7 @@ const onClose = () => lenis?.start()
       <li v-for="(p, i) in images" :key="p.title + i" class="w-full shrink-0 snap-start">
         <button
           type="button"
-          class="photo-frame group relative block aspect-[16/9] w-full overflow-hidden rounded-xl text-left sm:aspect-[21/8]"
+          class="photo-frame group relative block aspect-[4/3] w-full overflow-hidden rounded-xl text-left sm:aspect-[21/8]"
           :aria-label="`${p.title}: ${p.facts?.length ? 'open facts' : 'view photo'}`"
           @click="open(i)"
         >
@@ -54,8 +54,8 @@ const onClose = () => lenis?.start()
             <svg viewBox="0 0 24 24" class="size-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 11v5M12 7.5v.5" /></svg>
             Facts
           </span>
-          <span class="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/85 via-black/45 to-transparent p-3 pt-14 md:p-4 md:pt-16">
-            <span class="block font-display text-lg leading-tight font-semibold text-white md:text-2xl">{{ p.title }}</span>
+          <span class="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/85 via-black/40 to-transparent p-3 pt-10 md:p-4 md:pt-16">
+            <span class="block font-display text-[17px] leading-tight font-semibold text-white md:text-2xl">{{ p.title }}</span>
             <span v-if="p.place" class="mt-0.5 block text-[10.5px] font-medium tracking-[0.18em] text-white/75 uppercase">{{ p.place }}</span>
           </span>
         </button>
