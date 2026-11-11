@@ -16,6 +16,8 @@ const props = defineProps({
   compact: Boolean,
 })
 const time = computed(() => (props.stop.time ? formatTime(props.stop.time).split(' ') : ['TBA', ''])) // ['9:00', 'AM']
+// the database gives the label itself ('Assembly', 'Raffle'); older content used short keys ('bus' → 'Transfer')
+const kind = computed(() => KIND[props.stop.type] ?? props.stop.type)
 const shortTime = computed(() => (props.stop.time ? formatTime(props.stop.time) : 'Time TBA'))
 </script>
 
@@ -39,8 +41,8 @@ const shortTime = computed(() => (props.stop.time ? formatTime(props.stop.time) 
     <article v-if="compact" class="stop-card flex flex-wrap items-baseline gap-x-4 gap-y-1 rounded-xl px-4 py-3 md:px-5">
       <p class="flex w-full items-center gap-2 text-[11px] font-medium tracking-[0.18em] text-[#AEB9CF] uppercase sm:w-28 sm:shrink-0">
         <span class="text-white md:hidden">{{ shortTime }}</span>
-        <span v-if="KIND[stop.type]" class="md:hidden" aria-hidden="true">·</span>
-        {{ KIND[stop.type] }}
+        <span v-if="kind" class="md:hidden" aria-hidden="true">·</span>
+        {{ kind }}
       </p>
       <h3 class="text-[17px] leading-snug font-semibold text-white">{{ stop.title }}</h3>
       <span v-if="status === 'next'" class="rounded-full bg-white px-2 py-0.5 text-[11px] font-medium tracking-[0.12em] text-navy-950 uppercase">Up next</span>
@@ -52,7 +54,7 @@ const shortTime = computed(() => (props.stop.time ? formatTime(props.stop.time) 
         <p class="flex flex-wrap items-center gap-2 text-xs font-medium tracking-[0.18em] text-[#AEB9CF] uppercase">
           <span class="text-white md:hidden">{{ shortTime }}</span>
           <span class="md:hidden" aria-hidden="true">·</span>
-          {{ KIND[stop.type] }}
+          {{ kind }}
           <span v-if="status === 'next'" class="rounded-full bg-white px-2 py-0.5 tracking-[0.12em] text-navy-950">Up next</span>
         </p>
         <h3 class="mt-2 text-xl leading-snug font-semibold tracking-[-0.01em] text-white md:text-[1.35rem]">{{ stop.title }}</h3>
