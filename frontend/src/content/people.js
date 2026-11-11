@@ -56,12 +56,12 @@ export const events = [
   {
     id: 'royu', title: 'Royu Tour', when: 'Thu, Dec 3',
     attending: night.filter((_, i) => i % 3 === 0),
-    hosts: [{ name: 'Marco Valdez', group: 'Guides', role: 'Tour guide', note: 'Plant tour and showroom' }],
+    hosts: [{ name: 'Marco Valdez', group: 'Guides', role: 'Tour guide', note: 'Orientation and plant tour' }],
   },
   {
-    id: 'museum', title: 'Manila Tour: National Museum', when: 'Fri, Dec 4',
+    id: 'museum', title: 'FELCO Explores Manila: National Museum', when: 'Fri, Dec 4',
     attending: night.filter((_, i) => i % 2 === 1),
-    hosts: [{ name: 'Clara Pascual', group: 'Guides', role: 'Museum guide', note: 'Fine Arts, Anthropology, Natural History' }],
+    hosts: [{ name: 'Clara Pascual', group: 'Guides', role: 'Museum guide', note: 'Natural History, then Fine Arts' }],
   },
   {
     id: 'zen', title: 'Zen Office Tour', when: 'Fri, Dec 4',

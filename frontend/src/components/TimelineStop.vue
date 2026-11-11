@@ -1,7 +1,7 @@
 <!-- One stop on the silver line (Itinerary): chrome time on the left (desktop; "TBA" when the stop has no
      time yet), a sparkle on a glowing line, a glass card with a small-caps kind, title, place, note and an
      optional photo filling the card's right side.
-     compact: a slim row (kind + title), for the night's programme.
+     compact: a slim row (kind + title, and a short note under it if the stop has one), for parts' programmes.
      status: '' | 'past' (dimmed) | 'next' (card glows, sparkle twinkles). -->
 <script setup>
 import { computed } from 'vue'
@@ -44,6 +44,7 @@ const shortTime = computed(() => (props.stop.time ? formatTime(props.stop.time) 
       </p>
       <h3 class="text-[17px] leading-snug font-semibold text-white">{{ stop.title }}</h3>
       <span v-if="status === 'next'" class="rounded-full bg-white px-2 py-0.5 text-[11px] font-medium tracking-[0.12em] text-navy-950 uppercase">Up next</span>
+      <p v-if="stop.note" class="w-full text-[14px] leading-snug text-ink/70 sm:pl-32">{{ stop.note }}</p>
     </article>
 
     <article v-else class="stop-card grid overflow-hidden rounded-2xl" :class="stop.image && 'md:grid-cols-[1fr_auto]'">
