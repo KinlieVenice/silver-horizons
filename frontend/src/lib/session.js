@@ -30,7 +30,11 @@ const withPhotos = (v) => {
   if (!v || typeof v !== 'object') return v
   const o = {}
   for (const [k, x] of Object.entries(v)) {
-    o[k] = k === 'image' ? photos[x] : k === 'images' ? x.map((n) => photos[n]) : withPhotos(x)
+    // `image`: a photo name. `images`: either photo names (Home's film strip) or slides ({ image, title, facts })
+    // from the itinerary, which are walked like any other object
+    o[k] = k === 'image' ? (x ? photos[x] : null)
+      : k === 'images' && Array.isArray(x) && x.every((n) => typeof n === 'string') ? x.map((n) => photos[n])
+      : withPhotos(x)
   }
   return o
 }
