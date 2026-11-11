@@ -79,8 +79,8 @@ export const itinerary = [
       {
         title: 'Registration & Pre-event', range: '2:00 – 4:00 PM',
         stops: [
-          { time: '14:00', type: 'gather', title: 'Registration' },
-          { time: '14:00', type: 'gather', title: 'Pre-event activities' },
+          // one 2-hour block in the organisers' schedule: no separate times for the two
+          { time: '14:00', type: 'gather', title: 'Registration and pre-event activities' },
         ],
       },
       {
