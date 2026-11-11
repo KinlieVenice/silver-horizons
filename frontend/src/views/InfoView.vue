@@ -20,7 +20,7 @@ const glints = [
 </script>
 
 <template>
-  <header class="night relative isolate flex min-h-[60svh] flex-col items-center justify-center-safe overflow-hidden px-6 pt-24 pb-32 text-center md:pt-28">
+  <header class="night relative isolate flex min-h-[max(46svh,27rem)] flex-col md:min-h-[max(48svh,33rem)] items-center justify-center-safe overflow-hidden px-6 pt-16 pb-28 text-center md:pt-20 md:pb-36">
     <div class="star-dust intro-glow absolute inset-0 -z-10" aria-hidden="true" />
     <div class="hero-spot intro-glow absolute top-0 left-1/2 -z-10 h-[60svh] w-[90vw] -translate-x-1/2" aria-hidden="true" />
     <div class="hero-beam hero-beam--l intro-glow absolute -top-[10svh] left-1/2 -z-10 h-[70svh] w-[38vw]" aria-hidden="true" />

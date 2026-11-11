@@ -1,3 +1,9 @@
 # Reference skill clone (web design), not part of the project
 garden-skills/
 .claude/
+
+# secrets and local envs (backend lives on feat/google-login)
+.env
+.venv/
+__pycache__/
+.pytest_cache/

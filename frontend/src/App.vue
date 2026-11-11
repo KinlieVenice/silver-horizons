@@ -2,9 +2,7 @@
 import AppNav from './components/AppNav.vue'
 import logo from './assets/brand/silver-horizons-logo.webp'
 import { contact } from './content/info.js'
-import { itinerary } from './content/itinerary.js'
-
-const credits = itinerary.map((d) => d.credit).filter(Boolean)
+import { credits } from './content/itinerary.js'
 </script>
 
 <template>

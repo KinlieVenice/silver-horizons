@@ -15,7 +15,6 @@ import { lenis } from '../lib/smoothScroll.js'
 const links = [
   { to: '/', label: 'Home' },
   { to: '/itinerary', label: 'Itinerary' },
-  // { to: '/gala', label: 'Gala' },  // hidden for now
   { to: '/info', label: 'Info' },
 ]
 

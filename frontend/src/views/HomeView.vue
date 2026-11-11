@@ -9,10 +9,9 @@ import Ribbon from '../components/Ribbon.vue'
 import Sparkle from '../components/Sparkle.vue'
 import HorizonGlow from '../components/HorizonGlow.vue'
 import { event } from '../content/event.js'
-import { itinerary } from '../content/itinerary.js'
+import { journey } from '../content/itinerary.js'
 import { phMap } from '../content/phMap.js'
 import { branches, groups, hub } from '../content/branches.js'
-import { formatDay } from '../lib/schedule.js'
 import { useScenes, seg } from '../lib/useScenes.js'
 import { useAutoplay } from '../lib/useAutoplay.js'
 import { scrollLock, settle } from '../lib/smoothScroll.js'
@@ -67,7 +66,6 @@ const beat = computed(() => {
   return groups.find((g) => p >= GROUP_WIN[g.id][0] && p < GROUP_WIN[g.id][1])?.id ?? ''
 })
 
-const dayWords = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven']
 
 // Journey: a sideways slider; the bar under it follows how far along it is
 const strip = ref()
@@ -454,7 +452,7 @@ const sparks = Array.from({ length: 14 }, (_, i) => {
       <div class="mb-6 flex items-end justify-between gap-6 px-6 md:mb-10 md:px-[8vw]">
         <div>
           <p class="eyebrow">The Journey</p>
-          <h2 id="journey-h" class="silver-text mt-2 font-display text-4xl font-semibold md:text-6xl">{{ dayWords[itinerary.length] ?? itinerary.length }} days in Manila</h2>
+          <h2 id="journey-h" class="silver-text mt-2 font-display text-4xl font-semibold md:text-6xl">Three days, one celebration</h2>
         </div>
         <div class="hidden gap-2 md:flex">
           <button
@@ -463,7 +461,7 @@ const sparks = Array.from({ length: 14 }, (_, i) => {
             type="button"
             class="grid size-11 place-items-center rounded-full border border-white/25 text-white/85 transition hover:border-white hover:bg-white/10 active:translate-y-px disabled:pointer-events-none disabled:opacity-30"
             :disabled="dir < 0 ? stripP < 0.01 : stripP > 0.99"
-            :aria-label="dir < 0 ? 'Previous day' : 'Next day'"
+            :aria-label="dir < 0 ? 'Previous' : 'Next'"
             @click="slide(dir)"
           >
             <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -488,18 +486,26 @@ const sparks = Array.from({ length: 14 }, (_, i) => {
         <div class="flex w-max items-start [--frame-h:min(52vw,21rem)]">
           <div class="w-6 shrink-0 md:w-[8vw]" aria-hidden="true" />
 
-          <article v-for="(d, i) in itinerary" :key="d.date" class="w-[80vw] max-w-[30rem] shrink-0 snap-start md:w-[32rem]">
+          <article v-for="(d, i) in journey" :key="d.title" class="w-[80vw] max-w-[30rem] shrink-0 snap-start md:w-[32rem]">
             <div class="film-cell">
-              <div class="film-window">
-                <img v-if="d.image" :src="d.image" :alt="d.title" class="absolute inset-0 size-full object-cover" loading="lazy" draggable="false" />
-                <span v-else class="absolute inset-0 grid place-items-center pb-10 text-xs text-white/45">[Photo: {{ d.title }}]</span>
+              <!-- one photo fills the frame; two split it down the middle; none = a night frame with a chrome title -->
+              <div class="film-window" :class="!d.images && 'film-night'">
+                <div v-if="d.images" class="absolute inset-0 grid grid-flow-col gap-px">
+                  <img v-for="img in d.images" :key="img" :src="img" alt="" class="size-full object-cover" loading="lazy" draggable="false" />
+                </div>
+                <div v-else class="absolute inset-0 grid place-items-center px-6 pb-4 text-center">
+                  <h3 class="relative font-display text-[clamp(2.2rem,9vw,3.6rem)] leading-none font-semibold">
+                    <span class="chrome-shadow" aria-hidden="true">{{ d.title }}</span>
+                    <span class="chrome-text">{{ d.title }}</span>
+                  </h3>
+                </div>
                 <!-- still-frame overlay: number + date up top, title along the bottom -->
                 <div class="absolute inset-x-0 top-0 flex items-start justify-between bg-linear-to-b from-black/60 to-transparent p-4 pb-10">
                   <span class="numeral font-display text-5xl leading-[0.8] font-semibold" aria-hidden="true">{{ String(i + 1).padStart(2, '0') }}</span>
-                  <span class="text-right text-[10.5px] font-medium tracking-[0.22em] text-white/80 uppercase">Day {{ i + 1 }}<br />{{ formatDay(d.date) }}</span>
+                  <span class="text-right text-[10.5px] font-medium tracking-[0.22em] text-white/80 uppercase">{{ d.when }}</span>
                 </div>
                 <div class="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/80 via-black/40 to-transparent p-4 pt-12">
-                  <h3 class="font-display text-2xl leading-tight font-semibold text-white md:text-[1.7rem]">{{ d.title }}</h3>
+                  <h3 v-if="d.images" class="font-display text-2xl leading-tight font-semibold text-white md:text-[1.7rem]">{{ d.title }}</h3>
                   <p class="mt-1 text-[10.5px] font-medium tracking-[0.22em] text-white/70 uppercase">{{ d.area }}</p>
                 </div>
               </div>
@@ -517,7 +523,7 @@ const sparks = Array.from({ length: 14 }, (_, i) => {
                   <span class="mt-3 block text-2xl transition group-hover:translate-x-1" aria-hidden="true">→</span>
                 </span>
               </RouterLink>
-              <span class="film-print" aria-hidden="true">SILVER HORIZONS &nbsp;▸ 05A</span>
+              <span class="film-print" aria-hidden="true">SILVER HORIZONS &nbsp;▸ {{ String(journey.length + 1).padStart(2, '0') }}A</span>
             </div>
           </div>
 
@@ -587,7 +593,6 @@ const sparks = Array.from({ length: 14 }, (_, i) => {
           </p>
           <Countdown :target="event.startsAt" class="finale-count seg fade-up mt-6" style="--a:0.64;--d:0.1" />
           <div class="seg fade-up mt-8 flex flex-wrap justify-center gap-2 sm:mt-9 sm:gap-3" style="--a:0.7;--d:0.1">
-            <!-- Gala hidden for now: was <RouterLink to="/gala">The Night</RouterLink> -->
             <RouterLink to="/itinerary" class="inline-flex min-h-10 items-center rounded-full bg-white px-4 text-[11px] font-medium tracking-[0.16em] sm:min-h-12 sm:px-7 sm:text-sm sm:tracking-[0.2em] text-navy-950 uppercase transition hover:-translate-y-0.5 hover:bg-ink active:translate-y-0">See the itinerary</RouterLink>
             <RouterLink to="/info" class="inline-flex min-h-10 items-center rounded-full border border-white/60 px-4 text-[11px] font-medium tracking-[0.16em] sm:min-h-12 sm:px-7 sm:text-sm sm:tracking-[0.2em] text-white uppercase transition hover:-translate-y-0.5 hover:border-white hover:bg-white/10 active:translate-y-0">Know before you go</RouterLink>
           </div>

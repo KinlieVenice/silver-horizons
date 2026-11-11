@@ -17,8 +17,6 @@ const router = createRouter({
   routes: [
     { path: '/', component: () => import('./views/HomeView.vue') },
     { path: '/itinerary', component: () => import('./views/ItineraryView.vue') },
-    // ponytail: Gala hidden for now (catch-all sends /gala home); restore this route + nav item + Home's "The Night" button
-    // { path: '/gala', component: () => import('./views/GalaView.vue') },
     { path: '/info', component: () => import('./views/InfoView.vue') },
     { path: '/:pathMatch(.*)*', redirect: '/' },
   ],
