@@ -245,10 +245,6 @@ const pick = (i) => {
                 class="cascade"
               />
             </ol>
-            <p v-if="day.closing" style="--i: 24" class="cascade mt-12 flex items-center gap-3 text-sm text-ink/75 md:ml-[9.5rem]">
-              <span class="h-px w-10 bg-linear-to-r from-transparent to-white/60" aria-hidden="true" />
-              {{ day.closing }}
-            </p>
           </article>
         </Transition>
       </div>

@@ -186,7 +186,6 @@ export const itinerary = [
         stops: [{ time: '21:20', type: 'party', title: 'DJ set and socials' }],
       },
     ],
-    closing: 'Heading home: details to follow.',
   },
 ]
 
