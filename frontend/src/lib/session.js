@@ -4,12 +4,17 @@ import museum from '../assets/photos/museum.webp'
 import binondo from '../assets/photos/binondo.webp'
 import night from '../assets/photos/night.webp'
 
-// Sign-in state and the private content (itinerary, Home's film strip, tips, FAQ, contact), which only the backend
+// Sign-in state and the private content (itinerary, Home's film strip, People, tips, FAQ, contact), which only the backend
 // serves, after a company Google sign-in. The backend keeps the OAuth tokens; the browser only holds its
 // HttpOnly session cookie, sent along with every request here.
 // VITE_API_URL: the backend's origin when it isn't the same as the site's (empty in dev: Vite proxies it).
 const API = import.meta.env.VITE_API_URL ?? ''
-const photos = { welcome, museum, binondo, night } // content.json names a photo; the site bundles the file
+// content.json names a photo ('museum', 'people/eva-dy'); the site bundles the file
+const peoplePhotos = import.meta.glob('../assets/people/*.jpg', { eager: true, import: 'default' })
+const photos = {
+  welcome, museum, binondo, night,
+  ...Object.fromEntries(Object.entries(peoplePhotos).map(([f, url]) => [`people/${f.split('/').pop().replace('.jpg', '')}`, url])),
+}
 
 // status: 'loading' | 'out' (show sign-in) | 'in' | 'error' (backend unreachable)
 // error: why the last sign-in failed, from the backend's redirect (?auth_error=domain | cancelled)
@@ -21,7 +26,7 @@ if (session.error) {
 }
 
 // filled once signed in; views read it at setup (the app only renders its pages after it has loaded)
-export const content = reactive({ itinerary: [], journey: [], credits: [], tips: [], faq: [], contact: {} })
+export const content = reactive({ itinerary: [], journey: [], credits: [], people: [], tips: [], faq: [], contact: {} })
 
 // content.json names photos ('museum'); swap each `image` / `images` name for the bundled file, wherever it sits
 const withPhotos = (v) => {

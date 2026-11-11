@@ -3,15 +3,15 @@
     {
       "date": "2026-12-03",
       "title": "Welcome to Manila",
-      "area": "Arrival · Royu Tour",
+      "area": "Explores Manila · Royu Tour",
       "pills": [
-        "Sample programme",
-        "Royu Tour 1:00 – 5:30 PM"
+        "Museum trip AM · Binondo trip PM",
+        "Royu Tour · 12:30 – 5:00 PM"
       ],
       "parts": [
         {
           "title": "Arrival in Manila",
-          "range": "Morning",
+          "range": "December 3",
           "note": "All employees in Manila by December 3.",
           "stops": [
             {
@@ -21,44 +21,150 @@
           ]
         },
         {
-          "title": "Royu Tour",
-          "tag": "You’re registered",
-          "range": "1:00 – 5:30 PM",
+          "title": "FELCO Explores Manila: National Museum",
+          "tag": "Morning slot",
+          "range": "8:00 AM – 12:45 PM",
+          "note": "One trip per person, in one slot. Once you sign in, you’ll see only yours.",
+          "options": [
+            {
+              "title": "National Museum",
+              "place": "Fine Arts & Natural History",
+              "image": "museum"
+            }
+          ],
           "stops": [
+            {
+              "time": "08:00",
+              "type": "gather",
+              "title": "Assembly at ZEN",
+              "place": "ZEN"
+            },
+            {
+              "time": "08:15",
+              "type": "bus",
+              "title": "Travel to the National Museum"
+            },
+            {
+              "time": "08:30",
+              "type": "hotel",
+              "title": "Check-in at the venue",
+              "place": "National Museum"
+            },
+            {
+              "time": "09:00",
+              "type": "tour",
+              "title": "Exploring the National Museum of Fine Arts",
+              "place": "National Museum of Fine Arts"
+            },
+            {
+              "time": "10:30",
+              "type": "hotel",
+              "title": "Museum transfer and check-in",
+              "place": "National Museum of Natural History"
+            },
+            {
+              "time": "11:00",
+              "type": "tour",
+              "title": "Exploring the National Museum of Natural History",
+              "place": "National Museum of Natural History"
+            },
+            {
+              "time": "12:30",
+              "type": "bus",
+              "title": "Travel back to ZEN"
+            }
+          ]
+        },
+        {
+          "title": "FELCO Explores Manila: Binondo",
+          "tag": "Afternoon slot",
+          "range": "12:45 – 5:00 PM",
+          "options": [
+            {
+              "title": "Binondo",
+              "place": "Plaza Lorenzo Ruiz and Binondo",
+              "image": "binondo"
+            }
+          ],
+          "stops": [
+            {
+              "time": "12:45",
+              "type": "gather",
+              "title": "Assembly at ZEN",
+              "place": "ZEN"
+            },
             {
               "time": "13:00",
               "type": "bus",
-              "title": "Assembly at the hotel lobby",
-              "place": "Hotel lobby"
+              "title": "Travel to Plaza Lorenzo Ruiz"
             },
             {
-              "time": "14:00",
-              "type": "gather",
-              "title": "Welcome and safety briefing",
+              "time": "13:15",
+              "type": "tour",
+              "title": "Exploring Binondo",
+              "place": "Binondo, Manila"
+            },
+            {
+              "time": "16:45",
+              "type": "bus",
+              "title": "Travel back to ZEN"
+            }
+          ]
+        },
+        {
+          "title": "Royu Tour",
+          "tag": "You’re registered · Thursday afternoon run",
+          "range": "12:30 – 5:00 PM",
+          "note": "Two runs a day on December 3 and 4, 150 people each.",
+          "stops": [
+            {
+              "time": "12:30",
+              "type": "flight",
+              "title": "Arrival at Royu",
               "place": "Royu"
+            },
+            {
+              "time": "13:00",
+              "type": "gather",
+              "title": "Registration",
+              "place": "Royu"
+            },
+            {
+              "time": "13:15",
+              "type": "mic",
+              "title": "Orientation",
+              "place": "Royu",
+              "note": "History, house rules, and drafting into teams."
+            },
+            {
+              "time": "13:45",
+              "type": "tour",
+              "title": "Plant tour: first station",
+              "place": "Royu",
+              "note": "Each team rotates through Wires, Fab and Plastics."
             },
             {
               "time": "14:30",
               "type": "tour",
-              "title": "Plant tour: the production lines",
+              "title": "Plant tour: second station",
               "place": "Royu"
             },
             {
-              "time": "16:00",
+              "time": "15:15",
               "type": "tour",
-              "title": "Product showroom",
+              "title": "Plant tour: third station",
               "place": "Royu"
             },
             {
-              "time": "16:45",
+              "time": "15:45",
               "type": "meal",
-              "title": "Merienda with the Royu team",
+              "title": "Back to the assembly area; lunch distribution",
               "place": "Royu"
             },
             {
-              "time": "17:30",
+              "time": "16:30",
               "type": "bus",
-              "title": "Bus back to the hotel"
+              "title": "Departure"
             }
           ]
         }
@@ -66,87 +172,129 @@
     },
     {
       "date": "2026-12-04",
-      "title": "The Manila Experience",
-      "area": "Manila Tour · Zen Office",
+      "title": "FELCO Explores Manila",
+      "area": "Explores Manila · Zen Office",
       "pills": [
-        "Sample programme",
-        "8:30 AM – 5:30 PM"
+        "Binondo trip AM · Museum trip PM",
+        "Zen Office Tour: sample programme"
       ],
       "parts": [
         {
-          "title": "Manila Tour",
-          "tag": "Your assigned tour",
-          "range": "8:30 AM – 3:00 PM",
+          "title": "FELCO Explores Manila: Binondo",
+          "tag": "Morning slot",
+          "range": "7:45 AM – 12:00 PM",
+          "note": "One trip per person, in one slot. Once you sign in, you’ll see only yours.",
+          "options": [
+            {
+              "title": "Binondo",
+              "place": "Plaza Lorenzo Ruiz and Binondo",
+              "image": "binondo"
+            }
+          ],
+          "stops": [
+            {
+              "time": "07:45",
+              "type": "gather",
+              "title": "Assembly at ZEN",
+              "place": "ZEN"
+            },
+            {
+              "time": "08:00",
+              "type": "bus",
+              "title": "Travel to Plaza Lorenzo Ruiz"
+            },
+            {
+              "time": "08:15",
+              "type": "tour",
+              "title": "Exploring Binondo",
+              "place": "Binondo, Manila"
+            },
+            {
+              "time": "11:45",
+              "type": "bus",
+              "title": "Travel back to ZEN"
+            }
+          ]
+        },
+        {
+          "title": "FELCO Explores Manila: National Museum",
+          "tag": "Afternoon slot",
+          "range": "12:00 – 4:45 PM",
           "options": [
             {
               "title": "National Museum",
-              "place": "Ermita, Manila",
+              "place": "Fine Arts & Natural History",
               "image": "museum"
             }
           ],
           "stops": [
             {
-              "time": "08:30",
+              "time": "12:00",
+              "type": "gather",
+              "title": "Assembly at ZEN",
+              "place": "ZEN"
+            },
+            {
+              "time": "12:15",
               "type": "bus",
-              "title": "Assembly at the hotel lobby",
-              "place": "Hotel lobby"
-            },
-            {
-              "time": "09:30",
-              "type": "tour",
-              "title": "Fine Arts: Luna’s Spoliarium",
-              "place": "National Museum of Fine Arts"
-            },
-            {
-              "time": "11:00",
-              "type": "tour",
-              "title": "Anthropology: the Philippines before Spain",
-              "place": "National Museum of Anthropology"
+              "title": "Travel to the National Museum"
             },
             {
               "time": "12:30",
-              "type": "meal",
-              "title": "Lunch",
-              "place": "Ermita"
+              "type": "hotel",
+              "title": "Check-in at the venue",
+              "place": "National Museum"
             },
             {
-              "time": "13:30",
+              "time": "13:00",
               "type": "tour",
-              "title": "Natural History: the Tree of Life atrium",
+              "title": "Exploring the National Museum of Natural History",
               "place": "National Museum of Natural History"
             },
             {
+              "time": "14:30",
+              "type": "hotel",
+              "title": "Museum transfer and check-in",
+              "place": "National Museum of Fine Arts"
+            },
+            {
               "time": "15:00",
+              "type": "tour",
+              "title": "Exploring the National Museum of Fine Arts",
+              "place": "National Museum of Fine Arts"
+            },
+            {
+              "time": "16:30",
               "type": "bus",
-              "title": "Bus back to the hotel"
+              "title": "Travel back to ZEN"
             }
           ]
         },
         {
           "title": "Zen Office Tour",
           "tag": "Open to all",
-          "range": "4:00 – 5:30 PM · 11th floor",
+          "range": "Sample · 5:00 – 6:30 PM · 11th floor",
           "stops": [
             {
-              "time": "16:00",
+              "time": "17:00",
               "type": "gather",
               "title": "Welcome on the 11th floor",
               "place": "Zen Office, 11th floor"
             },
             {
-              "time": "16:15",
+              "time": "17:15",
               "type": "tour",
               "title": "Office walkthrough",
               "place": "Zen Office, 11th floor"
             },
             {
-              "time": "16:45",
+              "time": "17:45",
               "type": "mic",
               "title": "Meet the teams",
               "place": "Zen Office, 11th floor"
             },
             {
-              "time": "17:15",
+              "time": "18:15",
               "type": "party",
               "title": "Merienda and photos",
               "place": "Zen Office, 11th floor"
@@ -315,8 +463,7 @@
             }
           ]
         }
-      ],
-      "closing": "Heading home: details to follow."
+      ]
     }
   ],
   "tips": [
@@ -371,16 +518,16 @@
       ]
     },
     {
-      "when": "Dec 3",
+      "when": "Dec 3–4",
       "title": "Royu Tour",
       "area": "Registered participants",
-      "blurb": "For those who registered. Details to follow."
+      "blurb": "A plant tour for those who registered: two runs a day, December 3 and 4."
     },
     {
-      "when": "Dec 4",
-      "title": "Manila Tour",
+      "when": "Dec 3–4",
+      "title": "FELCO Explores Manila",
       "area": "Museum or Binondo",
-      "blurb": "The National Museum or Binondo, Manila’s Chinatown: one per person, assigned.",
+      "blurb": "The National Museum or Binondo, morning or afternoon: one trip per person.",
       "images": [
         "museum",
         "binondo"
@@ -407,5 +554,1316 @@
     "National Museum of the Philippines — Judgefloro, CC0",
     "Chinatown Arch, Manila — Richmond Chi, CC BY-SA 4.0",
     "Manila Bay at night — Ralff Nestor Nacor, CC BY-SA 4.0"
+  ],
+  "exploreManila": {
+    "museumThu": {
+      "date": "2026-12-03",
+      "slot": "Thursday morning",
+      "range": "8:00 AM – 12:45 PM",
+      "stops": [
+        {
+          "time": "08:00",
+          "type": "gather",
+          "title": "Assembly at ZEN",
+          "place": "ZEN"
+        },
+        {
+          "time": "08:15",
+          "type": "bus",
+          "title": "Travel to the National Museum"
+        },
+        {
+          "time": "08:30",
+          "type": "hotel",
+          "title": "Check-in at the venue",
+          "place": "National Museum"
+        },
+        {
+          "time": "09:00",
+          "type": "tour",
+          "title": "Exploring the National Museum of Fine Arts",
+          "place": "National Museum of Fine Arts"
+        },
+        {
+          "time": "10:30",
+          "type": "hotel",
+          "title": "Museum transfer and check-in",
+          "place": "National Museum of Natural History"
+        },
+        {
+          "time": "11:00",
+          "type": "tour",
+          "title": "Exploring the National Museum of Natural History",
+          "place": "National Museum of Natural History"
+        },
+        {
+          "time": "12:30",
+          "type": "bus",
+          "title": "Travel back to ZEN"
+        }
+      ]
+    },
+    "museumFri": {
+      "date": "2026-12-04",
+      "slot": "Friday afternoon",
+      "range": "12:00 – 4:45 PM",
+      "stops": [
+        {
+          "time": "12:00",
+          "type": "gather",
+          "title": "Assembly at ZEN",
+          "place": "ZEN"
+        },
+        {
+          "time": "12:15",
+          "type": "bus",
+          "title": "Travel to the National Museum"
+        },
+        {
+          "time": "12:30",
+          "type": "hotel",
+          "title": "Check-in at the venue",
+          "place": "National Museum"
+        },
+        {
+          "time": "13:00",
+          "type": "tour",
+          "title": "Exploring the National Museum of Natural History",
+          "place": "National Museum of Natural History"
+        },
+        {
+          "time": "14:30",
+          "type": "hotel",
+          "title": "Museum transfer and check-in",
+          "place": "National Museum of Fine Arts"
+        },
+        {
+          "time": "15:00",
+          "type": "tour",
+          "title": "Exploring the National Museum of Fine Arts",
+          "place": "National Museum of Fine Arts"
+        },
+        {
+          "time": "16:30",
+          "type": "bus",
+          "title": "Travel back to ZEN"
+        }
+      ]
+    },
+    "binondoThu": {
+      "date": "2026-12-03",
+      "slot": "Thursday afternoon",
+      "range": "12:45 – 5:00 PM",
+      "stops": [
+        {
+          "time": "12:45",
+          "type": "gather",
+          "title": "Assembly at ZEN",
+          "place": "ZEN"
+        },
+        {
+          "time": "13:00",
+          "type": "bus",
+          "title": "Travel to Plaza Lorenzo Ruiz"
+        },
+        {
+          "time": "13:15",
+          "type": "tour",
+          "title": "Exploring Binondo",
+          "place": "Binondo, Manila"
+        },
+        {
+          "time": "16:45",
+          "type": "bus",
+          "title": "Travel back to ZEN"
+        }
+      ]
+    },
+    "binondoFri": {
+      "date": "2026-12-04",
+      "slot": "Friday morning",
+      "range": "7:45 AM – 12:00 PM",
+      "stops": [
+        {
+          "time": "07:45",
+          "type": "gather",
+          "title": "Assembly at ZEN",
+          "place": "ZEN"
+        },
+        {
+          "time": "08:00",
+          "type": "bus",
+          "title": "Travel to Plaza Lorenzo Ruiz"
+        },
+        {
+          "time": "08:15",
+          "type": "tour",
+          "title": "Exploring Binondo",
+          "place": "Binondo, Manila"
+        },
+        {
+          "time": "11:45",
+          "type": "bus",
+          "title": "Travel back to ZEN"
+        }
+      ]
+    }
+  },
+  "royuTour": {
+    "thuAM": {
+      "date": "2026-12-03",
+      "slot": "Thursday morning",
+      "range": "8:00 AM – 12:00 PM",
+      "stops": [
+        {
+          "time": "08:00",
+          "type": "flight",
+          "title": "Arrival at Royu",
+          "place": "Royu"
+        },
+        {
+          "time": "08:30",
+          "type": "gather",
+          "title": "Registration",
+          "place": "Royu"
+        },
+        {
+          "time": "08:45",
+          "type": "mic",
+          "title": "Orientation",
+          "place": "Royu",
+          "note": "History, house rules, and drafting into teams."
+        },
+        {
+          "time": "09:00",
+          "type": "tour",
+          "title": "Plant tour: first station",
+          "place": "Royu",
+          "note": "Each team rotates through Wires, Fab and Plastics."
+        },
+        {
+          "time": "09:45",
+          "type": "tour",
+          "title": "Plant tour: second station",
+          "place": "Royu"
+        },
+        {
+          "time": "10:15",
+          "type": "tour",
+          "title": "Plant tour: third station",
+          "place": "Royu"
+        },
+        {
+          "time": "11:00",
+          "type": "meal",
+          "title": "Back to the assembly area; lunch distribution",
+          "place": "Royu"
+        },
+        {
+          "time": "11:45",
+          "type": "bus",
+          "title": "Departure"
+        }
+      ]
+    },
+    "thuPM": {
+      "date": "2026-12-03",
+      "slot": "Thursday afternoon",
+      "range": "12:30 – 5:00 PM",
+      "stops": [
+        {
+          "time": "12:30",
+          "type": "flight",
+          "title": "Arrival at Royu",
+          "place": "Royu"
+        },
+        {
+          "time": "13:00",
+          "type": "gather",
+          "title": "Registration",
+          "place": "Royu"
+        },
+        {
+          "time": "13:15",
+          "type": "mic",
+          "title": "Orientation",
+          "place": "Royu",
+          "note": "History, house rules, and drafting into teams."
+        },
+        {
+          "time": "13:45",
+          "type": "tour",
+          "title": "Plant tour: first station",
+          "place": "Royu",
+          "note": "Each team rotates through Wires, Fab and Plastics."
+        },
+        {
+          "time": "14:30",
+          "type": "tour",
+          "title": "Plant tour: second station",
+          "place": "Royu"
+        },
+        {
+          "time": "15:15",
+          "type": "tour",
+          "title": "Plant tour: third station",
+          "place": "Royu"
+        },
+        {
+          "time": "15:45",
+          "type": "meal",
+          "title": "Back to the assembly area; lunch distribution",
+          "place": "Royu"
+        },
+        {
+          "time": "16:30",
+          "type": "bus",
+          "title": "Departure"
+        }
+      ]
+    },
+    "friAM": {
+      "date": "2026-12-04",
+      "slot": "Friday morning",
+      "range": "8:00 AM – 12:00 PM",
+      "stops": [
+        {
+          "time": "08:00",
+          "type": "flight",
+          "title": "Arrival at Royu",
+          "place": "Royu"
+        },
+        {
+          "time": "08:30",
+          "type": "gather",
+          "title": "Registration",
+          "place": "Royu"
+        },
+        {
+          "time": "08:45",
+          "type": "mic",
+          "title": "Orientation",
+          "place": "Royu",
+          "note": "History, house rules, and drafting into teams."
+        },
+        {
+          "time": "09:00",
+          "type": "tour",
+          "title": "Plant tour: first station",
+          "place": "Royu",
+          "note": "Each team rotates through Wires, Fab and Plastics."
+        },
+        {
+          "time": "09:45",
+          "type": "tour",
+          "title": "Plant tour: second station",
+          "place": "Royu"
+        },
+        {
+          "time": "10:15",
+          "type": "tour",
+          "title": "Plant tour: third station",
+          "place": "Royu"
+        },
+        {
+          "time": "11:00",
+          "type": "meal",
+          "title": "Back to the assembly area; lunch distribution",
+          "place": "Royu"
+        },
+        {
+          "time": "11:45",
+          "type": "bus",
+          "title": "Departure"
+        }
+      ]
+    },
+    "friPM": {
+      "date": "2026-12-04",
+      "slot": "Friday afternoon",
+      "range": "12:30 – 5:00 PM",
+      "stops": [
+        {
+          "time": "12:30",
+          "type": "flight",
+          "title": "Arrival at Royu",
+          "place": "Royu"
+        },
+        {
+          "time": "13:00",
+          "type": "gather",
+          "title": "Registration",
+          "place": "Royu"
+        },
+        {
+          "time": "13:15",
+          "type": "mic",
+          "title": "Orientation",
+          "place": "Royu",
+          "note": "History, house rules, and drafting into teams."
+        },
+        {
+          "time": "13:45",
+          "type": "tour",
+          "title": "Plant tour: first station",
+          "place": "Royu",
+          "note": "Each team rotates through Wires, Fab and Plastics."
+        },
+        {
+          "time": "14:30",
+          "type": "tour",
+          "title": "Plant tour: second station",
+          "place": "Royu"
+        },
+        {
+          "time": "15:15",
+          "type": "tour",
+          "title": "Plant tour: third station",
+          "place": "Royu"
+        },
+        {
+          "time": "15:45",
+          "type": "meal",
+          "title": "Back to the assembly area; lunch distribution",
+          "place": "Royu"
+        },
+        {
+          "time": "16:30",
+          "type": "bus",
+          "title": "Departure"
+        }
+      ]
+    }
+  },
+  "people": [
+    {
+      "id": "night",
+      "title": "Silver Horizons Night",
+      "when": "Sat, Dec 5",
+      "attending": [
+        {
+          "name": "Aira Gonzales",
+          "branch": "Ilocos"
+        },
+        {
+          "name": "Aira Navarro",
+          "branch": "Urdaneta"
+        },
+        {
+          "name": "Andrea Garcia",
+          "branch": "General Santos"
+        },
+        {
+          "name": "Andrea Ramos",
+          "branch": "Pagadian City"
+        },
+        {
+          "name": "Andrea Reyes",
+          "branch": "Ilocos"
+        },
+        {
+          "name": "Bea Aquino",
+          "branch": "General Santos"
+        },
+        {
+          "name": "Bea Dela Cruz",
+          "branch": "Pagadian City"
+        },
+        {
+          "name": "Bryan Cruz",
+          "branch": "Iloilo"
+        },
+        {
+          "name": "Bryan Lopez",
+          "branch": "Cebu"
+        },
+        {
+          "name": "Carlo Mendoza",
+          "branch": "Calumpit"
+        },
+        {
+          "name": "Carlo Mercado",
+          "branch": "Naga"
+        },
+        {
+          "name": "Carlo Santos",
+          "branch": "Dulalia"
+        },
+        {
+          "name": "Celine Fernandez",
+          "branch": "General Santos"
+        },
+        {
+          "name": "Celine Lim",
+          "branch": "Urdaneta"
+        },
+        {
+          "name": "Celine Salazar",
+          "branch": "Ilocos"
+        },
+        {
+          "name": "Danica Domingo",
+          "branch": "Pagadian City"
+        },
+        {
+          "name": "Danica Ocampo",
+          "branch": "Tacloban"
+        },
+        {
+          "name": "Dominic Castillo",
+          "branch": "Naga"
+        },
+        {
+          "name": "Dominic Villanueva",
+          "branch": "Iloilo"
+        },
+        {
+          "name": "Ella Javier",
+          "branch": "General Santos"
+        },
+        {
+          "name": "Ella Soriano",
+          "branch": "Ilocos"
+        },
+        {
+          "name": "Enzo Navarro",
+          "branch": "Calumpit"
+        },
+        {
+          "name": "Enzo Torres",
+          "branch": "Dulalia"
+        },
+        {
+          "name": "Faye Fernandez",
+          "branch": "Pagadian City"
+        },
+        {
+          "name": "Faye Lopez",
+          "branch": "Tacloban"
+        },
+        {
+          "name": "Francis Flores",
+          "branch": "Iloilo"
+        },
+        {
+          "name": "Francis Tan",
+          "branch": "Naga"
+        },
+        {
+          "name": "Gabriel Castillo",
+          "branch": "Dulalia"
+        },
+        {
+          "name": "Gabriel Lim",
+          "branch": "Calumpit"
+        },
+        {
+          "name": "Gabriel Salazar",
+          "branch": "Isabela"
+        },
+        {
+          "name": "Hannah Bautista",
+          "branch": "Tacloban"
+        },
+        {
+          "name": "Hannah Villanueva",
+          "branch": "Bacolod"
+        },
+        {
+          "name": "Iñigo Pascual",
+          "branch": "Calumpit"
+        },
+        {
+          "name": "Iñigo Soriano",
+          "branch": "Isabela"
+        },
+        {
+          "name": "Jasmine Flores",
+          "branch": "Bacolod"
+        },
+        {
+          "name": "Jasmine Ramos",
+          "branch": "Tacloban"
+        },
+        {
+          "name": "Jasmine Tan",
+          "branch": "Palawan"
+        },
+        {
+          "name": "Kevin Garcia",
+          "branch": "Head Office"
+        },
+        {
+          "name": "Kevin Reyes",
+          "branch": "Isabela"
+        },
+        {
+          "name": "Lara Manalo",
+          "branch": "Palawan"
+        },
+        {
+          "name": "Lara Rivera",
+          "branch": "Bacolod"
+        },
+        {
+          "name": "Miguel Aquino",
+          "branch": "Head Office"
+        },
+        {
+          "name": "Miguel Mendoza",
+          "branch": "Isabela"
+        },
+        {
+          "name": "Nicole Mercado",
+          "branch": "Palawan"
+        },
+        {
+          "name": "Nicole Ocampo",
+          "branch": "Bacolod"
+        },
+        {
+          "name": "Nicole Santos",
+          "branch": "Carmona"
+        },
+        {
+          "name": "Oscar Domingo",
+          "branch": "Davao"
+        },
+        {
+          "name": "Oscar Gonzales",
+          "branch": "Head Office"
+        },
+        {
+          "name": "Paolo Manalo",
+          "branch": "Naga"
+        },
+        {
+          "name": "Paolo Valdez",
+          "branch": "Dulalia"
+        },
+        {
+          "name": "Patricia Cruz",
+          "branch": "Palawan"
+        },
+        {
+          "name": "Patricia Torres",
+          "branch": "Carmona"
+        },
+        {
+          "name": "Rafael Fernandez",
+          "branch": "Davao"
+        },
+        {
+          "name": "Rafael Lopez",
+          "branch": "Cagayan de Oro"
+        },
+        {
+          "name": "Rafael Salazar",
+          "branch": "Head Office"
+        },
+        {
+          "name": "Sofia Castillo",
+          "branch": "Carmona"
+        },
+        {
+          "name": "Sofia Lim",
+          "branch": "Lingunan"
+        },
+        {
+          "name": "Tristan Bautista",
+          "branch": "Cagayan de Oro"
+        },
+        {
+          "name": "Tristan Javier",
+          "branch": "Davao"
+        },
+        {
+          "name": "Ursula Pascual",
+          "branch": "Lingunan"
+        },
+        {
+          "name": "Ursula Tan",
+          "branch": "Carmona"
+        },
+        {
+          "name": "Vince Flores",
+          "branch": "Cebu"
+        },
+        {
+          "name": "Vince Garcia",
+          "branch": "Davao"
+        },
+        {
+          "name": "Vince Ramos",
+          "branch": "Cagayan de Oro"
+        },
+        {
+          "name": "Wendy Reyes",
+          "branch": "Urdaneta"
+        },
+        {
+          "name": "Wendy Valdez",
+          "branch": "Lingunan"
+        },
+        {
+          "name": "Xavier Dela Cruz",
+          "branch": "Cagayan de Oro"
+        },
+        {
+          "name": "Xavier Rivera",
+          "branch": "Cebu"
+        },
+        {
+          "name": "Ysabel Mendoza",
+          "branch": "Urdaneta"
+        },
+        {
+          "name": "Ysabel Santos",
+          "branch": "Lingunan"
+        },
+        {
+          "name": "Zach Mercado",
+          "branch": "Iloilo"
+        },
+        {
+          "name": "Zach Ocampo",
+          "branch": "Cebu"
+        }
+      ],
+      "hosts": [
+        {
+          "name": "Andrea Villanueva",
+          "group": "Hosts",
+          "role": "Host",
+          "note": "Your host for the night"
+        },
+        {
+          "name": "Paolo Mercado",
+          "group": "Hosts",
+          "role": "Host",
+          "note": "Your host for the night"
+        },
+        {
+          "name": "Ramon Castillo",
+          "group": "Speakers",
+          "role": "Speaker",
+          "note": "Opening remarks"
+        },
+        {
+          "name": "Teresa Aquino",
+          "group": "Speakers",
+          "role": "Speaker",
+          "note": "Silver Pioneers Award"
+        },
+        {
+          "name": "Leo Navarro",
+          "group": "Speakers",
+          "role": "Speaker",
+          "note": "Summit toast"
+        }
+      ],
+      "performers": [
+        {
+          "name": "To be revealed",
+          "group": "Headliner",
+          "role": "Headliner",
+          "note": "Part 3: Beyond the Summit",
+          "secret": true
+        },
+        {
+          "name": "The Silverlines",
+          "group": "Line-up",
+          "role": "Opening performance",
+          "note": "Part 1: Ascent"
+        },
+        {
+          "name": "Lumen Dance Company",
+          "group": "Line-up",
+          "role": "Opening spectacle",
+          "note": "Part 1: Ascent"
+        },
+        {
+          "name": "Mara Ocampo",
+          "group": "Line-up",
+          "role": "Performer",
+          "note": "During dinner"
+        },
+        {
+          "name": "Kinetic Light Crew",
+          "group": "Line-up",
+          "role": "Summit lights",
+          "note": "Part 3: Beyond the Summit"
+        },
+        {
+          "name": "DJ Horizon",
+          "group": "Line-up",
+          "role": "DJ set",
+          "note": "After Party"
+        }
+      ],
+      "committee": [
+        {
+          "name": "Aikel De Guzman",
+          "role": "Organizer",
+          "image": "people/aikel-de-guzman"
+        },
+        {
+          "name": "Crisselita Mismanos",
+          "role": "Organizer",
+          "image": "people/crisselita-mismanos"
+        },
+        {
+          "name": "Eva Dy",
+          "role": "Organizer",
+          "image": "people/eva-dy"
+        },
+        {
+          "name": "Faith Batalla",
+          "role": "Organizer",
+          "image": "people/faith-batalla"
+        },
+        {
+          "name": "Faith Gonzales",
+          "role": "Organizer",
+          "image": "people/faith-gonzales"
+        },
+        {
+          "name": "Jay-R Sombero",
+          "role": "Organizer",
+          "image": "people/jay-r-sombero"
+        },
+        {
+          "name": "John Montalvan",
+          "role": "Organizer",
+          "image": "people/john-montalvan"
+        },
+        {
+          "name": "Karen Yao",
+          "role": "Organizer",
+          "image": "people/karen-yao"
+        },
+        {
+          "name": "Lady Jill Sabado",
+          "role": "Organizer",
+          "image": "people/lady-jill-sabado"
+        },
+        {
+          "name": "Quennie May Pastrana",
+          "role": "Organizer",
+          "image": "people/quennie-may-pastrana"
+        },
+        {
+          "name": "Richmond Ronquillo",
+          "role": "Organizer",
+          "image": "people/richmond-ronquillo"
+        },
+        {
+          "name": "Shirley De Jesus",
+          "role": "Organizer",
+          "image": "people/shirley-de-jesus"
+        }
+      ]
+    },
+    {
+      "id": "royu",
+      "title": "Royu Tour",
+      "when": "Thu, Dec 3",
+      "attending": [
+        {
+          "name": "Aira Gonzales",
+          "branch": "Ilocos"
+        },
+        {
+          "name": "Andrea Ramos",
+          "branch": "Pagadian City"
+        },
+        {
+          "name": "Bea Dela Cruz",
+          "branch": "Pagadian City"
+        },
+        {
+          "name": "Carlo Mendoza",
+          "branch": "Calumpit"
+        },
+        {
+          "name": "Celine Fernandez",
+          "branch": "General Santos"
+        },
+        {
+          "name": "Danica Domingo",
+          "branch": "Pagadian City"
+        },
+        {
+          "name": "Dominic Villanueva",
+          "branch": "Iloilo"
+        },
+        {
+          "name": "Enzo Navarro",
+          "branch": "Calumpit"
+        },
+        {
+          "name": "Faye Lopez",
+          "branch": "Tacloban"
+        },
+        {
+          "name": "Gabriel Castillo",
+          "branch": "Dulalia"
+        },
+        {
+          "name": "Hannah Bautista",
+          "branch": "Tacloban"
+        },
+        {
+          "name": "Iñigo Soriano",
+          "branch": "Isabela"
+        },
+        {
+          "name": "Jasmine Tan",
+          "branch": "Palawan"
+        },
+        {
+          "name": "Lara Manalo",
+          "branch": "Palawan"
+        },
+        {
+          "name": "Miguel Mendoza",
+          "branch": "Isabela"
+        },
+        {
+          "name": "Nicole Santos",
+          "branch": "Carmona"
+        },
+        {
+          "name": "Paolo Manalo",
+          "branch": "Naga"
+        },
+        {
+          "name": "Patricia Torres",
+          "branch": "Carmona"
+        },
+        {
+          "name": "Rafael Salazar",
+          "branch": "Head Office"
+        },
+        {
+          "name": "Tristan Bautista",
+          "branch": "Cagayan de Oro"
+        },
+        {
+          "name": "Ursula Tan",
+          "branch": "Carmona"
+        },
+        {
+          "name": "Vince Ramos",
+          "branch": "Cagayan de Oro"
+        },
+        {
+          "name": "Xavier Dela Cruz",
+          "branch": "Cagayan de Oro"
+        },
+        {
+          "name": "Ysabel Santos",
+          "branch": "Lingunan"
+        }
+      ],
+      "hosts": [
+        {
+          "name": "Marco Valdez",
+          "group": "Guides",
+          "role": "Tour guide",
+          "note": "Orientation and plant tour"
+        }
+      ]
+    },
+    {
+      "id": "museum",
+      "title": "FELCO Explores Manila: National Museum",
+      "when": "Fri, Dec 4",
+      "attending": [
+        {
+          "name": "Aira Navarro",
+          "branch": "Urdaneta"
+        },
+        {
+          "name": "Andrea Ramos",
+          "branch": "Pagadian City"
+        },
+        {
+          "name": "Bea Aquino",
+          "branch": "General Santos"
+        },
+        {
+          "name": "Bryan Cruz",
+          "branch": "Iloilo"
+        },
+        {
+          "name": "Carlo Mendoza",
+          "branch": "Calumpit"
+        },
+        {
+          "name": "Carlo Santos",
+          "branch": "Dulalia"
+        },
+        {
+          "name": "Celine Lim",
+          "branch": "Urdaneta"
+        },
+        {
+          "name": "Danica Domingo",
+          "branch": "Pagadian City"
+        },
+        {
+          "name": "Dominic Castillo",
+          "branch": "Naga"
+        },
+        {
+          "name": "Ella Javier",
+          "branch": "General Santos"
+        },
+        {
+          "name": "Enzo Navarro",
+          "branch": "Calumpit"
+        },
+        {
+          "name": "Faye Fernandez",
+          "branch": "Pagadian City"
+        },
+        {
+          "name": "Francis Flores",
+          "branch": "Iloilo"
+        },
+        {
+          "name": "Gabriel Castillo",
+          "branch": "Dulalia"
+        },
+        {
+          "name": "Gabriel Salazar",
+          "branch": "Isabela"
+        },
+        {
+          "name": "Hannah Villanueva",
+          "branch": "Bacolod"
+        },
+        {
+          "name": "Iñigo Soriano",
+          "branch": "Isabela"
+        },
+        {
+          "name": "Jasmine Ramos",
+          "branch": "Tacloban"
+        },
+        {
+          "name": "Kevin Garcia",
+          "branch": "Head Office"
+        },
+        {
+          "name": "Lara Manalo",
+          "branch": "Palawan"
+        },
+        {
+          "name": "Miguel Aquino",
+          "branch": "Head Office"
+        },
+        {
+          "name": "Nicole Mercado",
+          "branch": "Palawan"
+        },
+        {
+          "name": "Nicole Santos",
+          "branch": "Carmona"
+        },
+        {
+          "name": "Oscar Gonzales",
+          "branch": "Head Office"
+        },
+        {
+          "name": "Paolo Valdez",
+          "branch": "Dulalia"
+        },
+        {
+          "name": "Patricia Torres",
+          "branch": "Carmona"
+        },
+        {
+          "name": "Rafael Lopez",
+          "branch": "Cagayan de Oro"
+        },
+        {
+          "name": "Sofia Castillo",
+          "branch": "Carmona"
+        },
+        {
+          "name": "Tristan Bautista",
+          "branch": "Cagayan de Oro"
+        },
+        {
+          "name": "Ursula Pascual",
+          "branch": "Lingunan"
+        },
+        {
+          "name": "Vince Flores",
+          "branch": "Cebu"
+        },
+        {
+          "name": "Vince Ramos",
+          "branch": "Cagayan de Oro"
+        },
+        {
+          "name": "Wendy Valdez",
+          "branch": "Lingunan"
+        },
+        {
+          "name": "Xavier Rivera",
+          "branch": "Cebu"
+        },
+        {
+          "name": "Ysabel Santos",
+          "branch": "Lingunan"
+        },
+        {
+          "name": "Zach Ocampo",
+          "branch": "Cebu"
+        }
+      ],
+      "hosts": [
+        {
+          "name": "Clara Pascual",
+          "group": "Guides",
+          "role": "Museum guide",
+          "note": "Natural History, then Fine Arts"
+        }
+      ]
+    },
+    {
+      "id": "zen",
+      "title": "Zen Office Tour",
+      "when": "Fri, Dec 4",
+      "attending": [
+        {
+          "name": "Aira Gonzales",
+          "branch": "Ilocos"
+        },
+        {
+          "name": "Aira Navarro",
+          "branch": "Urdaneta"
+        },
+        {
+          "name": "Andrea Ramos",
+          "branch": "Pagadian City"
+        },
+        {
+          "name": "Andrea Reyes",
+          "branch": "Ilocos"
+        },
+        {
+          "name": "Bea Aquino",
+          "branch": "General Santos"
+        },
+        {
+          "name": "Bryan Cruz",
+          "branch": "Iloilo"
+        },
+        {
+          "name": "Bryan Lopez",
+          "branch": "Cebu"
+        },
+        {
+          "name": "Carlo Mendoza",
+          "branch": "Calumpit"
+        },
+        {
+          "name": "Carlo Santos",
+          "branch": "Dulalia"
+        },
+        {
+          "name": "Celine Fernandez",
+          "branch": "General Santos"
+        },
+        {
+          "name": "Celine Lim",
+          "branch": "Urdaneta"
+        },
+        {
+          "name": "Danica Domingo",
+          "branch": "Pagadian City"
+        },
+        {
+          "name": "Danica Ocampo",
+          "branch": "Tacloban"
+        },
+        {
+          "name": "Dominic Castillo",
+          "branch": "Naga"
+        },
+        {
+          "name": "Ella Javier",
+          "branch": "General Santos"
+        },
+        {
+          "name": "Ella Soriano",
+          "branch": "Ilocos"
+        },
+        {
+          "name": "Enzo Navarro",
+          "branch": "Calumpit"
+        },
+        {
+          "name": "Faye Fernandez",
+          "branch": "Pagadian City"
+        },
+        {
+          "name": "Faye Lopez",
+          "branch": "Tacloban"
+        },
+        {
+          "name": "Francis Flores",
+          "branch": "Iloilo"
+        },
+        {
+          "name": "Gabriel Castillo",
+          "branch": "Dulalia"
+        },
+        {
+          "name": "Gabriel Lim",
+          "branch": "Calumpit"
+        },
+        {
+          "name": "Gabriel Salazar",
+          "branch": "Isabela"
+        },
+        {
+          "name": "Hannah Villanueva",
+          "branch": "Bacolod"
+        },
+        {
+          "name": "Iñigo Pascual",
+          "branch": "Calumpit"
+        },
+        {
+          "name": "Iñigo Soriano",
+          "branch": "Isabela"
+        },
+        {
+          "name": "Jasmine Ramos",
+          "branch": "Tacloban"
+        },
+        {
+          "name": "Jasmine Tan",
+          "branch": "Palawan"
+        },
+        {
+          "name": "Kevin Garcia",
+          "branch": "Head Office"
+        },
+        {
+          "name": "Lara Manalo",
+          "branch": "Palawan"
+        },
+        {
+          "name": "Lara Rivera",
+          "branch": "Bacolod"
+        },
+        {
+          "name": "Miguel Aquino",
+          "branch": "Head Office"
+        },
+        {
+          "name": "Nicole Mercado",
+          "branch": "Palawan"
+        },
+        {
+          "name": "Nicole Ocampo",
+          "branch": "Bacolod"
+        },
+        {
+          "name": "Nicole Santos",
+          "branch": "Carmona"
+        },
+        {
+          "name": "Oscar Gonzales",
+          "branch": "Head Office"
+        },
+        {
+          "name": "Paolo Manalo",
+          "branch": "Naga"
+        },
+        {
+          "name": "Paolo Valdez",
+          "branch": "Dulalia"
+        },
+        {
+          "name": "Patricia Torres",
+          "branch": "Carmona"
+        },
+        {
+          "name": "Rafael Fernandez",
+          "branch": "Davao"
+        },
+        {
+          "name": "Rafael Lopez",
+          "branch": "Cagayan de Oro"
+        },
+        {
+          "name": "Sofia Castillo",
+          "branch": "Carmona"
+        },
+        {
+          "name": "Sofia Lim",
+          "branch": "Lingunan"
+        },
+        {
+          "name": "Tristan Bautista",
+          "branch": "Cagayan de Oro"
+        },
+        {
+          "name": "Ursula Pascual",
+          "branch": "Lingunan"
+        },
+        {
+          "name": "Ursula Tan",
+          "branch": "Carmona"
+        },
+        {
+          "name": "Vince Flores",
+          "branch": "Cebu"
+        },
+        {
+          "name": "Vince Ramos",
+          "branch": "Cagayan de Oro"
+        },
+        {
+          "name": "Wendy Reyes",
+          "branch": "Urdaneta"
+        },
+        {
+          "name": "Wendy Valdez",
+          "branch": "Lingunan"
+        },
+        {
+          "name": "Xavier Rivera",
+          "branch": "Cebu"
+        },
+        {
+          "name": "Ysabel Mendoza",
+          "branch": "Urdaneta"
+        },
+        {
+          "name": "Ysabel Santos",
+          "branch": "Lingunan"
+        },
+        {
+          "name": "Zach Ocampo",
+          "branch": "Cebu"
+        }
+      ],
+      "hosts": [
+        {
+          "name": "Gabriel Tan",
+          "group": "Hosts",
+          "role": "Host",
+          "note": "Welcome on the 11th floor"
+        }
+      ]
+    }
   ]
 }

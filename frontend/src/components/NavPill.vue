@@ -41,7 +41,7 @@ watch(() => route.path, () => nextTick(measure))
         :ref="(c) => (els[i] = c?.$el)"
         :to="l.to"
         class="flex items-center font-medium text-muted uppercase transition-colors hover:text-white"
-        :class="compact ? 'h-12 px-3.5 text-[10.5px] tracking-[0.18em]' : 'h-11 px-5 text-[11.5px] tracking-[0.24em]'"
+        :class="compact ? 'h-12 px-3 text-[10.5px] tracking-[0.14em]' : 'h-11 px-5 text-[11.5px] tracking-[0.24em]'"
         exact-active-class="text-white!"
       >{{ l.label }}</RouterLink>
     </li>

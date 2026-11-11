@@ -126,10 +126,12 @@ const pick = (i) => {
     </p>
   </header>
 
-  <!-- phones and tablets: days as a sticky segmented control; the chosen day is a white pill (like the site's
-       main buttons), the others outlined glass so they read as buttons too -->
-  <div class="sticky top-0 z-30 border-b border-white/10 bg-navy-950/90 px-3 py-2.5 backdrop-blur-lg md:pt-[4.5rem] lg:hidden">
-    <div class="mx-auto flex max-w-2xl gap-1.5 rounded-full border border-white/12 bg-white/[0.04] p-1 shadow-[inset_0_1px_0_rgb(255_255_255/0.06)]" role="group" aria-label="Choose day">
+  <section class="relative isolate bg-navy-950 px-5 pt-12 pb-28 font-normal md:px-8 lg:pt-20" aria-label="Schedule">
+    <div class="star-dust absolute inset-0 -z-10 opacity-60" aria-hidden="true" />
+    <!-- phones and tablets: days as a floating segmented control, sticking just under the top (under the nav
+         pill from tablet up); the chosen day is a white pill, the others outlined glass -->
+    <div class="sticky top-3 z-30 mx-auto mb-10 max-w-2xl md:top-[4.5rem] lg:hidden">
+    <div class="flex gap-1.5 rounded-full border border-white/14 bg-[#0A1438]/85 p-1 shadow-[inset_0_1px_0_rgb(255_255_255/0.08),0_14px_34px_-14px_rgb(0_0_0/0.9)] backdrop-blur-lg" role="group" aria-label="Choose day">
       <button
         v-for="(d, i) in itinerary"
         :key="d.date"
@@ -144,9 +146,6 @@ const pick = (i) => {
       </button>
     </div>
   </div>
-
-  <section class="relative isolate bg-navy-950 px-5 pt-12 pb-28 font-normal md:px-8 lg:pt-20" aria-label="Schedule">
-    <div class="star-dust absolute inset-0 -z-10 opacity-60" aria-hidden="true" />
     <div class="mx-auto grid max-w-6xl gap-14 lg:grid-cols-[17rem_1fr]">
       <!-- desktop: the day index. Every day is a glass button with an arrow; the chosen one glows with a
            silver edge and a lit bar on its left, and says "Viewing" -->
@@ -248,10 +247,6 @@ const pick = (i) => {
                 class="cascade"
               />
             </ol>
-            <p v-if="day.closing" style="--i: 24" class="cascade mt-12 flex items-center gap-3 text-sm text-ink/75 md:ml-[9.5rem]">
-              <span class="h-px w-10 bg-linear-to-r from-transparent to-white/60" aria-hidden="true" />
-              {{ day.closing }}
-            </p>
           </article>
         </Transition>
       </div>

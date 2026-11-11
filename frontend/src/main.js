@@ -34,6 +34,7 @@ const router = createRouter({
   routes: [
     { path: '/', component: () => import('./views/HomeView.vue') },
     { path: '/itinerary', component: () => import('./views/ItineraryView.vue') },
+    { path: '/people', component: () => import('./views/PeopleView.vue') },
     { path: '/info', component: () => import('./views/InfoView.vue') },
     { path: '/:pathMatch(.*)*', redirect: '/' },
   ],
