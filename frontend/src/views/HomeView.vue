@@ -53,7 +53,9 @@ const routes = branches.map((b) => {
   const cy = my + (hub.x - b.x) * k
   const mates = branches.filter((o) => o.group === b.group)
   const j = mates.indexOf(b)
-  const a = GROUP_WIN[b.group][0] + 0.02 + j * (mates.length > 4 ? 0.008 : 0.02)
+  // words first: a group's name and chips settle before its lines launch (Luzon's are already up on arrival)
+  const lead = b.group === groups[0].id ? 0.02 : 0.09
+  const a = GROUP_WIN[b.group][0] + lead + j * (mates.length > 4 ? 0.008 : 0.02)
   return { ...b, d: `M${b.x} ${b.y} Q ${cx.toFixed(1)} ${cy.toFixed(1)} ${hub.x} ${hub.y}`, a }
 })
 const beats = groups.map((g) => {
@@ -66,7 +68,8 @@ const lit = (name) => (progress.converge ?? 0) >= landAt[name]
 const beat = computed(() => {
   const p = progress.converge ?? 0
   if (p >= 0.88) return 'done'
-  return groups.find((g) => p >= GROUP_WIN[g.id][0] && p < GROUP_WIN[g.id][1])?.id ?? ''
+  // the first group's words show from the moment the scene arrives, before any line is drawn
+  return groups.find((g) => p < GROUP_WIN[g.id][1])?.id ?? ''
 })
 
 
@@ -442,7 +445,7 @@ const sparks = Array.from({ length: 14 }, (_, i) => {
             <!-- comet: a bright head running ahead of the line, gone as it lands -->
             <path :d="r.d" pathLength="1" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" class="comet" filter="url(#glow)" />
             <g class="branch-dot" :class="beat === r.group && 'is-on'">
-              <circle class="halo" :cx="r.x" :cy="r.y" r="11" fill="#9DB6F0" filter="url(#glow)" />
+              <g :style="'opacity:clamp(0, calc(var(--t) * 20), 1)'"><circle class="halo" :cx="r.x" :cy="r.y" r="11" fill="#9DB6F0" filter="url(#glow)" /></g>
               <circle :cx="r.x" :cy="r.y" r="3.5" fill="#FFFFFF" :style="'opacity:var(--t)'" />
             </g>
             <text
