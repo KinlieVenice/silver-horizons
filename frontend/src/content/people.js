@@ -4,6 +4,11 @@
 // image: optional photo (import it like the itinerary photos); without one a chrome monogram shows.
 import { branches } from './branches.js'
 
+// photos in assets/people, named after the person ('Shirley De Jesus' → shirley-de-jesus.jpg)
+const photoFiles = import.meta.glob('../assets/people/*.jpg', { eager: true, import: 'default' })
+const slug = (name) => name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+const withPhoto = (p) => ({ ...p, image: photoFiles[`../assets/people/${slug(p.name)}.jpg`] ?? p.image })
+
 const first = ['Andrea', 'Paolo', 'Bea', 'Carlo', 'Danica', 'Enzo', 'Faye', 'Gabriel', 'Hannah', 'Iñigo', 'Jasmine', 'Kevin', 'Lara', 'Miguel', 'Nicole', 'Oscar', 'Patricia', 'Rafael', 'Sofia', 'Tristan', 'Ursula', 'Vince', 'Wendy', 'Xavier', 'Ysabel', 'Zach', 'Aira', 'Bryan', 'Celine', 'Dominic', 'Ella', 'Francis']
 const last = ['Reyes', 'Santos', 'Cruz', 'Bautista', 'Garcia', 'Mendoza', 'Torres', 'Villanueva', 'Ramos', 'Aquino', 'Navarro', 'Castillo', 'Flores', 'Dela Cruz', 'Gonzales', 'Lim', 'Tan', 'Rivera', 'Domingo', 'Salazar', 'Pascual', 'Manalo', 'Ocampo', 'Fernandez', 'Soriano', 'Valdez', 'Mercado', 'Lopez', 'Javier']
 const offices = [...branches.map((b) => b.name), 'Head Office']
@@ -19,7 +24,7 @@ const everyone = Array.from({ length: 72 }, (_, i) => ({
 // group: the heading a card sits under (Hosts, Speakers, Guides; Headliner, Line-up …), in the order given.
 // secret: a headliner still under wraps: one wide spotlight card, no name, no photo.
 const night = everyone
-export const events = [
+const events_ = [
   {
     id: 'night', title: 'Silver Horizons Night', when: 'Sat, Dec 5',
     attending: night,
@@ -69,3 +74,9 @@ export const events = [
     hosts: [{ name: 'Gabriel Tan', group: 'Hosts', role: 'Host', note: 'Welcome on the 11th floor' }],
   },
 ]
+
+// every card gets its photo when there's a file for that name
+export const events = events_.map((e) => ({
+  ...e,
+  ...Object.fromEntries(['hosts', 'performers', 'committee'].filter((k) => e[k]).map((k) => [k, e[k].map(withPhoto)])),
+}))

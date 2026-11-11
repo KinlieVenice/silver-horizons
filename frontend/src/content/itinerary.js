@@ -21,7 +21,7 @@ export const credits = [
 // FELCO Explores Manila (official): one trip per person, in one slot.
 //   Dec 3: Museum Trip in the morning, Binondo Trip in the afternoon
 //   Dec 4: Binondo Trip in the morning, Museum Trip in the afternoon
-// Every slot's programme, for when each person is shown their own (the sample person below has museumFri).
+// Every slot's programme; the preview below shows all four, sign-in will show each person their own.
 const zen = 'ZEN'
 export const exploreManila = {
   museumThu: { date: '2026-12-03', slot: 'Thursday morning', range: '8:00 AM – 12:45 PM', stops: [
@@ -78,16 +78,29 @@ export const royuTour = {
   friPM: { date: '2026-12-04', slot: 'Friday afternoon', range: '12:30 – 5:00 PM', stops: royuPM },
 }
 
+// a trip as a part of its day: its photo, slot and official programme
+const trip = (key, title, photo, place, first) => ({
+  title: `FELCO Explores Manila: ${title}`,
+  tag: exploreManila[key].slot.replace(/^\w+ (\w)/, (_, c) => c.toUpperCase()) + ' slot', // 'Thursday morning' → 'Morning slot'
+  range: exploreManila[key].range,
+  note: first ? 'One trip per person, in one slot. Once you sign in, you’ll see only yours.' : undefined,
+  options: [{ title, place, image: photo }],
+  stops: exploreManila[key].stops,
+})
+
 export const itinerary = [
-  // Seen as one employee: on the Royu Tour's Thursday afternoon run and the National Museum trip's Friday
-  // afternoon slot. The Zen Office Tour is still SAMPLE (made up) until the organisers confirm.
+  // Preview: both FELCO Explores Manila trips show on each day, in their slots; once sign-in is live each
+  // person sees only their own trip and Royu run. Royu is shown as the Thursday afternoon run (registered).
+  // The Zen Office Tour is still SAMPLE (made up) until the organisers confirm.
   {
     date: '2026-12-03',
     title: 'Welcome to Manila',
-    area: 'Arrival · Royu Tour',
-    pills: ['Royu Tour · 12:30 – 5:00 PM'],
+    area: 'Explores Manila · Royu Tour',
+    pills: ['Museum trip AM · Binondo trip PM', 'Royu Tour · 12:30 – 5:00 PM'],
     parts: [
-      { title: 'Arrival in Manila', range: 'Morning', note: 'All employees in Manila by December 3.', stops: [{ type: 'flight', title: 'Travel details to follow' }] },
+      { title: 'Arrival in Manila', range: 'December 3', note: 'All employees in Manila by December 3.', stops: [{ type: 'flight', title: 'Travel details to follow' }] },
+      trip('museumThu', 'National Museum', museumPhoto, 'Fine Arts & Natural History', true),
+      trip('binondoThu', 'Binondo', binondoPhoto, 'Plaza Lorenzo Ruiz and Binondo'),
       {
         title: 'Royu Tour', tag: 'You’re registered · Thursday afternoon run', range: royuTour.thuPM.range,
         note: 'Two runs a day on December 3 and 4, 150 people each.',
@@ -98,23 +111,19 @@ export const itinerary = [
   {
     date: '2026-12-04',
     title: 'FELCO Explores Manila',
-    area: 'Zen Office · National Museum',
-    pills: ['National Museum · 12:00 – 4:45 PM', 'Zen Office Tour: sample programme'],
+    area: 'Explores Manila · Zen Office',
+    pills: ['Binondo trip AM · Museum trip PM', 'Zen Office Tour: sample programme'],
     parts: [
+      trip('binondoFri', 'Binondo', binondoPhoto, 'Plaza Lorenzo Ruiz and Binondo', true),
+      trip('museumFri', 'National Museum', museumPhoto, 'Fine Arts & Natural History'),
       {
-        title: 'Zen Office Tour', tag: 'Open to all', range: 'Sample · 9:00 – 10:30 AM · 11th floor',
+        title: 'Zen Office Tour', tag: 'Open to all', range: 'Sample · 5:00 – 6:30 PM · 11th floor',
         stops: [
-          { time: '09:00', type: 'gather', title: 'Welcome on the 11th floor', place: 'Zen Office, 11th floor' },
-          { time: '09:15', type: 'tour', title: 'Office walkthrough', place: 'Zen Office, 11th floor' },
-          { time: '09:45', type: 'mic', title: 'Meet the teams', place: 'Zen Office, 11th floor' },
-          { time: '10:15', type: 'party', title: 'Coffee and photos', place: 'Zen Office, 11th floor' },
+          { time: '17:00', type: 'gather', title: 'Welcome on the 11th floor', place: 'Zen Office, 11th floor' },
+          { time: '17:15', type: 'tour', title: 'Office walkthrough', place: 'Zen Office, 11th floor' },
+          { time: '17:45', type: 'mic', title: 'Meet the teams', place: 'Zen Office, 11th floor' },
+          { time: '18:15', type: 'party', title: 'Merienda and photos', place: 'Zen Office, 11th floor' },
         ],
-      },
-      {
-        title: 'FELCO Explores Manila', tag: 'Your trip · Friday afternoon', range: exploreManila.museumFri.range,
-        note: 'One trip per person, in one slot: the National Museum or Binondo, morning or afternoon.',
-        options: [{ title: 'National Museum', place: 'Fine Arts & Natural History', image: museumPhoto }],
-        stops: exploreManila.museumFri.stops,
       },
     ],
   },

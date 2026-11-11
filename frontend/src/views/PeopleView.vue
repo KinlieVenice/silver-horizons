@@ -242,7 +242,10 @@ const initials = (name) => { const w = name.split(' '); return w[0][0] + (w.leng
             </li>
             <li v-for="c in g.cards.filter((x) => !x.secret)" :key="c.name + c.role" :style="{ '--i': c.at }" class="cascade portrait-card group overflow-hidden rounded-2xl">
               <div class="relative aspect-[4/5] overflow-hidden">
-                <img v-if="c.image" :src="c.image" :alt="c.name" class="absolute inset-0 size-full object-cover transition duration-700 group-hover:scale-[1.03]" loading="lazy" />
+                <!-- photo: its white studio backdrop multiplies into a soft silver one, so it sits in the night page -->
+                <div v-if="c.image" class="portrait-photo absolute inset-0">
+                  <img :src="c.image" :alt="c.name" class="size-full object-cover object-top mix-blend-multiply transition duration-700 group-hover:scale-[1.03]" loading="lazy" />
+                </div>
                 <!-- no photo yet: a chrome monogram on the night sky -->
                 <div v-else class="portrait-night absolute inset-0 grid place-items-center" aria-hidden="true">
                   <span class="chrome-num text-[clamp(2.6rem,7vw,4.2rem)] leading-none">{{ initials(c.name) }}</span>
