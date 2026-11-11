@@ -238,11 +238,16 @@ body {
 /* a part with no programme yet: one faint row */
 .stop.pending { opacity: 0.55; }
 .stop.pending .stop-card:hover { transform: none; }
-/* assigned-per-person options: the chrome "or" on the seam between the two photos */
-.or-medal {
-  background: radial-gradient(circle at 35% 30%, #1D3470, #08122F 75%);
-  box-shadow: 0 0 0 1px rgb(255 255 255 / 0.35), 0 0 0 5px rgb(4 11 36 / 0.85), 0 0 30px rgb(140 175 255 / 0.45);
+/* the fact card (Itinerary photos): glass on a dimmed, blurred page */
+.fact-card {
+  border: 1px solid rgb(255 255 255 / 0.16);
+  background: linear-gradient(180deg, #0E1D4A, #060E2C);
+  color: inherit;
+  box-shadow: 0 40px 100px -30px rgb(0 0 0 / 0.95), 0 0 60px -20px rgb(140 175 255 / 0.4);
 }
+.fact-card::backdrop { background: rgb(2 6 20 / 0.72); backdrop-filter: blur(6px); }
+.fact-card[open] { animation: fact-in 0.35s cubic-bezier(.2,.8,.2,1); }
+@keyframes fact-in { from { opacity: 0; transform: translateY(16px) scale(0.98); } }
 /* a part of the night: a glass band with a silver hairline, the part's name in chrome */
 .part-band {
   position: relative;
@@ -520,7 +525,7 @@ body {
   .day-leave-active { transition: none; }
   .day-enter-active .cascade, .day-enter-active .cascade .stop-line, .day-enter-active .cascade .stop-spark { animation: none; }
   .branch-dot.is-on .halo { animation: none; }
-  .portrait-photo { animation: none; }
+  .portrait-photo, .fact-card[open] { animation: none; }
   .beat-item, .beat-item.is-on, .beat-item .isle { transition: none; }
   /* Scenes become plain stacked sections shown at their end state */
   [data-scene] { height: auto !important; --p: 1 !important; }

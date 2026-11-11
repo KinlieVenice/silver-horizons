@@ -10,6 +10,7 @@ import Ribbon from '../components/Ribbon.vue'
 import Sparkle from '../components/Sparkle.vue'
 import HorizonGlow from '../components/HorizonGlow.vue'
 import TimelineStop from '../components/TimelineStop.vue'
+import PartGallery from '../components/PartGallery.vue'
 import { itinerary } from '../content/itinerary.js'
 import { defaultDayIndex, nextStopIndex, formatDay, manilaDate } from '../lib/schedule.js'
 
@@ -205,19 +206,8 @@ const pick = (i) => {
                   </div>
                   <p v-if="p.tag" class="glass-pill mt-3 inline-block text-xs font-medium tracking-[0.12em] text-ink uppercase">{{ p.tag }}</p>
                   <p v-if="p.note" class="mt-3 max-w-prose text-[15px] leading-relaxed text-ink/85">{{ p.note }}</p>
-                  <!-- assigned per person: one photo for the person's own tour; the public view shows both, a chrome "or" on the seam -->
-                  <ul v-if="p.options" class="relative mt-4 grid gap-2" :class="p.options.length > 1 && 'grid-cols-2'">
-                    <li v-for="o in p.options" :key="o.title" class="photo-frame relative overflow-hidden rounded-xl" :class="p.options.length > 1 ? 'aspect-[4/5] sm:aspect-[16/9]' : 'aspect-[16/9] sm:aspect-[21/8]'">
-                      <img :src="o.image" alt="" class="absolute inset-0 size-full object-cover" loading="lazy" />
-                      <div class="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/85 via-black/45 to-transparent p-3 pt-14 md:p-4 md:pt-16">
-                        <h4 class="font-display text-lg leading-tight font-semibold text-white md:text-2xl">{{ o.title }}</h4>
-                        <p class="mt-0.5 text-[10.5px] font-medium tracking-[0.18em] text-white/75 uppercase">{{ o.place }}</p>
-                      </div>
-                    </li>
-                    <li v-if="p.options.length > 1" class="or-medal pointer-events-none absolute top-[30%] left-1/2 grid size-10 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full sm:top-1/2 sm:size-12" aria-hidden="true">
-                      <span class="chrome-num font-display text-lg italic md:text-xl">or</span>
-                    </li>
-                  </ul>
+                  <!-- the activity's photos: a slider; tap one for its facts -->
+                  <PartGallery v-if="p.images?.length" :images="p.images" />
                 </header>
                 <ol class="mt-4 space-y-2.5">
                   <TimelineStop v-if="!p.stops.length" :stop="{ title: 'Programme to follow' }" :style="{ '--i': 4 + pi }" class="cascade pending" compact last />

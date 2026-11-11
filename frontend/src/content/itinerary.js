@@ -5,19 +5,27 @@ import welcomePhoto from '../assets/photos/welcome.webp'
 import museumPhoto from '../assets/photos/museum.webp'
 import binondoPhoto from '../assets/photos/binondo.webp'
 import nightPhoto from '../assets/photos/night.webp'
+import fineArtsPhoto from '../assets/photos/fine-arts.webp'
+import naturalHistoryPhoto from '../assets/photos/natural-history.webp'
+import anthropologyPhoto from '../assets/photos/anthropology.webp'
+import plazaPhoto from '../assets/photos/plaza-lorenzo-ruiz.webp'
 
 export const credits = [
   'Manila Bay sunset — Vyacheslav Argenberg, CC BY 4.0',
   'National Museum of the Philippines — Judgefloro, CC0',
   'Chinatown Arch, Manila — Richmond Chi, CC BY-SA 4.0',
   'Manila Bay at night — Ralff Nestor Nacor, CC BY-SA 4.0',
+  'National Museum of Fine Arts — PhiliptheNumber1, CC BY 4.0',
+  'National Museum of Natural History — RoyKabanlit, CC BY-SA 4.0',
+  'National Museum of Anthropology — Ralff Nestor Nacor, CC BY-SA 4.0',
+  'Plaza San Lorenzo Ruiz, Binondo — patrickroque01, CC BY-SA 4.0',
 ]
 
 // Day: date (+ endDate for a span), title, area, pills, then either `stops` or `parts`.
-// Part: title, range, optional tag (who it's for), note, options (assigned per person: { title, place, image }),
+// Part: title, range, optional tag (who it's for), note, images (photos, a slider; each { image, title, place, facts? }),
 // stops (its programme; empty = "Programme to follow").
 // Stop: time "HH:MM" Manila time (omit = TBA), type (see lib/kinds.js), title, optional place, note, image, mapUrl.
-// ponytail: tags and options are the public view; once sign-in is live each person gets only their own parts.
+// ponytail: tags are the public view; once sign-in is live each person gets only their own parts.
 // FELCO Explores Manila (official): one trip per person, in one slot.
 //   Dec 3: Museum Trip in the morning, Binondo Trip in the afternoon
 //   Dec 4: Binondo Trip in the morning, Museum Trip in the afternoon
@@ -78,13 +86,141 @@ export const royuTour = {
   friPM: { date: '2026-12-04', slot: 'Friday afternoon', range: '12:30 – 5:00 PM', stops: royuPM },
 }
 
-// a trip as a part of its day: its photo, slot and official programme
-const trip = (key, title, photo, place, first) => ({
+// each trip's photos (a slider; tap one for its facts)
+const gallery = {
+  // Zen Office Tour: placeholder frames until there are photos (from FELCO's own words)
+  zen: [
+    {
+      title: 'FELCO at 25', place: 'Built by purpose, powered by progress',
+      facts: [
+        'FELCO started in Manila in 2001 with a simple goal: quality lighting and electrical products that every Filipino can get and afford.',
+        'For 25 years, it has stood by its promise to deliver quality that Filipinos can rely on.',
+        'More than longevity, the milestone reflects the trust of its customers, partners and communities.',
+        'Its journey has been guided by integrity, dedication and values that endure, carried through every brand it serves.',
+        'The silver milestone isn’t an ending, but a launchpad for what comes next.',
+      ],
+    },
+    {
+      title: 'Quality Solutions for Quality Living', place: 'What FELCO does',
+      facts: [
+        'Light bulbs, electrical devices, accessories, door hardware, hand tools and power tools: FELCO builds confidence in every one.',
+        'Dependable lighting, electrical and power solutions for Filipino homes, businesses and communities.',
+        'From everyday essentials to engineered systems, made to stand the test of time.',
+      ],
+    },
+    {
+      title: 'FELCO in numbers', place: 'Bringing quality closer to you',
+      facts: [
+        '25 years of experience, since 2001.',
+        '13,000+ stores served directly, and a presence in 1,000+ modern retail stores.',
+        '2,000+ professional partner accounts.',
+        '17 distribution hubs and branches in key cities across the archipelago, for fast, reliable access nationwide.',
+      ],
+    },
+    {
+      title: '25 years of brands', place: 'From one lighting brand to many',
+      facts: [
+        '2001: Firefly Lighting. 2002: ROYU Wires and Devices.',
+        '2011: Firefly LED sets a new standard for efficient lighting.',
+        '2016: ECOLum, FELCO’s value brand, and CHINT for demanding environments.',
+        '2018: Dulux Paints, FELCO’s first step beyond electrical and lighting.',
+        '2020: Firefly Yellow Shield and Firefly Home. 2021: Firefly Smart Solutions.',
+        '2023: HERKS locksets and door hardware. 2024: ROYU Piping System, ABB and DCK Power Tools.',
+        '2026: XPERT sanitary fixtures and fittings.',
+      ],
+    },
+    {
+      title: 'Mission and Vision', place: 'What drives FELCO',
+      facts: [
+        'Mission: elevating everyday experiences with accessible quality products and solutions that every Filipino deserves.',
+        'Vision: to be the partner of choice for lighting and power solutions in the Philippines.',
+      ],
+    },
+  ],
+  // Royu: placeholder frames until there are photos (facts from Royu's company video)
+  royu: [
+    {
+      title: 'Royu Electrical', place: 'Proudly owned by FELCO',
+      facts: [
+        'Royu Electrical is owned by Firefly Electric and Lighting Corporation.',
+        'For over two decades it has served Filipino consumers with quality, affordable electrical products.',
+        'It started with switches and outlets, and grew into a full range of electrical solutions.',
+        'The electrical specialists: a one-stop shop for quality electrical needs.',
+      ],
+    },
+    {
+      title: 'The Calumpit plant', place: 'Calumpit, Bulacan',
+      facts: [
+        'Royu’s products are made at its manufacturing plant in Calumpit.',
+        'The plant runs on cutting-edge machinery imported from Europe.',
+        'A team of licensed engineers makes sure every product meets high standards of quality, safety and durability.',
+        'Industry-grade testing facilities are right on site.',
+      ],
+    },
+    {
+      title: 'What Royu makes', place: 'From switches to switchgear',
+      facts: [
+        'ROYU Wires and Devices arrived in 2002, and grew in 2013 with Royu’s own wires and communications cables, a favourite of professionals and homeowners.',
+        'Panel boards, distribution panels, switchboards and switchgear followed.',
+        'Circuit protection came in 2017, metallic tubes for conduits in 2021.',
+        'In 2024 the ROYU Piping System added PVC pipes and fittings.',
+      ],
+    },
+  ],
+  museum: [
+    {
+      title: 'National Museum of Fine Arts', place: 'The old Legislative Building', image: fineArtsPhoto,
+      facts: [
+        'It fills the former Legislative Building, completed in 1926, where the country’s lawmakers once met.',
+        'Home to Juan Luna’s Spoliarium (1884), the largest painting in the Philippines; it won a gold medal at the Madrid Exposition that year.',
+        'Works by Félix Resurrección Hidalgo and other Filipino masters hang in its galleries.',
+        'Entrance is free.',
+      ],
+    },
+    {
+      title: 'National Museum of Natural History', place: 'Agrifina Circle, Rizal Park', image: naturalHistoryPhoto,
+      facts: [
+        'It fills the former Agriculture and Commerce Building (1940) and opened as a museum in 2018.',
+        'At its heart stands the “Tree of Life”, a structure rising through the central atrium.',
+        'Its galleries cover the country’s plants, animals and ecosystems, from mountains to the deep sea.',
+        'It keeps the remains of Lolong, one of the largest saltwater crocodiles ever held in captivity.',
+      ],
+    },
+    {
+      title: 'National Museum of Anthropology', place: 'Next door, on the same museum grounds', image: anthropologyPhoto,
+      facts: [
+        'It fills the former Finance Building, the twin of the Natural History building across Agrifina Circle.',
+        'It holds the treasures of the San Diego, a Spanish galleon that sank off Batangas in 1600.',
+        'Here too is the Manunggul Jar, a burial jar nearly 3,000 years old and a National Cultural Treasure.',
+      ],
+    },
+  ],
+  binondo: [
+    {
+      title: 'Binondo', place: 'Manila’s Chinatown', image: binondoPhoto,
+      facts: [
+        'Founded in 1594, Binondo is often called the oldest Chinatown in the world.',
+        'Ongpin Street is the heart of its food scene: hopia, siopao, dumplings and more.',
+      ],
+    },
+    {
+      title: 'Plaza Lorenzo Ruiz', place: 'Binondo', image: plazaPhoto,
+      facts: [
+        'It honours San Lorenzo Ruiz, born in Binondo, the first Filipino saint, canonised in 1987.',
+        'It faces Binondo Church, the Minor Basilica of San Lorenzo Ruiz, first founded in 1596.',
+        'The Binondo trip’s bus drops you here, at the doorstep of old Binondo.',
+      ],
+    },
+  ],
+}
+
+// a trip as a part of its day: its photos (tap for facts), slot and official programme
+const trip = (key, title, first) => ({
   title: `FELCO Explores Manila: ${title}`,
   tag: exploreManila[key].slot.replace(/^\w+ (\w)/, (_, c) => c.toUpperCase()) + ' slot', // 'Thursday morning' → 'Morning slot'
   range: exploreManila[key].range,
   note: first ? 'One trip per person, in one slot. Once you sign in, you’ll see only yours.' : undefined,
-  options: [{ title, place, image: photo }],
+  images: gallery[key.replace(/(Thu|Fri)$/, '')],
   stops: exploreManila[key].stops,
 })
 
@@ -99,11 +235,12 @@ export const itinerary = [
     pills: ['Museum trip AM · Binondo trip PM', 'Royu Tour · 12:30 – 5:00 PM'],
     parts: [
       { title: 'Arrival in Manila', range: 'December 3', note: 'All employees in Manila by December 3.', stops: [{ type: 'flight', title: 'Travel details to follow' }] },
-      trip('museumThu', 'National Museum', museumPhoto, 'Fine Arts & Natural History', true),
-      trip('binondoThu', 'Binondo', binondoPhoto, 'Plaza Lorenzo Ruiz and Binondo'),
+      trip('museumThu', 'National Museum', true),
+      trip('binondoThu', 'Binondo'),
       {
         title: 'Royu Tour', tag: 'You’re registered · Thursday afternoon run', range: royuTour.thuPM.range,
         note: 'Two runs a day on December 3 and 4, 150 people each.',
+        images: gallery.royu,
         stops: royuTour.thuPM.stops,
       },
     ],
@@ -114,10 +251,11 @@ export const itinerary = [
     area: 'Explores Manila · Zen Office',
     pills: ['Binondo trip AM · Museum trip PM', 'Zen Office Tour: sample programme'],
     parts: [
-      trip('binondoFri', 'Binondo', binondoPhoto, 'Plaza Lorenzo Ruiz and Binondo', true),
-      trip('museumFri', 'National Museum', museumPhoto, 'Fine Arts & Natural History'),
+      trip('binondoFri', 'Binondo', true),
+      trip('museumFri', 'National Museum'),
       {
         title: 'Zen Office Tour', tag: 'Open to all', range: 'Sample · 5:00 – 6:30 PM · 11th floor',
+        images: gallery.zen,
         stops: [
           { time: '17:00', type: 'gather', title: 'Welcome on the 11th floor', place: 'Zen Office, 11th floor' },
           { time: '17:15', type: 'tour', title: 'Office walkthrough', place: 'Zen Office, 11th floor' },
