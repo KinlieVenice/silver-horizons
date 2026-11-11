@@ -2,8 +2,8 @@
      photo large, its title and place, and its facts if it has any (a glass "Facts" badge says so). The card is a
      native <dialog> (focus, Esc, screen readers for free); arrows step through the photos, ✕ / Esc / a tap
      outside closes it. images: [{ image?, title, place?, facts?: [] }]; no image = a night-sky placeholder with the
-     title in chrome (until a photo comes). Fixed sizes throughout: every thumbnail the same frame, the card's image
-     area always 16:9 and its text area one height, so nothing jumps; photos fill their frame (object-cover). -->
+     title in chrome (until a photo comes). Images have fixed sizes (every thumbnail the same frame, the card's image
+     always 16:9, object-cover); the card's text only has a max height, growing with its facts and scrolling past it. -->
 <script setup>
 import { ref } from 'vue'
 import Sparkle from './Sparkle.vue'
@@ -119,7 +119,7 @@ const onClose = () => lenis?.start()
             </button>
           </template>
         </div>
-        <figcaption class="h-[min(38svh,22rem)] overflow-y-auto px-6 pt-5 pb-7 md:px-8">
+        <figcaption class="max-h-[min(38svh,22rem)] overflow-y-auto px-6 pt-5 pb-7 md:px-8">
           <p v-if="images.length > 1" class="text-[11px] font-medium tracking-[0.2em] text-[#AEB9CF] uppercase">{{ shown + 1 }} / {{ images.length }}</p>
           <h3 class="relative mt-1 font-display text-[clamp(1.6rem,4vw,2.2rem)] leading-tight font-semibold">
             <span class="chrome-shadow" aria-hidden="true">{{ images[shown].title }}</span>
