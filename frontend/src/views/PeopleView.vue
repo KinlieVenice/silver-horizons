@@ -165,8 +165,10 @@ const initials = (name) => name.split(' ').filter((w) => /^[A-ZÑ]/.test(w)).map
       <div :key="tab">
         <p style="--i: 0" class="cascade max-w-xl text-[15px] leading-relaxed text-ink/80">{{ intro[tab] }}</p>
 
-        <!-- the events with entries in this tab (only one: just its name) -->
-        <div v-if="tabEvents.length > 1" style="--i: 1" class="cascade -mx-5 mt-6 flex gap-2 overflow-x-auto px-5 pb-1 [scrollbar-width:none] md:mx-0 md:flex-wrap md:px-0 [&::-webkit-scrollbar]:hidden" role="group" aria-label="Event">
+        <!-- the events with entries in this tab (only one: just its name). Sticky on a frosted strip just under
+             the tab capsule (phones, tablets) or the nav (desktop), so the list scrolls beneath it -->
+        <div v-if="tabEvents.length > 1" style="--i: 1" class="cascade event-strip sticky top-[4.5rem] z-20 -mx-5 mt-6 md:top-[8.25rem] md:-mx-3 lg:top-[4.5rem]">
+        <div class="flex gap-2 overflow-x-auto px-5 py-2 [scrollbar-width:none] md:flex-wrap md:px-3 [&::-webkit-scrollbar]:hidden" role="group" aria-label="Event">
           <button
             v-for="e in tabEvents"
             :key="e.id"
@@ -179,6 +181,7 @@ const initials = (name) => name.split(' ').filter((w) => /^[A-ZÑ]/.test(w)).map
             <span class="block text-[10.5px] font-medium tracking-[0.18em] uppercase opacity-75">{{ e.when }} · {{ e[tab].length }}</span>
             <span class="block text-sm font-semibold whitespace-nowrap">{{ e.title }}</span>
           </button>
+        </div>
         </div>
 
         <!-- Who's attending: a count, a search, then name | branch rows -->
