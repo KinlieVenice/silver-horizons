@@ -162,8 +162,18 @@ body {
 .event-strip::before { content: ""; position: absolute; inset-inline: 0; bottom: 100%; height: 4.5rem; background: inherit; backdrop-filter: inherit; -webkit-backdrop-filter: inherit; pointer-events: none; }
 @media (min-width: 768px) { .event-strip::before { height: 8.25rem; } }
 @media (min-width: 1024px) { .event-strip::before { height: 4.5rem; } }
-/* People: behind a photo, a soft silver gradient its white studio backdrop multiplies into */
-.portrait-photo { background: linear-gradient(180deg, #E9EDF4 0%, #CBD3E0 70%, #A9B4C6 100%); }
+/* People: behind a cut-out photo, polished silver: the site's chrome bands (as in SILVER / 25) on a diagonal,
+   and a band of light that glints across now and then (staggered card to card by --i) */
+.portrait-photo {
+  background:
+    linear-gradient(115deg, transparent 38%, rgb(255 255 255 / 0.75) 48%, transparent 58%),
+    linear-gradient(155deg, #F7F9FC 0%, #D4DAE4 20%, #9CA6B9 42%, #B9C1CF 58%, #EEF1F6 76%, #A9B2C3 100%);
+  background-size: 260% 100%, 100% 100%;
+  background-position: 130% 0, 0 0;
+  animation: silver-glint 7s ease-in-out infinite;
+  animation-delay: calc(var(--i, 0) * 0.45s);
+}
+@keyframes silver-glint { 0%, 55% { background-position: 130% 0, 0 0; } 85%, 100% { background-position: -30% 0, 0 0; } }
 /* People: the secret headliner, a wide card under two stage beams */
 .spotlight-card {
   position: relative;
@@ -510,6 +520,7 @@ body {
   .day-leave-active { transition: none; }
   .day-enter-active .cascade, .day-enter-active .cascade .stop-line, .day-enter-active .cascade .stop-spark { animation: none; }
   .branch-dot.is-on .halo { animation: none; }
+  .portrait-photo { animation: none; }
   .beat-item, .beat-item.is-on, .beat-item .isle { transition: none; }
   /* Scenes become plain stacked sections shown at their end state */
   [data-scene] { height: auto !important; --p: 1 !important; }

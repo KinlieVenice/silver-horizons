@@ -107,6 +107,43 @@ const glints = [
       </div>
     </section>
 
+    <!-- Lookbook: the official Canva lookbook embedded (portrait pages, Canva's own page controls), with a link
+         to open it full screen -->
+    <section class="px-5 pb-20 md:px-8 md:pb-28" aria-labelledby="lookbook-h">
+      <div class="mx-auto max-w-5xl">
+        <SectionHead id="lookbook-h" eyebrow="Lookbook" title="What to wear" />
+        <div class="invite-card mt-10 grid items-center gap-8 overflow-hidden rounded-3xl p-5 md:grid-cols-[1fr_minmax(0,24rem)] md:gap-12 md:p-10">
+          <div class="px-2 md:px-0">
+            <p class="text-xs font-medium tracking-[0.24em] text-[#AEB9CF] uppercase">Silver Horizons Night</p>
+            <p class="mt-3 text-2xl leading-snug font-semibold text-white">The official lookbook for the night.</p>
+            <p class="mt-3 text-base leading-relaxed text-ink">Flip through it for outfit ideas, and dress to shine: there’s a Best Dressed award on the programme.</p>
+            <a
+              :href="event.lookbook"
+              target="_blank"
+              rel="noopener"
+              class="mt-7 inline-flex min-h-11 w-fit items-center gap-2 rounded-full bg-white px-6 text-xs font-medium tracking-[0.22em] text-navy-950 uppercase transition hover:-translate-y-0.5 hover:bg-ink active:translate-y-0"
+            >Open full screen
+              <svg viewBox="0 0 24 24" class="size-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-8 8M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" /></svg>
+            </a>
+          </div>
+          <!-- exactly the page's shape (794 × 1123): with no spare room Canva lays its controls over the bottom of
+               the page on a soft gradient (and fades them out), so there's no black band anywhere -->
+          <div class="mx-auto w-full max-w-[24rem]">
+            <div class="photo-frame relative aspect-[794/1123] overflow-hidden rounded-2xl bg-navy-900">
+              <iframe
+                :src="`${event.lookbook}?embed`"
+                title="Silver Horizons lookbook"
+                class="absolute inset-0 size-full border-0"
+                loading="lazy"
+                allow="fullscreen"
+                allowfullscreen
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Travel tips -->
     <section class="px-5 pb-20 md:px-8 md:pb-28" aria-labelledby="tips-h">
       <div class="mx-auto max-w-5xl">

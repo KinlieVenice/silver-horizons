@@ -4,10 +4,11 @@
 // image: optional photo (import it like the itinerary photos); without one a chrome monogram shows.
 import { branches } from './branches.js'
 
-// photos in assets/people, named after the person ('Shirley De Jesus' → shirley-de-jesus.jpg)
-const photoFiles = import.meta.glob('../assets/people/*.jpg', { eager: true, import: 'default' })
+// photos in assets/people, named after the person ('Shirley De Jesus' → shirley-de-jesus.webp): cut-outs on a
+// transparent background (IMG.LY background removal), shown on the card's silver gradient
+const photoFiles = import.meta.glob('../assets/people/*.webp', { eager: true, import: 'default' })
 const slug = (name) => name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
-const withPhoto = (p) => ({ ...p, image: photoFiles[`../assets/people/${slug(p.name)}.jpg`] ?? p.image })
+const withPhoto = (p) => ({ ...p, image: photoFiles[`../assets/people/${slug(p.name)}.webp`] ?? p.image })
 
 const first = ['Andrea', 'Paolo', 'Bea', 'Carlo', 'Danica', 'Enzo', 'Faye', 'Gabriel', 'Hannah', 'Iñigo', 'Jasmine', 'Kevin', 'Lara', 'Miguel', 'Nicole', 'Oscar', 'Patricia', 'Rafael', 'Sofia', 'Tristan', 'Ursula', 'Vince', 'Wendy', 'Xavier', 'Ysabel', 'Zach', 'Aira', 'Bryan', 'Celine', 'Dominic', 'Ella', 'Francis']
 const last = ['Reyes', 'Santos', 'Cruz', 'Bautista', 'Garcia', 'Mendoza', 'Torres', 'Villanueva', 'Ramos', 'Aquino', 'Navarro', 'Castillo', 'Flores', 'Dela Cruz', 'Gonzales', 'Lim', 'Tan', 'Rivera', 'Domingo', 'Salazar', 'Pascual', 'Manalo', 'Ocampo', 'Fernandez', 'Soriano', 'Valdez', 'Mercado', 'Lopez', 'Javier']
@@ -22,7 +23,7 @@ const everyone = Array.from({ length: 72 }, (_, i) => ({
 // The events this (sample) person is registered for. Each event carries its own lists; a list left empty
 // (or out) means that event doesn't show in that tab, and a tab with nothing in any event doesn't show at all.
 // group: the heading a card sits under (Hosts, Speakers, Guides; Headliner, Line-up …), in the order given.
-// secret: a headliner still under wraps: one wide spotlight card, no name, no photo.
+// secret: an act still under wraps (a sparkle instead of a face); spotlight: the headliner's wide card.
 const night = everyone
 const events_ = [
   {
@@ -36,12 +37,9 @@ const events_ = [
       { name: 'Leo Navarro', group: 'Speakers', role: 'Speaker', note: 'Summit toast' },
     ],
     performers: [
-      { name: 'To be revealed', group: 'Headliner', role: 'Headliner', note: 'Part 3: Beyond the Summit', secret: true },
-      { name: 'The Silverlines', group: 'Line-up', role: 'Opening performance', note: 'Part 1: Ascent' },
-      { name: 'Lumen Dance Company', group: 'Line-up', role: 'Opening spectacle', note: 'Part 1: Ascent' },
-      { name: 'Mara Ocampo', group: 'Line-up', role: 'Performer', note: 'During dinner' },
-      { name: 'Kinetic Light Crew', group: 'Line-up', role: 'Summit lights', note: 'Part 3: Beyond the Summit' },
-      { name: 'DJ Horizon', group: 'Line-up', role: 'DJ set', note: 'After Party' },
+      { name: 'To be revealed', group: 'Headliner', role: 'Headliner', note: 'Part 3: Beyond the Summit · 8:40 PM', secret: true, spotlight: true },
+      { name: 'To be revealed', group: 'Line-up', role: 'Opening performance', note: 'Part 1: Ascent · 5:15 PM', secret: true },
+      { name: 'To be revealed', group: 'Line-up', role: 'Performer 1', note: 'During dinner · 6:30 PM', secret: true },
     ],
     committee: [
       { name: 'Aikel De Guzman', role: 'Organizer' },
