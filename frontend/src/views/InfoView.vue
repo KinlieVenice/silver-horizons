@@ -7,6 +7,7 @@ import Sparkle from '../components/Sparkle.vue'
 import HorizonGlow from '../components/HorizonGlow.vue'
 import SectionHead from '../components/SectionHead.vue'
 import { event } from '../content/event.js'
+import venuePhoto from '../assets/photos/east-ocean-palace.webp'
 import { content } from '../lib/session.js'
 
 const { tips, faq, contact } = content // loaded after sign-in, before any page renders
@@ -83,6 +84,11 @@ const glints = [
       <div class="mx-auto max-w-5xl">
         <SectionHead id="venue-h" eyebrow="Venue" :title="event.venue" />
         <div class="invite-card mt-10 grid overflow-hidden rounded-3xl md:grid-cols-[1fr_1.5fr]">
+          <!-- the venue at night, across the top of the card, so it's easy to spot on arrival -->
+          <div class="relative aspect-[16/10] border-b border-white/10 sm:aspect-[2/1] md:col-span-2">
+            <img :src="venuePhoto" alt="East Ocean Palace at night, its lit sign over the entrance" class="absolute inset-0 size-full object-cover object-[center_72%]" loading="lazy" />
+            <span class="absolute inset-x-0 bottom-0 h-1/3 bg-linear-to-t from-[#0B1534]/80 to-transparent" aria-hidden="true" />
+          </div>
           <div class="flex flex-col justify-center p-7 md:p-10">
             <p class="text-xs font-medium tracking-[0.24em] text-[#AEB9CF] uppercase">Where</p>
             <p class="mt-2 text-2xl font-semibold text-white">{{ event.venue }}</p>
@@ -104,6 +110,43 @@ const glints = [
               loading="lazy"
               referrerpolicy="no-referrer-when-downgrade"
             />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Lookbook: the official Canva lookbook embedded (portrait pages, Canva's own page controls), with a link
+         to open it full screen -->
+    <section class="px-5 pb-20 md:px-8 md:pb-28" aria-labelledby="lookbook-h">
+      <div class="mx-auto max-w-5xl">
+        <SectionHead id="lookbook-h" eyebrow="Lookbook" title="What to wear" />
+        <div class="invite-card mt-10 grid items-center gap-8 overflow-hidden rounded-3xl p-5 md:grid-cols-[1fr_minmax(0,24rem)] md:gap-12 md:p-10">
+          <div class="px-2 md:px-0">
+            <p class="text-xs font-medium tracking-[0.24em] text-[#AEB9CF] uppercase">Silver Horizons Night</p>
+            <p class="mt-3 text-2xl leading-snug font-semibold text-white">The official lookbook for the night.</p>
+            <p class="mt-3 text-base leading-relaxed text-ink">Flip through it for outfit ideas, and dress to shine: there’s a Best Dressed award on the programme.</p>
+            <a
+              :href="event.lookbook"
+              target="_blank"
+              rel="noopener"
+              class="mt-7 inline-flex min-h-11 w-fit items-center gap-2 rounded-full bg-white px-6 text-xs font-medium tracking-[0.22em] text-navy-950 uppercase transition hover:-translate-y-0.5 hover:bg-ink active:translate-y-0"
+            >Open full screen
+              <svg viewBox="0 0 24 24" class="size-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-8 8M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" /></svg>
+            </a>
+          </div>
+          <!-- exactly the page's shape (794 × 1123): with no spare room Canva lays its controls over the bottom of
+               the page on a soft gradient (and fades them out), so there's no black band anywhere -->
+          <div class="mx-auto w-full max-w-[24rem]">
+            <div class="photo-frame relative aspect-[794/1123] overflow-hidden rounded-2xl bg-navy-900">
+              <iframe
+                :src="`${event.lookbook}?embed`"
+                title="Silver Horizons lookbook"
+                class="absolute inset-0 size-full border-0"
+                loading="lazy"
+                allow="fullscreen"
+                allowfullscreen
+              />
+            </div>
           </div>
         </div>
       </div>

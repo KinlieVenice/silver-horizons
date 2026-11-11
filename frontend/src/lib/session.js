@@ -1,20 +1,16 @@
 import { reactive } from 'vue'
-import welcome from '../assets/photos/welcome.webp'
-import museum from '../assets/photos/museum.webp'
-import binondo from '../assets/photos/binondo.webp'
-import night from '../assets/photos/night.webp'
 
 // Sign-in state and the private content (itinerary, Home's film strip, People, tips, FAQ, contact), which only the backend
 // serves, after a company Google sign-in. The backend keeps the OAuth tokens; the browser only holds its
 // HttpOnly session cookie, sent along with every request here.
 // VITE_API_URL: the backend's origin when it isn't the same as the site's (empty in dev: Vite proxies it).
 const API = import.meta.env.VITE_API_URL ?? ''
-// content.json names a photo ('museum', 'people/eva-dy'); the site bundles the file
-const peoplePhotos = import.meta.glob('../assets/people/*.jpg', { eager: true, import: 'default' })
-const photos = {
-  welcome, museum, binondo, night,
-  ...Object.fromEntries(Object.entries(peoplePhotos).map(([f, url]) => [`people/${f.split('/').pop().replace('.jpg', '')}`, url])),
-}
+// content.json names a photo by its file ('fine-arts', 'people/eva-dy'); the site bundles every photo in
+// assets/photos and assets/people, so a new one only needs its file there
+const photoFiles = import.meta.glob(['../assets/photos/*.webp', '../assets/people/*.webp'], { eager: true, import: 'default' })
+const photos = Object.fromEntries(
+  Object.entries(photoFiles).map(([f, url]) => [f.replace('../assets/photos/', '').replace('../assets/', '').replace('.webp', ''), url]),
+)
 
 // status: 'loading' | 'out' (show sign-in) | 'in' | 'error' (backend unreachable)
 // error: why the last sign-in failed, from the backend's redirect (?auth_error=domain | cancelled)

@@ -25,11 +25,38 @@
           "tag": "Morning slot",
           "range": "8:00 AM – 12:45 PM",
           "note": "One trip per person, in one slot. Once you sign in, you’ll see only yours.",
-          "options": [
+          "images": [
             {
-              "title": "National Museum",
-              "place": "Fine Arts & Natural History",
-              "image": "museum"
+              "title": "National Museum of Fine Arts",
+              "place": "The old Legislative Building",
+              "image": "fine-arts",
+              "facts": [
+                "It fills the former Legislative Building, completed in 1926, where the country’s lawmakers once met.",
+                "Home to Juan Luna’s Spoliarium (1884), the largest painting in the Philippines; it won a gold medal at the Madrid Exposition that year.",
+                "Works by Félix Resurrección Hidalgo and other Filipino masters hang in its galleries.",
+                "Entrance is free."
+              ]
+            },
+            {
+              "title": "National Museum of Natural History",
+              "place": "Agrifina Circle, Rizal Park",
+              "image": "natural-history",
+              "facts": [
+                "It fills the former Agriculture and Commerce Building (1940) and opened as a museum in 2018.",
+                "At its heart stands the “Tree of Life”, a structure rising through the central atrium.",
+                "Its galleries cover the country’s plants, animals and ecosystems, from mountains to the deep sea.",
+                "It keeps the remains of Lolong, one of the largest saltwater crocodiles ever held in captivity."
+              ]
+            },
+            {
+              "title": "National Museum of Anthropology",
+              "place": "Next door, on the same museum grounds",
+              "image": "anthropology",
+              "facts": [
+                "It fills the former Finance Building, the twin of the Natural History building across Agrifina Circle.",
+                "It holds the treasures of the San Diego, a Spanish galleon that sank off Batangas in 1600.",
+                "Here too is the Manunggul Jar, a burial jar nearly 3,000 years old and a National Cultural Treasure."
+              ]
             }
           ],
           "stops": [
@@ -79,11 +106,25 @@
           "title": "FELCO Explores Manila: Binondo",
           "tag": "Afternoon slot",
           "range": "12:45 – 5:00 PM",
-          "options": [
+          "images": [
             {
               "title": "Binondo",
-              "place": "Plaza Lorenzo Ruiz and Binondo",
-              "image": "binondo"
+              "place": "Manila’s Chinatown",
+              "image": "binondo",
+              "facts": [
+                "Founded in 1594, Binondo is often called the oldest Chinatown in the world.",
+                "Ongpin Street is the heart of its food scene: hopia, siopao, dumplings and more."
+              ]
+            },
+            {
+              "title": "Plaza Lorenzo Ruiz",
+              "place": "Binondo",
+              "image": "plaza-lorenzo-ruiz",
+              "facts": [
+                "It honours San Lorenzo Ruiz, born in Binondo, the first Filipino saint, canonised in 1987.",
+                "It faces Binondo Church, the Minor Basilica of San Lorenzo Ruiz, first founded in 1596.",
+                "The Binondo trip’s bus drops you here, at the doorstep of old Binondo."
+              ]
             }
           ],
           "stops": [
@@ -116,6 +157,38 @@
           "tag": "You’re registered · Thursday afternoon run",
           "range": "12:30 – 5:00 PM",
           "note": "Two runs a day on December 3 and 4, 150 people each.",
+          "images": [
+            {
+              "title": "Royu Electrical",
+              "place": "Proudly owned by FELCO",
+              "facts": [
+                "Royu Electrical is owned by Firefly Electric and Lighting Corporation.",
+                "For over two decades it has served Filipino consumers with quality, affordable electrical products.",
+                "It started with switches and outlets, and grew into a full range of electrical solutions.",
+                "The electrical specialists: a one-stop shop for quality electrical needs."
+              ]
+            },
+            {
+              "title": "The Calumpit plant",
+              "place": "Calumpit, Bulacan",
+              "facts": [
+                "Royu’s products are made at its manufacturing plant in Calumpit.",
+                "The plant runs on cutting-edge machinery imported from Europe.",
+                "A team of licensed engineers makes sure every product meets high standards of quality, safety and durability.",
+                "Industry-grade testing facilities are right on site."
+              ]
+            },
+            {
+              "title": "What Royu makes",
+              "place": "From switches to switchgear",
+              "facts": [
+                "ROYU Wires and Devices arrived in 2002, and grew in 2013 with Royu’s own wires and communications cables, a favourite of professionals and homeowners.",
+                "Panel boards, distribution panels, switchboards and switchgear followed.",
+                "Circuit protection came in 2017, metallic tubes for conduits in 2021.",
+                "In 2024 the ROYU Piping System added PVC pipes and fittings."
+              ]
+            }
+          ],
           "stops": [
             {
               "time": "12:30",
@@ -184,11 +257,25 @@
           "tag": "Morning slot",
           "range": "7:45 AM – 12:00 PM",
           "note": "One trip per person, in one slot. Once you sign in, you’ll see only yours.",
-          "options": [
+          "images": [
             {
               "title": "Binondo",
-              "place": "Plaza Lorenzo Ruiz and Binondo",
-              "image": "binondo"
+              "place": "Manila’s Chinatown",
+              "image": "binondo",
+              "facts": [
+                "Founded in 1594, Binondo is often called the oldest Chinatown in the world.",
+                "Ongpin Street is the heart of its food scene: hopia, siopao, dumplings and more."
+              ]
+            },
+            {
+              "title": "Plaza Lorenzo Ruiz",
+              "place": "Binondo",
+              "image": "plaza-lorenzo-ruiz",
+              "facts": [
+                "It honours San Lorenzo Ruiz, born in Binondo, the first Filipino saint, canonised in 1987.",
+                "It faces Binondo Church, the Minor Basilica of San Lorenzo Ruiz, first founded in 1596.",
+                "The Binondo trip’s bus drops you here, at the doorstep of old Binondo."
+              ]
             }
           ],
           "stops": [
@@ -220,11 +307,38 @@
           "title": "FELCO Explores Manila: National Museum",
           "tag": "Afternoon slot",
           "range": "12:00 – 4:45 PM",
-          "options": [
+          "images": [
             {
-              "title": "National Museum",
-              "place": "Fine Arts & Natural History",
-              "image": "museum"
+              "title": "National Museum of Fine Arts",
+              "place": "The old Legislative Building",
+              "image": "fine-arts",
+              "facts": [
+                "It fills the former Legislative Building, completed in 1926, where the country’s lawmakers once met.",
+                "Home to Juan Luna’s Spoliarium (1884), the largest painting in the Philippines; it won a gold medal at the Madrid Exposition that year.",
+                "Works by Félix Resurrección Hidalgo and other Filipino masters hang in its galleries.",
+                "Entrance is free."
+              ]
+            },
+            {
+              "title": "National Museum of Natural History",
+              "place": "Agrifina Circle, Rizal Park",
+              "image": "natural-history",
+              "facts": [
+                "It fills the former Agriculture and Commerce Building (1940) and opened as a museum in 2018.",
+                "At its heart stands the “Tree of Life”, a structure rising through the central atrium.",
+                "Its galleries cover the country’s plants, animals and ecosystems, from mountains to the deep sea.",
+                "It keeps the remains of Lolong, one of the largest saltwater crocodiles ever held in captivity."
+              ]
+            },
+            {
+              "title": "National Museum of Anthropology",
+              "place": "Next door, on the same museum grounds",
+              "image": "anthropology",
+              "facts": [
+                "It fills the former Finance Building, the twin of the Natural History building across Agrifina Circle.",
+                "It holds the treasures of the San Diego, a Spanish galleon that sank off Batangas in 1600.",
+                "Here too is the Manunggul Jar, a burial jar nearly 3,000 years old and a National Cultural Treasure."
+              ]
             }
           ],
           "stops": [
@@ -274,6 +388,59 @@
           "title": "Zen Office Tour",
           "tag": "Open to all",
           "range": "Sample · 5:00 – 6:30 PM · 11th floor",
+          "images": [
+            {
+              "title": "FELCO at 25",
+              "place": "Built by purpose, powered by progress",
+              "facts": [
+                "FELCO started in Manila in 2001 with a simple goal: quality lighting and electrical products that every Filipino can get and afford.",
+                "For 25 years, it has stood by its promise to deliver quality that Filipinos can rely on.",
+                "More than longevity, the milestone reflects the trust of its customers, partners and communities.",
+                "Its journey has been guided by integrity, dedication and values that endure, carried through every brand it serves.",
+                "The silver milestone isn’t an ending, but a launchpad for what comes next."
+              ]
+            },
+            {
+              "title": "Quality Solutions for Quality Living",
+              "place": "What FELCO does",
+              "facts": [
+                "Light bulbs, electrical devices, accessories, door hardware, hand tools and power tools: FELCO builds confidence in every one.",
+                "Dependable lighting, electrical and power solutions for Filipino homes, businesses and communities.",
+                "From everyday essentials to engineered systems, made to stand the test of time."
+              ]
+            },
+            {
+              "title": "FELCO in numbers",
+              "place": "Bringing quality closer to you",
+              "facts": [
+                "25 years of experience, since 2001.",
+                "13,000+ stores served directly, and a presence in 1,000+ modern retail stores.",
+                "2,000+ professional partner accounts.",
+                "17 distribution hubs and branches in key cities across the archipelago, for fast, reliable access nationwide."
+              ]
+            },
+            {
+              "title": "25 years of brands",
+              "place": "From one lighting brand to many",
+              "facts": [
+                "2001: Firefly Lighting. 2002: ROYU Wires and Devices.",
+                "2011: Firefly LED sets a new standard for efficient lighting.",
+                "2016: ECOLum, FELCO’s value brand, and CHINT for demanding environments.",
+                "2018: Dulux Paints, FELCO’s first step beyond electrical and lighting.",
+                "2020: Firefly Yellow Shield and Firefly Home. 2021: Firefly Smart Solutions.",
+                "2023: HERKS locksets and door hardware. 2024: ROYU Piping System, ABB and DCK Power Tools.",
+                "2026: XPERT sanitary fixtures and fittings."
+              ]
+            },
+            {
+              "title": "Mission and Vision",
+              "place": "What drives FELCO",
+              "facts": [
+                "Mission: elevating everyday experiences with accessible quality products and solutions that every Filipino deserves.",
+                "Vision: to be the partner of choice for lighting and power solutions in the Philippines."
+              ]
+            }
+          ],
           "stops": [
             {
               "time": "17:00",
@@ -315,6 +482,13 @@
         {
           "title": "Registration & Pre-event",
           "range": "2:00 – 4:00 PM",
+          "images": [
+            {
+              "title": "East Ocean Palace",
+              "place": "Parañaque City",
+              "image": "east-ocean-palace"
+            }
+          ],
           "stops": [
             {
               "time": "14:00",
@@ -545,7 +719,7 @@
       "area": "East Ocean Palace",
       "blurb": "The 25th anniversary celebration, 2:00 to 11:00 PM.",
       "images": [
-        "night"
+        "east-ocean-palace"
       ]
     }
   ],
@@ -553,7 +727,10 @@
     "Manila Bay sunset — Vyacheslav Argenberg, CC BY 4.0",
     "National Museum of the Philippines — Judgefloro, CC0",
     "Chinatown Arch, Manila — Richmond Chi, CC BY-SA 4.0",
-    "Manila Bay at night — Ralff Nestor Nacor, CC BY-SA 4.0"
+    "National Museum of Fine Arts — PhiliptheNumber1, CC BY 4.0",
+    "National Museum of Natural History — RoyKabanlit, CC BY-SA 4.0",
+    "National Museum of Anthropology — Ralff Nestor Nacor, CC BY-SA 4.0",
+    "Plaza San Lorenzo Ruiz, Binondo — patrickroque01, CC BY-SA 4.0"
   ],
   "exploreManila": {
     "museumThu": {
@@ -1267,38 +1444,23 @@
           "name": "To be revealed",
           "group": "Headliner",
           "role": "Headliner",
-          "note": "Part 3: Beyond the Summit",
+          "note": "Part 3: Beyond the Summit · 8:40 PM",
+          "secret": true,
+          "spotlight": true
+        },
+        {
+          "name": "To be revealed",
+          "group": "Line-up",
+          "role": "Opening performance",
+          "note": "Part 1: Ascent · 5:15 PM",
           "secret": true
         },
         {
-          "name": "The Silverlines",
+          "name": "To be revealed",
           "group": "Line-up",
-          "role": "Opening performance",
-          "note": "Part 1: Ascent"
-        },
-        {
-          "name": "Lumen Dance Company",
-          "group": "Line-up",
-          "role": "Opening spectacle",
-          "note": "Part 1: Ascent"
-        },
-        {
-          "name": "Mara Ocampo",
-          "group": "Line-up",
-          "role": "Performer",
-          "note": "During dinner"
-        },
-        {
-          "name": "Kinetic Light Crew",
-          "group": "Line-up",
-          "role": "Summit lights",
-          "note": "Part 3: Beyond the Summit"
-        },
-        {
-          "name": "DJ Horizon",
-          "group": "Line-up",
-          "role": "DJ set",
-          "note": "After Party"
+          "role": "Performer 1",
+          "note": "During dinner · 6:30 PM",
+          "secret": true
         }
       ],
       "committee": [

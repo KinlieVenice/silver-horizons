@@ -7,4 +7,6 @@ export const event = {
   venue: 'East Ocean Palace',
   city: 'Parañaque City',
   mapQuery: 'East Ocean Palace, Parañaque City',
+  // the official lookbook (Canva, shared as 'anyone with the link can view'); shown on Info
+  lookbook: 'https://www.canva.com/design/DAHV_81BWMs/RxH5uKgk3iz2GJ0vQJf8UQ/view',
 }

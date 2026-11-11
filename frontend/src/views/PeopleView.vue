@@ -224,9 +224,9 @@ const initials = (name) => { const w = name.split(' '); return w[0][0] + (w.leng
             <span class="h-px flex-1 bg-linear-to-r from-white/40 to-transparent" aria-hidden="true" />
             <span class="text-xs font-medium tracking-[0.18em] text-[#AEB9CF] uppercase">{{ g.cards.length }}</span>
           </h3>
-          <ul class="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3" :class="g.name && 'mt-5'">
+          <ul class="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4" :class="g.name && 'mt-5'">
             <!-- a headliner still under wraps: one wide spotlight card -->
-            <li v-for="c in g.cards.filter((x) => x.secret)" :key="c.name + c.role" :style="{ '--i': c.at }" class="cascade spotlight-card col-span-full grid overflow-hidden rounded-3xl md:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]">
+            <li v-for="c in g.cards.filter((x) => x.spotlight)" :key="c.name + c.role" :style="{ '--i': c.at }" class="cascade spotlight-card col-span-full grid overflow-hidden rounded-3xl md:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]">
               <div class="spotlight-stage relative grid min-h-56 place-items-center md:min-h-72" aria-hidden="true">
                 <Sparkle twinkle class="relative z-[1] size-20 md:size-28" />
                 <Sparkle twinkle class="absolute top-[22%] left-[24%] size-3 [animation-delay:0.8s]" />
@@ -242,21 +242,23 @@ const initials = (name) => { const w = name.split(' '); return w[0][0] + (w.leng
                 <p class="mt-1 text-sm text-ink/60">Revealed closer to the night.</p>
               </div>
             </li>
-            <li v-for="c in g.cards.filter((x) => !x.secret)" :key="c.name + c.role" :style="{ '--i': c.at }" class="cascade portrait-card group overflow-hidden rounded-2xl">
+            <li v-for="c in g.cards.filter((x) => !x.spotlight)" :key="c.name + c.role" :style="{ '--i': c.at }" class="cascade portrait-card group overflow-hidden rounded-2xl">
               <div class="relative aspect-[4/5] overflow-hidden">
-                <!-- photo: its white studio backdrop multiplies into a soft silver one, so it sits in the night page -->
+                <!-- photo: a cut-out (transparent background) standing on a soft silver gradient -->
                 <div v-if="c.image" class="portrait-photo absolute inset-0">
-                  <img :src="c.image" :alt="c.name" class="size-full object-cover object-top mix-blend-multiply transition duration-700 group-hover:scale-[1.03]" loading="lazy" />
+                  <img :src="c.image" :alt="c.name" class="size-full object-cover object-top transition duration-700 group-hover:scale-[1.03]" loading="lazy" />
                 </div>
                 <!-- no photo yet: a chrome monogram on the night sky -->
                 <div v-else class="portrait-night absolute inset-0 grid place-items-center" aria-hidden="true">
-                  <span class="chrome-num text-[clamp(2.6rem,7vw,4.2rem)] leading-none">{{ initials(c.name) }}</span>
+                  <!-- an act still under wraps: a sparkle in a spotlight instead of a face -->
+                  <Sparkle v-if="c.secret" twinkle :style="{ animationDelay: `${c.at * 0.4}s` }" class="size-12 md:size-16" />
+                  <span v-else class="chrome-num text-[clamp(2.6rem,7vw,4.2rem)] leading-none">{{ initials(c.name) }}</span>
                 </div>
                 <span class="absolute inset-x-0 bottom-0 h-1/3 bg-linear-to-t from-[#060E2C] to-transparent" aria-hidden="true" />
               </div>
               <div class="px-4 pt-1 pb-4">
                 <p class="text-[10.5px] font-medium tracking-[0.18em] text-[#AEB9CF] uppercase">{{ c.role }}</p>
-                <h3 class="mt-1 text-[17px] leading-snug font-semibold text-white">{{ c.name }}</h3>
+                <h3 class="mt-1 text-[17px] leading-snug font-semibold text-white" :class="c.secret && 'text-white/80 italic'">{{ c.name }}</h3>
                 <p v-if="c.note" class="mt-0.5 text-[13px] text-ink/70">{{ c.note }}</p>
               </div>
             </li>
