@@ -2,7 +2,8 @@
      photo large, its title and place, and its facts if it has any (a glass "Facts" badge says so). The card is a
      native <dialog> (focus, Esc, screen readers for free); arrows step through the photos, ✕ / Esc / a tap
      outside closes it. images: [{ image?, title, place?, facts?: [] }]; no image = a night-sky placeholder with the
-     title in chrome (until a photo comes). -->
+     title in chrome (until a photo comes). Images have fixed sizes (every thumbnail the same frame, the card's image
+     always 16:9, object-cover); the card's text only has a max height, growing with its facts and scrolling past it. -->
 <script setup>
 import { ref } from 'vue'
 import Sparkle from './Sparkle.vue'
@@ -46,7 +47,7 @@ const onClose = () => lenis?.start()
           :aria-label="`${p.title}: ${p.facts?.length ? 'open facts' : 'view photo'}`"
           @click="open(i)"
         >
-          <img v-if="p.image" :src="p.image" alt="" class="absolute inset-0 size-full object-cover" loading="lazy" draggable="false" />
+          <img v-if="p.image" :src="p.image" alt="" width="1200" height="800" class="absolute inset-0 size-full object-cover" loading="lazy" draggable="false" />
           <span v-else class="film-night absolute inset-0 grid place-items-center pb-10" aria-hidden="true">
             <Sparkle twinkle class="size-8 opacity-80" />
           </span>
@@ -92,8 +93,9 @@ const onClose = () => lenis?.start()
     <!-- the fact card -->
     <dialog ref="dlg" class="fact-card m-auto w-[min(92vw,44rem)] overflow-hidden rounded-3xl p-0 text-left" :aria-label="images[shown].title" @click.self="dlg.close()" @close="onClose">
       <figure>
-        <div class="relative bg-navy-950" :class="images[shown].image ? 'aspect-[16/10]' : 'aspect-[16/6]'">
-          <img v-if="images[shown].image" :src="images[shown].image" :alt="images[shown].title" class="absolute inset-0 size-full object-cover" />
+        <!-- one fixed shape for every slide (photo or placeholder), so the card never changes size as you step -->
+        <div class="relative aspect-[16/9] overflow-hidden bg-navy-950">
+          <img v-if="images[shown].image" :src="images[shown].image" :alt="images[shown].title" width="1200" height="800" class="absolute inset-0 size-full object-cover" />
           <div v-else class="film-night absolute inset-0 grid place-items-center" aria-hidden="true">
             <span class="relative px-8 text-center font-display text-[clamp(2rem,6vw,3.2rem)] leading-tight font-semibold">
               <span class="chrome-shadow">{{ images[shown].title }}</span>
@@ -117,7 +119,7 @@ const onClose = () => lenis?.start()
             </button>
           </template>
         </div>
-        <figcaption class="overflow-y-auto px-6 pt-5 pb-7 md:px-8" :class="images[shown].image ? 'max-h-[45svh]' : 'max-h-[62svh]'">
+        <figcaption class="max-h-[min(38svh,22rem)] overflow-y-auto px-6 pt-5 pb-7 md:px-8">
           <p v-if="images.length > 1" class="text-[11px] font-medium tracking-[0.2em] text-[#AEB9CF] uppercase">{{ shown + 1 }} / {{ images.length }}</p>
           <h3 class="relative mt-1 font-display text-[clamp(1.6rem,4vw,2.2rem)] leading-tight font-semibold">
             <span class="chrome-shadow" aria-hidden="true">{{ images[shown].title }}</span>
