@@ -11,7 +11,7 @@
   --font-sans: "Jost", "Gill Sans", "Segoe UI", sans-serif;
 }
 
-/* shared metallic silver (SILVER MOMENT, MANILA, day headings, chrome numerals): bright top, smooth cool-grey
+/* shared metallic silver (SILVER MOMENT, Itinerary SILVER, day headings, chrome numerals): bright top, smooth cool-grey
    mid-tones, a light sheen, soft grey foot; gradual stops, so no hard line through the letters */
 :root { --chrome: linear-gradient(180deg, #F7F9FC 0%, #D4DAE4 20%, #9CA6B9 42%, #B9C1CF 58%, #EEF1F6 76%, #A9B2C3 100%); }
 html { background: var(--color-navy-950); color-scheme: dark; }
@@ -76,19 +76,35 @@ body {
 .numeral { color: transparent; -webkit-text-stroke: 1.5px var(--accent); }
 
 /* ---- Itinerary: day index + stop timeline ---- */
-/* day index (desktop): chrome numerals; the chosen day sits on a glass panel with a silver edge */
-.day-card { border: 1px solid transparent; transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.15s ease; }
-.day-card:hover { background: rgb(255 255 255 / 0.03); }
-.day-card:active { transform: translateY(1px); }
-.day-card.is-active {
-  background: linear-gradient(180deg, rgb(255 255 255 / 0.07), rgb(255 255 255 / 0.02));
-  border-color: rgb(255 255 255 / 0.14);
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.12), 0 18px 40px -24px rgb(0 0 0 / 0.9);
+/* day index (desktop): every day a glass button (edge, arrow) so it reads as clickable; hover lifts and
+   brightens; the chosen day glows with a silver edge and a lit bar on its left */
+.day-card {
+  border: 1px solid rgb(255 255 255 / 0.12);
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.05), rgb(255 255 255 / 0.015));
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.07), 0 14px 30px -22px rgb(0 0 0 / 0.9);
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
 }
-.day-card .chrome-num { opacity: 0.45; transition: opacity 0.3s ease; }
+.day-card:hover { border-color: rgb(255 255 255 / 0.32); transform: translateY(-2px); box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.1), 0 0 26px -8px rgb(140 175 255 / 0.4); }
+.day-card:active { transform: translateY(0); }
+.day-card:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+.day-card.is-active {
+  border-color: rgb(255 255 255 / 0.5);
+  background: linear-gradient(180deg, rgb(60 95 190 / 0.35), rgb(255 255 255 / 0.04));
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.2), 0 0 34px -6px rgb(150 185 255 / 0.55);
+}
+.day-card.is-active::before {
+  content: ""; position: absolute; left: -1px; top: 18%; bottom: 18%; width: 2px; border-radius: 2px;
+  background: #fff; box-shadow: 0 0 10px 1px rgb(170 200 255 / 0.9);
+}
+.day-card .chrome-num { opacity: 0.7; transition: opacity 0.3s ease; }
 .day-card:hover .chrome-num, .day-card.is-active .chrome-num { opacity: 1; }
-.day-btn { transition: color 0.2s ease, transform 0.15s ease; }
+.day-arrow { transition: transform 0.25s ease, color 0.25s ease; }
+.day-card:hover .day-arrow { transform: translateX(3px); color: #fff; }
+/* phones: segmented control */
+.day-btn { color: #C3CDE0; border: 1px solid rgb(255 255 255 / 0.1); transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.15s ease; }
+.day-btn:hover { border-color: rgb(255 255 255 / 0.3); color: #fff; }
 .day-btn:active { transform: translateY(1px); }
+.day-btn.is-active { background: #fff; color: #040B24; border-color: #fff; box-shadow: 0 0 22px -4px rgb(160 190 255 / 0.7); }
 
 /* chrome numerals (times, day numbers): the SILVER MOMENT face and sheen, no shadow copy needed at this size */
 .chrome-num {
@@ -101,7 +117,7 @@ body {
   font-variant-numeric: lining-nums;
 }
 
-/* Gala invitation card: glass, a silver hairline along the top */
+/* invitation card (Info): glass, a silver hairline along the top */
 .invite-card {
   position: relative;
   border: 1px solid rgb(255 255 255 / 0.12);
@@ -112,29 +128,6 @@ body {
   content: ""; position: absolute; inset: 0 2rem auto; height: 1px;
   background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.8), transparent);
 }
-
-/* Gala: a soft glow behind the programme */
-.gala-glow { background: radial-gradient(closest-side, rgb(60 100 200 / 0.28), transparent); }
-
-/* Gala programme: framed glass card, a second silver frame inset like a printed programme */
-.programme {
-  border: 1px solid rgb(255 255 255 / 0.18);
-  background: linear-gradient(180deg, rgb(12 26 70 / 0.7), rgb(6 14 42 / 0.75));
-  backdrop-filter: blur(6px);
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.12), 0 50px 100px -40px rgb(0 0 0 / 0.95), 0 0 80px -30px rgb(140 175 255 / 0.35);
-}
-.programme::before {
-  content: ""; position: absolute; inset: 0.75rem; border-radius: 1.5rem; pointer-events: none;
-  border: 1px solid rgb(255 255 255 / 0.1);
-}
-.programme::after {
-  content: ""; position: absolute; inset: 0 3rem auto; height: 1px;
-  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.85), transparent);
-}
-.prog-item h3 { transition: text-shadow 0.3s ease; }
-.prog-item:hover h3 { text-shadow: 0 0 24px rgb(170 200 255 / 0.55); }
-.prog-item.past { filter: brightness(0.5) saturate(0.4); }
-.prog-item.next h3 { text-shadow: 0 0 28px rgb(170 200 255 / 0.7); }
 
 /* Info FAQ: glass rows, brighter when open */
 .faq-item {
@@ -177,6 +170,25 @@ body {
   background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.7), transparent);
 }
 .stop-card:hover { transform: translateY(-2px); border-color: rgb(255 255 255 / 0.22); box-shadow: 0 30px 60px -28px rgb(0 0 0 / 0.95), 0 0 30px -10px rgb(140 175 255 / 0.35); }
+/* compact rows (the night's programme): tighter list, so the line and sparkle sit higher */
+.stop.compact .stop-line { bottom: -0.625rem; }
+.stop.compact:first-child .stop-line { top: 1.25rem; }
+.stop.compact.last .stop-line { height: 1.25rem; }
+/* a part with no programme yet: one faint row */
+.stop.pending { opacity: 0.55; }
+.stop.pending .stop-card:hover { transform: none; }
+/* assigned-per-person options: the chrome "or" on the seam between the two photos */
+.or-medal {
+  background: radial-gradient(circle at 35% 30%, #1D3470, #08122F 75%);
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 0.35), 0 0 0 5px rgb(4 11 36 / 0.85), 0 0 30px rgb(140 175 255 / 0.45);
+}
+/* a part of the night: a glass band with a silver hairline, the part's name in chrome */
+.part-band {
+  position: relative;
+  border: 1px solid rgb(255 255 255 / 0.14);
+  background: linear-gradient(90deg, rgb(40 70 150 / 0.28), rgb(255 255 255 / 0.03) 70%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.1), 0 0 40px -18px rgb(140 175 255 / 0.5);
+}
 .stop.next .stop-card { border-color: rgb(255 255 255 / 0.35); box-shadow: 0 0 40px -6px rgb(150 185 255 / 0.45); }
 
 /* live status on the trip day (filter, so it never fights other opacity rules) */
@@ -258,11 +270,34 @@ body {
 .branch-dot.is-on .halo { opacity: 0.85; animation: halo 1.6s ease-in-out infinite; }
 @keyframes halo { 0%, 100% { opacity: 0.85; } 50% { opacity: 0.45; } }
 /* a ring pulses out of Manila as each group lands */
+/* finale flare: one wide ring sweeping out of Manila over the islands */
+.manila-flare { transform-box: fill-box; transform-origin: center; transform: scale(calc(1 + var(--t) * 14)); opacity: calc(min(var(--t) * 10, 1) * (1 - var(--t)) * 0.9); }
+/* branch chips: dim glass until the branch's line lands, then lit silver with a glowing dot */
+.branch-chip {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.3rem 0.7rem; border-radius: 9999px;
+  font-size: 12px; font-weight: 500; letter-spacing: 0.04em;
+  color: rgb(195 205 224 / 0.55);
+  border: 1px solid rgb(255 255 255 / 0.08);
+  background: rgb(255 255 255 / 0.02);
+  transition: color 0.4s ease, border-color 0.4s ease, background-color 0.4s ease, box-shadow 0.4s ease;
+}
+.branch-chip::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: rgb(255 255 255 / 0.25); transition: background-color 0.4s ease, box-shadow 0.4s ease; }
+.branch-chip.is-lit { color: #fff; border-color: rgb(255 255 255 / 0.4); background: rgb(80 120 220 / 0.18); box-shadow: 0 0 18px -6px rgb(150 185 255 / 0.8); }
+.branch-chip.is-lit::before { background: #fff; box-shadow: 0 0 6px 1px rgb(170 200 255 / 0.9); }
+/* phones: no pill, just a dot and the name, so a row of nine stays light */
+@media (max-width: 767px) {
+  .branch-chip, .branch-chip.is-lit { padding: 0.15rem 0.35rem; font-size: 12px; gap: 0.3rem; border-color: transparent; background: none; box-shadow: none; }
+  .branch-chip.is-lit { text-shadow: 0 0 12px rgb(150 185 255 / 0.7); }
+}
 .manila-ring { transform-box: fill-box; transform-origin: center; transform: scale(calc(1 + var(--t) * 4)); opacity: calc(min(var(--t) * 12, 1) * (1 - var(--t))); }
 /* the group title swaps per beat */
 /* map beats: all stacked in one cell; the current one rises in out of a blur after the last has left */
 .beat-item { opacity: 0; transform: translateY(-12px); filter: blur(4px); transition: opacity 0.3s ease, transform 0.35s ease, filter 0.35s ease; }
 .beat-item.is-on { opacity: 1; transform: none; filter: none; transition: opacity 0.35s ease 0.25s, transform 0.45s cubic-bezier(.2,.8,.2,1) 0.25s, filter 0.45s ease 0.25s; }
+/* the ending's island list: each name rises and lights in turn once the list is on */
+.beat-item .isle { opacity: 0; transform: translateY(10px); filter: blur(4px); transition: opacity 0.3s ease, transform 0.3s ease, filter 0.3s ease; }
+.beat-item.is-on .isle { opacity: 1; transform: none; filter: none; transition: opacity 0.5s ease, transform 0.6s cubic-bezier(.2,.8,.2,1), filter 0.6s ease; transition-delay: calc(0.15s + var(--k) * 0.15s); }
 
 /* ---- 35mm film strip (Home · Journey) ----
    .film-cell: a stretch of film base with sprocket holes punched into the top and bottom rails
@@ -284,6 +319,20 @@ body {
   border-radius: 3px;
   background: radial-gradient(120% 90% at 30% 20%, #1D3470 0%, #0E1D4A 55%, #08122F 100%);
   box-shadow: inset 0 0 40px rgb(0 0 0 / 0.55), 0 0 0 1px rgb(255 255 255 / 0.05);
+}
+/* a frame with no photo yet: star dust, a horizon glow along the bottom */
+.film-night {
+  background:
+    radial-gradient(70% 45% at 50% 100%, rgb(150 185 255 / 0.45), transparent 70%),
+    radial-gradient(1px 1px at 20% 30%, #fff, transparent), radial-gradient(1px 1px at 70% 20%, #fff, transparent),
+    radial-gradient(1px 1px at 45% 55%, rgb(255 255 255 / 0.7), transparent), radial-gradient(1.5px 1.5px at 85% 45%, #fff, transparent),
+    radial-gradient(1px 1px at 10% 65%, rgb(255 255 255 / 0.6), transparent), radial-gradient(1px 1px at 60% 75%, rgb(255 255 255 / 0.5), transparent),
+    radial-gradient(120% 90% at 30% 10%, #1D3470 0%, #0E1D4A 55%, #08122F 100%);
+}
+.film-night::after {
+  content: ""; position: absolute; inset: auto 8% 22% 8%; height: 1px;
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.9), transparent);
+  box-shadow: 0 0 12px 1px rgb(160 190 255 / 0.8);
 }
 /* edge printing on the bottom rail, between frame and holes */
 .film-print {
@@ -309,9 +358,17 @@ body {
 }
 .burst > * { animation: burst 1.8s cubic-bezier(0.15, 0.7, 0.2, 1) both; }
 
-.day-enter-active, .day-leave-active { transition: opacity .35s ease, transform .35s ease; }
-.day-enter-from { opacity: 0; transform: translateY(14px); }
-.day-leave-to { opacity: 0; }
+/* Itinerary day switch: the old day slides out toward the side you're leaving (--dir: 1 forward, -1 back) and
+   blurs; the new one cascades in from the other side, item by item (--i = order; capped so long days don't drag),
+   the silver line drawing down and each sparkle popping as its row lands */
+.day-leave-active { transition: opacity .22s ease, transform .22s ease, filter .22s ease; }
+.day-leave-to { opacity: 0; transform: translateX(calc(var(--dir, 1) * -28px)); filter: blur(4px); }
+.day-enter-active .cascade { animation: day-rise .65s cubic-bezier(.2,.8,.2,1) both; animation-delay: calc(min(var(--i, 0), 18) * 40ms + 40ms); }
+.day-enter-active .cascade .stop-line { animation: day-line .6s ease-out both; animation-delay: calc(min(var(--i, 0), 18) * 40ms + 100ms); transform-origin: top; }
+.day-enter-active .cascade .stop-spark { animation: day-spark .55s cubic-bezier(.3,1.6,.5,1) both; animation-delay: calc(min(var(--i, 0), 18) * 40ms + 200ms); }
+@keyframes day-rise { from { opacity: 0; transform: translate(calc(var(--dir, 1) * 28px), 8px); filter: blur(6px); } }
+@keyframes day-line { from { transform: scaleY(0); } }
+@keyframes day-spark { from { opacity: 0; transform: scale(0) rotate(-90deg); } }
 
 
 /* Ribbon glint: short bright dash travelling the ribbon's centerline */
@@ -399,9 +456,10 @@ body {
   .chrome-shine { animation: none; }
   .star-dust::after, .hero-beam--l, .hero-beam--r { animation: none; }
   .intro-horizon, .intro-glow, .intro-logo, .intro-after { animation: none; }
-  .day-enter-active, .day-leave-active { transition: none; }
+  .day-leave-active { transition: none; }
+  .day-enter-active .cascade, .day-enter-active .cascade .stop-line, .day-enter-active .cascade .stop-spark { animation: none; }
   .branch-dot.is-on .halo { animation: none; }
-  .beat-item, .beat-item.is-on { transition: none; }
+  .beat-item, .beat-item.is-on, .beat-item .isle { transition: none; }
   /* Scenes become plain stacked sections shown at their end state */
   [data-scene] { height: auto !important; --p: 1 !important; }
   [data-scene] > .sticky { position: relative; height: auto; min-height: 100svh; padding-block: 4rem; }

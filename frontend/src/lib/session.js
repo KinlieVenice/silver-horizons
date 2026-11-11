@@ -4,7 +4,7 @@ import museum from '../assets/photos/museum.webp'
 import binondo from '../assets/photos/binondo.webp'
 import night from '../assets/photos/night.webp'
 
-// Sign-in state and the private content (itinerary, program, tips, FAQ, contact), which only the backend
+// Sign-in state and the private content (itinerary, Home's film strip, tips, FAQ, contact), which only the backend
 // serves, after a company Google sign-in. The backend keeps the OAuth tokens; the browser only holds its
 // HttpOnly session cookie, sent along with every request here.
 // VITE_API_URL: the backend's origin when it isn't the same as the site's (empty in dev: Vite proxies it).
@@ -21,7 +21,18 @@ if (session.error) {
 }
 
 // filled once signed in; views read it at setup (the app only renders its pages after it has loaded)
-export const content = reactive({ itinerary: [], program: { stops: [] }, tips: [], faq: [], contact: {} })
+export const content = reactive({ itinerary: [], journey: [], credits: [], tips: [], faq: [], contact: {} })
+
+// content.json names photos ('museum'); swap each `image` / `images` name for the bundled file, wherever it sits
+const withPhotos = (v) => {
+  if (Array.isArray(v)) return v.map(withPhotos)
+  if (!v || typeof v !== 'object') return v
+  const o = {}
+  for (const [k, x] of Object.entries(v)) {
+    o[k] = k === 'image' ? photos[x] : k === 'images' ? x.map((n) => photos[n]) : withPhotos(x)
+  }
+  return o
+}
 
 const api = (path, init) => fetch(API + path, { credentials: 'include', ...init })
 
@@ -34,11 +45,7 @@ export async function loadSession() {
     const res = await api('/api/content')
     if (!res.ok) throw new Error(`api/content ${res.status}`)
     const data = await res.json()
-    for (const d of data.itinerary) {
-      d.image = photos[d.image]
-      for (const s of d.stops) if (s.image) s.image = photos[s.image]
-    }
-    Object.assign(content, data)
+    Object.assign(content, withPhotos(data))
     session.user = await me.json()
     session.status = 'in'
   } catch {

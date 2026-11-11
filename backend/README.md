@@ -1,7 +1,7 @@
 # Silver Horizons backend
 
 FastAPI: Google sign-in for `@fireflyelectric.com` accounts only, and the site's private content
-(`app/content.json`: itinerary, gala program, tips, FAQ, contact), served only to signed-in visitors.
+(`app/content.json`: itinerary, Home's film strip, tips, FAQ, contact, photo credits), served only to signed-in visitors.
 
 OAuth design (per the OAuth 2.0 Security BCP, RFC 9700, and the browser-based apps guidance, RFC 10017):
 this server is the OAuth client ("backend for frontend"). It runs the Authorization Code flow with PKCE,

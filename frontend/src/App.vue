@@ -7,7 +7,7 @@ import { session, content, loadSession, signOut } from './lib/session.js'
 
 // the whole site is behind a FELCO Google sign-in: the pages only render once the backend says who you are
 loadSession()
-const credits = computed(() => content.itinerary.map((d) => d.credit).filter(Boolean))
+const credits = computed(() => content.credits)
 </script>
 
 <template>

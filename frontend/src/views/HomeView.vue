@@ -12,12 +12,11 @@ import { event } from '../content/event.js'
 import { content } from '../lib/session.js'
 import { phMap } from '../content/phMap.js'
 import { branches, groups, hub } from '../content/branches.js'
-import { formatDay } from '../lib/schedule.js'
 import { useScenes, seg } from '../lib/useScenes.js'
 import { useAutoplay } from '../lib/useAutoplay.js'
 import { scrollLock, settle } from '../lib/smoothScroll.js'
 
-const itinerary = content.itinerary // loaded after sign-in, before any page renders
+const journey = content.journey // loaded after sign-in, before any page renders
 const root = ref()
 const progress = useScenes(root)
 const autoplay = useAutoplay(root) // idle visitors: story plays on by itself
@@ -45,7 +44,7 @@ const loopTo = computed(() => seg(progress.years ?? 0, 0.04, 0.28))
 // Three beats, one island group each (Luzon → Visayas → Mindanao): the group's lines streak into Manila
 // together, a ring pulses out of Manila as they land, then the group holds before the next one starts.
 // Each window is [start, end) of the scene's progress; the group's title shows for its whole window.
-const GROUP_WIN = { luzon: [0.14, 0.4], visayas: [0.4, 0.64], mindanao: [0.64, 0.88] }
+const GROUP_WIN = { luzon: [0.03, 0.3], visayas: [0.3, 0.53], mindanao: [0.53, 0.76] }
 const LINE = 0.1 // each line's draw time
 const routes = branches.map((b) => {
   const mx = (b.x + hub.x) / 2
@@ -55,20 +54,24 @@ const routes = branches.map((b) => {
   const cy = my + (hub.x - b.x) * k
   const mates = branches.filter((o) => o.group === b.group)
   const j = mates.indexOf(b)
-  const a = GROUP_WIN[b.group][0] + 0.02 + j * (mates.length > 4 ? 0.008 : 0.02)
+  // words first: a group's name and chips settle before its lines launch
+  const a = GROUP_WIN[b.group][0] + 0.09 + j * (mates.length > 4 ? 0.008 : 0.012)
   return { ...b, d: `M${b.x} ${b.y} Q ${cx.toFixed(1)} ${cy.toFixed(1)} ${hub.x} ${hub.y}`, a }
 })
 const beats = groups.map((g) => {
   const mine = routes.filter((r) => r.group === g.id)
   return { ...g, names: mine.map((r) => r.name), land: Math.max(...mine.map((r) => r.a)) + LINE - 0.01 }
 })
+// a branch's chip lights up as its line lands in Manila
+const landAt = Object.fromEntries(routes.map((r) => [r.name, r.a + LINE]))
+const lit = (name) => (progress.converge ?? 0) >= landAt[name]
 const beat = computed(() => {
   const p = progress.converge ?? 0
-  if (p >= 0.88) return 'done'
+  if (p >= 0.76) return 'done'
+  // headline first (0 → 0.06), then Luzon's words from 0.03, then its lines
   return groups.find((g) => p >= GROUP_WIN[g.id][0] && p < GROUP_WIN[g.id][1])?.id ?? ''
 })
 
-const dayWords = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven']
 
 // Journey: a sideways slider; the bar under it follows how far along it is
 const strip = ref()
@@ -378,35 +381,57 @@ const sparks = Array.from({ length: 14 }, (_, i) => {
     </section>
 
     <!-- 3 · From every branch, one destination -->
-    <section data-scene="converge" data-play="6500" class="relative h-[200svh] bg-navy-950">
-      <div class="sticky top-0 grid h-svh overflow-hidden px-6 py-[10svh] md:grid-cols-2 md:items-center md:gap-10 md:px-[8vw]">
+    <section data-scene="converge" data-play="8500" class="relative h-[200svh] bg-navy-950">
+      <!-- a night chart: star dust behind; text and map centred together so no dead gap opens between them.
+           Phones: the map takes whatever height the text leaves (up to 46svh), so it never runs off small screens -->
+      <div class="sticky top-0 isolate grid h-svh grid-rows-[auto_minmax(0,1fr)] overflow-hidden px-6 py-[8svh] md:grid-rows-1 md:py-[10svh] md:grid-cols-[minmax(0,34rem)_auto] md:items-center md:justify-center md:gap-16 md:px-[6vw]">
+        <div class="star-dust absolute inset-0 -z-10 opacity-70" aria-hidden="true" />
         <div class="relative z-10 text-center md:text-left">
-          <p class="seg fade-up eyebrow" style="--a:0;--d:0.15">Silver Horizons · Manila</p>
-          <h2 class="seg fade-up silver-text mt-3 font-display text-4xl leading-[1.05] font-semibold md:text-6xl" style="--a:0.05;--d:0.2">From {{ branches.length }} branches,<br />one destination.</h2>
+          <p class="seg fade-up eyebrow max-md:hidden" style="--a:0;--d:0.05">Silver Horizons · Manila</p>
+          <h2 class="seg fade-up silver-text mt-3 font-display text-[2rem] leading-[1.05] font-semibold sm:text-4xl md:text-6xl" style="--a:0;--d:0.06">From <span class="chrome-num inline-block align-[-0.04em] text-[1.3em] leading-none">{{ branches.length }}</span> branches,<br />one destination.</h2>
           <!-- the beat in hand: which island group is landing, then (after the last) the welcome line -->
           <!-- every beat and the closing line share one grid cell (only the current one shows), so the box is
                always as tall as the tallest and the map below never shifts between groups -->
-          <div class="mt-5 grid md:mt-8" aria-live="off">
+          <div class="mt-6 grid md:mt-8" aria-live="off">
             <div v-for="(b, i) in beats" :key="b.id" class="beat-item [grid-area:1/1]" :class="beat === b.id && 'is-on'" :aria-hidden="beat !== b.id">
-              <p class="text-xs font-medium tracking-[0.3em] text-muted uppercase">{{ i + 1 }} / {{ beats.length }} · {{ b.names.length }} branches</p>
-              <p class="silver-text mt-1 font-display text-5xl leading-none font-semibold md:text-7xl">{{ b.name }}</p>
-              <p class="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-ink/80 md:mx-0">{{ b.names.join(' · ') }}</p>
+              <p class="text-[11px] font-medium tracking-[0.3em] text-muted uppercase md:text-xs"><span class="max-md:hidden">{{ i + 1 }} / {{ beats.length }} · </span>{{ b.names.length }} branches</p>
+              <p class="silver-text mt-1 font-display text-4xl leading-none font-semibold sm:text-5xl md:text-7xl">{{ b.name }}</p>
+              <!-- each branch a glass chip that lights up as its line lands -->
+              <ul class="mx-auto mt-3 flex max-w-md flex-wrap justify-center gap-1 sm:gap-1.5 md:mx-0 md:mt-4 md:justify-start">
+                <li v-for="n in b.names" :key="n" class="branch-chip" :class="lit(n) && 'is-lit'">{{ n }}</li>
+              </ul>
             </div>
-            <p class="beat-item mx-auto max-w-md text-[15px] text-ink/85 [grid-area:1/1] md:mx-0 md:text-lg" :class="beat === 'done' && 'is-on'" :aria-hidden="beat !== 'done'">
-              Throughout the year, we’ve celebrated the people, partnerships, challenges, and milestones that brought FELCO to 25. Now we come together in Manila.
-            </p>
+            <!-- the end: all three island groups, lit one after another as Manila flares -->
+            <ul class="beat-item mx-auto w-fit self-center [grid-area:1/1] md:mx-0 md:self-start" :class="beat === 'done' && 'is-on'" :aria-hidden="beat !== 'done'">
+              <li v-for="(b, k) in beats" :key="b.id" class="isle flex items-baseline justify-between gap-6 border-b border-white/10 py-1.5 last:border-0 md:gap-10 md:py-2" :style="{ '--k': k }">
+                <span class="relative font-display text-[2.1rem] leading-none font-semibold md:text-6xl">
+                  <span class="chrome-shadow" aria-hidden="true">{{ b.name }}</span>
+                  <span class="chrome-text">{{ b.name }}</span>
+                </span>
+                <span class="text-[11px] font-medium tracking-[0.24em] whitespace-nowrap text-muted uppercase md:text-xs"><span class="chrome-num text-lg md:text-2xl">{{ b.names.length }}</span> branches</span>
+              </li>
+            </ul>
           </div>
         </div>
 
-        <svg :viewBox="`0 0 ${phMap.width} ${phMap.height}`" class="mx-auto h-[46svh] w-auto overflow-visible md:h-[78svh]" aria-hidden="true">
+        <svg :viewBox="`0 0 ${phMap.width} ${phMap.height}`" class="mx-auto mt-4 h-full max-h-[46svh] w-auto overflow-visible md:mt-0 md:h-[84svh] md:max-h-none" aria-hidden="true">
           <defs>
             <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4" /></filter>
+            <radialGradient id="sea-glow"><stop offset="0" stop-color="#3D63C9" stop-opacity="0.42" /><stop offset="1" stop-color="#3D63C9" stop-opacity="0" /></radialGradient>
+            <radialGradient id="grid-fade"><stop offset="0.25" stop-color="#fff" /><stop offset="1" stop-color="#000" /></radialGradient>
+            <mask id="grid-mask"><rect x="-140" y="-60" :width="phMap.width + 280" :height="phMap.height + 120" fill="url(#grid-fade)" /></mask>
+            <pattern id="chart-grid" width="76" height="76" patternUnits="userSpaceOnUse"><path d="M76 0H0V76" fill="none" stroke="#9DB6F0" stroke-opacity="0.11" stroke-width="0.6" /></pattern>
           </defs>
+          <!-- night chart: a pool of blue light over the sea and a faint latitude/longitude grid, fading at the edges -->
+          <g class="seg" style="--a:0;--d:0.08;opacity:var(--t)">
+            <ellipse :cx="phMap.width / 2" :cy="phMap.height / 2" :rx="phMap.width * 0.8" :ry="phMap.height * 0.62" fill="url(#sea-glow)" />
+            <rect x="-140" y="-60" :width="phMap.width + 280" :height="phMap.height + 120" fill="url(#chart-grid)" mask="url(#grid-mask)" />
+          </g>
           <!-- Philippines: coastline draws itself, then fills with a faint silver -->
-          <path class="seg" style="--a:0.12;--d:0.2;opacity:var(--t)" :d="phMap.d" fill="#B8C8F0" fill-opacity="0.13" fill-rule="evenodd" />
+          <path class="seg" style="--a:0.03;--d:0.1;opacity:var(--t)" :d="phMap.d" fill="#B8C8F0" fill-opacity="0.13" fill-rule="evenodd" />
           <!-- coastline revealed north → south by a sweeping line of light (no stroke-dash: Chrome restarts
                the dash at every island, which scatters fragments) -->
-          <g class="seg" style="--a:0;--d:0.22">
+          <g class="seg" style="--a:0;--d:0.09">
             <path :d="phMap.d" fill="none" stroke="#C9D6F5" stroke-width="1.2" stroke-linejoin="round" style="clip-path: inset(0 0 calc((1 - var(--t)) * 100%) 0)" />
             <rect
               x="-20" :width="phMap.width + 40" height="2" fill="#FFFFFF" filter="url(#glow)"
@@ -420,7 +445,7 @@ const sparks = Array.from({ length: 14 }, (_, i) => {
             <!-- comet: a bright head running ahead of the line, gone as it lands -->
             <path :d="r.d" pathLength="1" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" class="comet" filter="url(#glow)" />
             <g class="branch-dot" :class="beat === r.group && 'is-on'">
-              <circle class="halo" :cx="r.x" :cy="r.y" r="11" fill="#9DB6F0" filter="url(#glow)" />
+              <g :style="'opacity:clamp(0, calc(var(--t) * 20), 1)'"><circle class="halo" :cx="r.x" :cy="r.y" r="11" fill="#9DB6F0" filter="url(#glow)" /></g>
               <circle :cx="r.x" :cy="r.y" r="3.5" fill="#FFFFFF" :style="'opacity:var(--t)'" />
             </g>
             <text
@@ -440,7 +465,10 @@ const sparks = Array.from({ length: 14 }, (_, i) => {
             :style="`--a:${b.land};--d:0.07`"
             :cx="hub.x" :cy="hub.y" r="10" fill="none" stroke="#FFFFFF" stroke-width="1.5"
           />
-          <g class="seg" style="--a:0.16;--d:0.1">
+          <!-- finale: once every group has landed, Manila flares and a wide ring sweeps out over the islands -->
+          <circle class="seg manila-flare" style="--a:0.76;--d:0.14" :cx="hub.x" :cy="hub.y" r="16" fill="none" stroke="#FFFFFF" stroke-width="2" />
+          <circle class="seg" style="--a:0.74;--d:0.06" :cx="hub.x" :cy="hub.y" r="54" fill="#9DB6F0" filter="url(#glow)" :style="'opacity:calc(var(--t) * 0.55)'" />
+          <g class="seg" style="--a:0.02;--d:0.06">
             <circle :cx="hub.x" :cy="hub.y" r="24" fill="#7F9CE0" filter="url(#glow)" :style="'opacity:calc(var(--t) * 0.7)'" />
             <circle :cx="hub.x" :cy="hub.y" r="6" fill="#FFFFFF" :style="'opacity:var(--t)'" />
             <text :x="hub.x - 14" :y="hub.y + 30" text-anchor="end" class="fill-white font-display text-[24px] font-semibold" paint-order="stroke" stroke="#040B24" stroke-width="6" stroke-linejoin="round" :style="'opacity:var(--t)'">{{ hub.name }}</text>
@@ -455,7 +483,7 @@ const sparks = Array.from({ length: 14 }, (_, i) => {
       <div class="mb-6 flex items-end justify-between gap-6 px-6 md:mb-10 md:px-[8vw]">
         <div>
           <p class="eyebrow">The Journey</p>
-          <h2 id="journey-h" class="silver-text mt-2 font-display text-4xl font-semibold md:text-6xl">{{ dayWords[itinerary.length] ?? itinerary.length }} days in Manila</h2>
+          <h2 id="journey-h" class="silver-text mt-2 font-display text-4xl font-semibold md:text-6xl">Three days, one celebration</h2>
         </div>
         <div class="hidden gap-2 md:flex">
           <button
@@ -464,7 +492,7 @@ const sparks = Array.from({ length: 14 }, (_, i) => {
             type="button"
             class="grid size-11 place-items-center rounded-full border border-white/25 text-white/85 transition hover:border-white hover:bg-white/10 active:translate-y-px disabled:pointer-events-none disabled:opacity-30"
             :disabled="dir < 0 ? stripP < 0.01 : stripP > 0.99"
-            :aria-label="dir < 0 ? 'Previous day' : 'Next day'"
+            :aria-label="dir < 0 ? 'Previous' : 'Next'"
             @click="slide(dir)"
           >
             <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -489,18 +517,26 @@ const sparks = Array.from({ length: 14 }, (_, i) => {
         <div class="flex w-max items-start [--frame-h:min(52vw,21rem)]">
           <div class="w-6 shrink-0 md:w-[8vw]" aria-hidden="true" />
 
-          <article v-for="(d, i) in itinerary" :key="d.date" class="w-[80vw] max-w-[30rem] shrink-0 snap-start md:w-[32rem]">
+          <article v-for="(d, i) in journey" :key="d.title" class="w-[80vw] max-w-[30rem] shrink-0 snap-start md:w-[32rem]">
             <div class="film-cell">
-              <div class="film-window">
-                <img v-if="d.image" :src="d.image" :alt="d.title" class="absolute inset-0 size-full object-cover" loading="lazy" draggable="false" />
-                <span v-else class="absolute inset-0 grid place-items-center pb-10 text-xs text-white/45">[Photo: {{ d.title }}]</span>
+              <!-- one photo fills the frame; two split it down the middle; none = a night frame with a chrome title -->
+              <div class="film-window" :class="!d.images && 'film-night'">
+                <div v-if="d.images" class="absolute inset-0 grid grid-flow-col gap-px">
+                  <img v-for="img in d.images" :key="img" :src="img" alt="" class="size-full object-cover" loading="lazy" draggable="false" />
+                </div>
+                <div v-else class="absolute inset-0 grid place-items-center px-6 pb-4 text-center">
+                  <h3 class="relative font-display text-[clamp(2.2rem,9vw,3.6rem)] leading-none font-semibold">
+                    <span class="chrome-shadow" aria-hidden="true">{{ d.title }}</span>
+                    <span class="chrome-text">{{ d.title }}</span>
+                  </h3>
+                </div>
                 <!-- still-frame overlay: number + date up top, title along the bottom -->
                 <div class="absolute inset-x-0 top-0 flex items-start justify-between bg-linear-to-b from-black/60 to-transparent p-4 pb-10">
                   <span class="numeral font-display text-5xl leading-[0.8] font-semibold" aria-hidden="true">{{ String(i + 1).padStart(2, '0') }}</span>
-                  <span class="text-right text-[10.5px] font-medium tracking-[0.22em] text-white/80 uppercase">Day {{ i + 1 }}<br />{{ formatDay(d.date) }}</span>
+                  <span class="text-right text-[10.5px] font-medium tracking-[0.22em] text-white/80 uppercase">{{ d.when }}</span>
                 </div>
                 <div class="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/80 via-black/40 to-transparent p-4 pt-12">
-                  <h3 class="font-display text-2xl leading-tight font-semibold text-white md:text-[1.7rem]">{{ d.title }}</h3>
+                  <h3 v-if="d.images" class="font-display text-2xl leading-tight font-semibold text-white md:text-[1.7rem]">{{ d.title }}</h3>
                   <p class="mt-1 text-[10.5px] font-medium tracking-[0.22em] text-white/70 uppercase">{{ d.area }}</p>
                 </div>
               </div>
@@ -518,7 +554,7 @@ const sparks = Array.from({ length: 14 }, (_, i) => {
                   <span class="mt-3 block text-2xl transition group-hover:translate-x-1" aria-hidden="true">→</span>
                 </span>
               </RouterLink>
-              <span class="film-print" aria-hidden="true">SILVER HORIZONS &nbsp;▸ 05A</span>
+              <span class="film-print" aria-hidden="true">SILVER HORIZONS &nbsp;▸ {{ String(journey.length + 1).padStart(2, '0') }}A</span>
             </div>
           </div>
 
@@ -588,7 +624,6 @@ const sparks = Array.from({ length: 14 }, (_, i) => {
           </p>
           <Countdown :target="event.startsAt" class="finale-count seg fade-up mt-6" style="--a:0.64;--d:0.1" />
           <div class="seg fade-up mt-8 flex flex-wrap justify-center gap-2 sm:mt-9 sm:gap-3" style="--a:0.7;--d:0.1">
-            <!-- Gala hidden for now: was <RouterLink to="/gala">The Night</RouterLink> -->
             <RouterLink to="/itinerary" class="inline-flex min-h-10 items-center rounded-full bg-white px-4 text-[11px] font-medium tracking-[0.16em] sm:min-h-12 sm:px-7 sm:text-sm sm:tracking-[0.2em] text-navy-950 uppercase transition hover:-translate-y-0.5 hover:bg-ink active:translate-y-0">See the itinerary</RouterLink>
             <RouterLink to="/info" class="inline-flex min-h-10 items-center rounded-full border border-white/60 px-4 text-[11px] font-medium tracking-[0.16em] sm:min-h-12 sm:px-7 sm:text-sm sm:tracking-[0.2em] text-white uppercase transition hover:-translate-y-0.5 hover:border-white hover:bg-white/10 active:translate-y-0">Know before you go</RouterLink>
           </div>

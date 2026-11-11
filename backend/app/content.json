@@ -1,202 +1,324 @@
 {
   "itinerary": [
     {
-      "date": "2026-12-02",
-      "title": "Welcome to Manila",
-      "area": "Manila",
-      "blurb": "Arrive, settle in, and meet colleagues from every branch.",
-      "image": "welcome",
-      "credit": "Manila Bay sunset — Vyacheslav Argenberg, CC BY 4.0",
-      "stops": [
-        {
-          "time": "09:00",
-          "type": "flight",
-          "title": "Airport pick-up",
-          "place": "NAIA Terminal [TBC]",
-          "note": "Look for the Silver Horizons welcome team at arrivals."
-        },
-        {
-          "time": "13:00",
-          "type": "hotel",
-          "title": "Hotel check-in",
-          "place": "[Hotel name]",
-          "note": "Room assignments to follow."
-        },
-        {
-          "time": "18:30",
-          "type": "meal",
-          "title": "Welcome dinner",
-          "place": "[Venue]",
-          "note": "Meet colleagues from every branch.",
-          "image": "welcome"
-        }
-      ]
-    },
-    {
       "date": "2026-12-03",
-      "title": "National Museum of the Philippines",
-      "area": "Ermita, Manila",
-      "blurb": "A day among the nation’s art, history and natural heritage.",
-      "image": "museum",
-      "credit": "National Museum of the Philippines — Judgefloro, CC0",
-      "stops": [
+      "title": "Welcome to Manila",
+      "area": "Arrival · Royu Tour",
+      "pills": [
+        "Sample programme",
+        "Royu Tour 1:00 – 5:30 PM"
+      ],
+      "parts": [
         {
-          "time": "08:00",
-          "type": "bus",
-          "title": "Assembly at hotel lobby",
-          "place": "[Hotel name]",
-          "note": "Buses depart 8:15 sharp."
+          "title": "Arrival in Manila",
+          "range": "Morning",
+          "note": "All employees in Manila by December 3.",
+          "stops": [
+            {
+              "type": "flight",
+              "title": "Travel details to follow"
+            }
+          ]
         },
         {
-          "time": "09:00",
-          "type": "tour",
-          "title": "[Museum tour, first gallery]",
-          "place": "National Museum, Manila",
-          "note": "[Tour details to follow.]",
-          "image": "museum"
-        },
-        {
-          "time": "12:30",
-          "type": "meal",
-          "title": "Lunch",
-          "place": "[Restaurant]",
-          "note": "[Details to follow.]"
-        },
-        {
-          "time": "14:00",
-          "type": "tour",
-          "title": "[Museum tour, second gallery]",
-          "place": "National Museum, Manila",
-          "note": "[Tour details to follow.]"
-        },
-        {
-          "time": "18:00",
-          "type": "free",
-          "title": "Free evening",
-          "place": "Your choice",
-          "note": "Rest or explore on your own."
+          "title": "Royu Tour",
+          "tag": "You’re registered",
+          "range": "1:00 – 5:30 PM",
+          "stops": [
+            {
+              "time": "13:00",
+              "type": "bus",
+              "title": "Assembly at the hotel lobby",
+              "place": "Hotel lobby"
+            },
+            {
+              "time": "14:00",
+              "type": "gather",
+              "title": "Welcome and safety briefing",
+              "place": "Royu"
+            },
+            {
+              "time": "14:30",
+              "type": "tour",
+              "title": "Plant tour: the production lines",
+              "place": "Royu"
+            },
+            {
+              "time": "16:00",
+              "type": "tour",
+              "title": "Product showroom",
+              "place": "Royu"
+            },
+            {
+              "time": "16:45",
+              "type": "meal",
+              "title": "Merienda with the Royu team",
+              "place": "Royu"
+            },
+            {
+              "time": "17:30",
+              "type": "bus",
+              "title": "Bus back to the hotel"
+            }
+          ]
         }
       ]
     },
     {
       "date": "2026-12-04",
-      "title": "Binondo",
-      "area": "Binondo, Manila",
-      "blurb": "Manila’s historic Chinatown: old streets, temples, and a food crawl to remember.",
-      "image": "binondo",
-      "credit": "Chinatown Arch, Manila — Richmond Chi, CC BY-SA 4.0",
-      "stops": [
+      "title": "The Manila Experience",
+      "area": "Manila Tour · Zen Office",
+      "pills": [
+        "Sample programme",
+        "8:30 AM – 5:30 PM"
+      ],
+      "parts": [
         {
-          "time": "08:30",
-          "type": "bus",
-          "title": "Assembly at hotel lobby",
-          "place": "[Hotel name]",
-          "note": "[Departure details to follow.]"
+          "title": "Manila Tour",
+          "tag": "Your assigned tour",
+          "range": "8:30 AM – 3:00 PM",
+          "options": [
+            {
+              "title": "National Museum",
+              "place": "Ermita, Manila",
+              "image": "museum"
+            }
+          ],
+          "stops": [
+            {
+              "time": "08:30",
+              "type": "bus",
+              "title": "Assembly at the hotel lobby",
+              "place": "Hotel lobby"
+            },
+            {
+              "time": "09:30",
+              "type": "tour",
+              "title": "Fine Arts: Luna’s Spoliarium",
+              "place": "National Museum of Fine Arts"
+            },
+            {
+              "time": "11:00",
+              "type": "tour",
+              "title": "Anthropology: the Philippines before Spain",
+              "place": "National Museum of Anthropology"
+            },
+            {
+              "time": "12:30",
+              "type": "meal",
+              "title": "Lunch",
+              "place": "Ermita"
+            },
+            {
+              "time": "13:30",
+              "type": "tour",
+              "title": "Natural History: the Tree of Life atrium",
+              "place": "National Museum of Natural History"
+            },
+            {
+              "time": "15:00",
+              "type": "bus",
+              "title": "Bus back to the hotel"
+            }
+          ]
         },
         {
-          "time": "09:30",
-          "type": "tour",
-          "title": "[Binondo heritage walk]",
-          "place": "Binondo, Manila",
-          "note": "[Route to follow.]",
-          "image": "binondo"
-        },
-        {
-          "time": "11:30",
-          "type": "meal",
-          "title": "[Food crawl]",
-          "place": "Binondo, Manila",
-          "note": "[Stops to follow.]"
-        },
-        {
-          "time": "15:00",
-          "type": "free",
-          "title": "Free afternoon",
-          "place": "Your choice",
-          "note": "Rest up for the big night."
+          "title": "Zen Office Tour",
+          "tag": "Open to all",
+          "range": "4:00 – 5:30 PM · 11th floor",
+          "stops": [
+            {
+              "time": "16:00",
+              "type": "gather",
+              "title": "Welcome on the 11th floor",
+              "place": "Zen Office, 11th floor"
+            },
+            {
+              "time": "16:15",
+              "type": "tour",
+              "title": "Office walkthrough",
+              "place": "Zen Office, 11th floor"
+            },
+            {
+              "time": "16:45",
+              "type": "mic",
+              "title": "Meet the teams",
+              "place": "Zen Office, 11th floor"
+            },
+            {
+              "time": "17:15",
+              "type": "party",
+              "title": "Merienda and photos",
+              "place": "Zen Office, 11th floor"
+            }
+          ]
         }
       ]
     },
     {
       "date": "2026-12-05",
       "title": "Silver Horizons Night",
-      "area": "Parañaque City",
-      "blurb": "The 25th anniversary and Christmas party at East Ocean Palace.",
-      "image": "night",
-      "credit": "Manila Bay at night — Ralff Nestor Nacor, CC BY-SA 4.0",
-      "stops": [
+      "area": "East Ocean Palace, Parañaque City",
+      "pills": [
+        "2:00 – 11:00 PM",
+        "East Ocean Palace"
+      ],
+      "parts": [
         {
-          "time": "10:00",
-          "type": "free",
-          "title": "Free morning",
-          "place": "Hotel",
-          "note": "Brunch and prep time."
+          "title": "Registration & Pre-event",
+          "range": "2:00 – 4:00 PM",
+          "stops": [
+            {
+              "time": "14:00",
+              "type": "gather",
+              "title": "Registration and pre-event activities"
+            }
+          ]
         },
         {
-          "time": "15:30",
-          "type": "bus",
-          "title": "Bus departure to venue",
-          "place": "Hotel lobby",
-          "note": "[Details to follow.]"
+          "title": "Holy Mass",
+          "range": "4:00 – 5:00 PM",
+          "stops": [
+            {
+              "time": "16:00",
+              "type": "mass",
+              "title": "Holy Mass: A Thanksgiving Celebration"
+            },
+            {
+              "time": "16:45",
+              "type": "break",
+              "title": "Break"
+            }
+          ]
         },
         {
-          "time": "17:00",
-          "type": "party",
-          "title": "Silver Horizons anniversary & Christmas party",
-          "place": "East Ocean Palace, Parañaque City",
-          "note": "The anniversary and Christmas party. Program to follow.",
-          "image": "night"
+          "title": "Part 1: Ascent",
+          "range": "5:00 – 7:00 PM",
+          "stops": [
+            {
+              "time": "17:00",
+              "type": "perf",
+              "title": "Moodsetter"
+            },
+            {
+              "time": "17:05",
+              "type": "mic",
+              "title": "Opening remarks"
+            },
+            {
+              "time": "17:15",
+              "type": "perf",
+              "title": "Opening performance"
+            },
+            {
+              "time": "17:20",
+              "type": "perf",
+              "title": "Opening spectacle"
+            },
+            {
+              "time": "17:25",
+              "type": "party",
+              "title": "Ice breaker"
+            },
+            {
+              "time": "17:40",
+              "type": "award",
+              "title": "Awardees, part 1"
+            },
+            {
+              "time": "17:55",
+              "type": "raffle",
+              "title": "Raffle 1"
+            },
+            {
+              "time": "18:00",
+              "type": "meal",
+              "title": "Dinner"
+            },
+            {
+              "time": "18:30",
+              "type": "perf",
+              "title": "Performer 1"
+            }
+          ]
+        },
+        {
+          "title": "Part 2: Summit",
+          "range": "7:00 – 8:30 PM",
+          "stops": [
+            {
+              "time": "19:15",
+              "type": "raffle",
+              "title": "Raffle 2"
+            },
+            {
+              "time": "19:30",
+              "type": "award",
+              "title": "Awardees, part 2"
+            },
+            {
+              "time": "19:45",
+              "type": "award",
+              "title": "Best Dressed"
+            },
+            {
+              "time": "20:00",
+              "type": "mic",
+              "title": "Project Village"
+            },
+            {
+              "time": "20:05",
+              "type": "award",
+              "title": "Silver Pioneers Award"
+            },
+            {
+              "time": "20:20",
+              "type": "raffle",
+              "title": "Raffle 3"
+            }
+          ]
+        },
+        {
+          "title": "Part 3: Beyond the Summit",
+          "range": "8:30 – 9:20 PM",
+          "stops": [
+            {
+              "time": "20:30",
+              "type": "party",
+              "title": "Summit toast"
+            },
+            {
+              "time": "20:35",
+              "type": "perf",
+              "title": "Summit lights"
+            },
+            {
+              "time": "20:40",
+              "type": "perf",
+              "title": "Headliner performance"
+            },
+            {
+              "time": "21:15",
+              "type": "video",
+              "title": "Same-day edit"
+            }
+          ]
+        },
+        {
+          "title": "After Party",
+          "range": "9:20 – 11:00 PM",
+          "stops": [
+            {
+              "time": "21:20",
+              "type": "party",
+              "title": "DJ set and socials"
+            }
+          ]
         }
-      ]
+      ],
+      "closing": "Heading home: details to follow."
     }
   ],
-  "program": {
-    "date": "2026-12-05",
-    "stops": [
-      {
-        "time": "17:00",
-        "type": "gather",
-        "title": "Registration & cocktails",
-        "place": "Foyer",
-        "note": "Placeholder."
-      },
-      {
-        "time": "18:00",
-        "type": "mic",
-        "title": "Opening",
-        "place": "Main hall",
-        "note": "Placeholder."
-      },
-      {
-        "time": "18:30",
-        "type": "meal",
-        "title": "Dinner",
-        "place": "Main hall",
-        "note": "Placeholder."
-      },
-      {
-        "time": "19:30",
-        "type": "party",
-        "title": "25 years of FELCO",
-        "place": "Main hall",
-        "note": "Placeholder."
-      },
-      {
-        "time": "20:30",
-        "type": "award",
-        "title": "Awards & raffle",
-        "place": "Main hall",
-        "note": "Placeholder."
-      },
-      {
-        "time": "21:30",
-        "type": "party",
-        "title": "Christmas party",
-        "place": "Main hall",
-        "note": "Placeholder."
-      }
-    ]
-  },
   "tips": [
     {
       "title": "Weather",
@@ -237,5 +359,53 @@
     "group": "Corporate Communications Group",
     "line": "For questions or concerns, please feel free to reach out to the Corporate Communications Group.",
     "email": "[email to follow]"
-  }
+  },
+  "journey": [
+    {
+      "when": "Dec 3",
+      "title": "Arrival",
+      "area": "Manila",
+      "blurb": "Everyone in Manila by December 3, from every branch.",
+      "images": [
+        "welcome"
+      ]
+    },
+    {
+      "when": "Dec 3",
+      "title": "Royu Tour",
+      "area": "Registered participants",
+      "blurb": "For those who registered. Details to follow."
+    },
+    {
+      "when": "Dec 4",
+      "title": "Manila Tour",
+      "area": "Museum or Binondo",
+      "blurb": "The National Museum or Binondo, Manila’s Chinatown: one per person, assigned.",
+      "images": [
+        "museum",
+        "binondo"
+      ]
+    },
+    {
+      "when": "Dec 4",
+      "title": "Zen Office Tour",
+      "area": "11th floor",
+      "blurb": "Open to all. Details to follow."
+    },
+    {
+      "when": "Dec 5",
+      "title": "Silver Horizons Night",
+      "area": "East Ocean Palace",
+      "blurb": "The 25th anniversary celebration, 2:00 to 11:00 PM.",
+      "images": [
+        "night"
+      ]
+    }
+  ],
+  "credits": [
+    "Manila Bay sunset — Vyacheslav Argenberg, CC BY 4.0",
+    "National Museum of the Philippines — Judgefloro, CC0",
+    "Chinatown Arch, Manila — Richmond Chi, CC BY-SA 4.0",
+    "Manila Bay at night — Ralff Nestor Nacor, CC BY-SA 4.0"
+  ]
 }
