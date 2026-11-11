@@ -43,7 +43,7 @@ const loopTo = computed(() => seg(progress.years ?? 0, 0.04, 0.28))
 // Three beats, one island group each (Luzon → Visayas → Mindanao): the group's lines streak into Manila
 // together, a ring pulses out of Manila as they land, then the group holds before the next one starts.
 // Each window is [start, end) of the scene's progress; the group's title shows for its whole window.
-const GROUP_WIN = { luzon: [0.14, 0.4], visayas: [0.4, 0.64], mindanao: [0.64, 0.88] }
+const GROUP_WIN = { luzon: [0.03, 0.35], visayas: [0.35, 0.61], mindanao: [0.61, 0.88] }
 const LINE = 0.1 // each line's draw time
 const routes = branches.map((b) => {
   const mx = (b.x + hub.x) / 2
@@ -378,14 +378,14 @@ const sparks = Array.from({ length: 14 }, (_, i) => {
     </section>
 
     <!-- 3 · From every branch, one destination -->
-    <section data-scene="converge" data-play="6500" class="relative h-[200svh] bg-navy-950">
+    <section data-scene="converge" data-play="10500" class="relative h-[200svh] bg-navy-950">
       <!-- a night chart: star dust behind; text and map centred together so no dead gap opens between them.
            Phones: the map takes whatever height the text leaves (up to 46svh), so it never runs off small screens -->
       <div class="sticky top-0 isolate grid h-svh grid-rows-[auto_minmax(0,1fr)] overflow-hidden px-6 py-[8svh] md:grid-rows-1 md:py-[10svh] md:grid-cols-[minmax(0,34rem)_auto] md:items-center md:justify-center md:gap-16 md:px-[6vw]">
         <div class="star-dust absolute inset-0 -z-10 opacity-70" aria-hidden="true" />
         <div class="relative z-10 text-center md:text-left">
-          <p class="seg fade-up eyebrow" style="--a:0;--d:0.15">Silver Horizons · Manila</p>
-          <h2 class="seg fade-up silver-text mt-3 font-display text-[2rem] leading-[1.05] font-semibold sm:text-4xl md:text-6xl" style="--a:0.05;--d:0.2">From <span class="chrome-num inline-block align-[-0.04em] text-[1.3em] leading-none">{{ branches.length }}</span> branches,<br />one destination.</h2>
+          <p class="seg fade-up eyebrow" style="--a:0;--d:0.05">Silver Horizons · Manila</p>
+          <h2 class="seg fade-up silver-text mt-3 font-display text-[2rem] leading-[1.05] font-semibold sm:text-4xl md:text-6xl" style="--a:0;--d:0.06">From <span class="chrome-num inline-block align-[-0.04em] text-[1.3em] leading-none">{{ branches.length }}</span> branches,<br />one destination.</h2>
           <!-- the beat in hand: which island group is landing, then (after the last) the welcome line -->
           <!-- every beat and the closing line share one grid cell (only the current one shows), so the box is
                always as tall as the tallest and the map below never shifts between groups -->
@@ -420,15 +420,15 @@ const sparks = Array.from({ length: 14 }, (_, i) => {
             <pattern id="chart-grid" width="46" height="46" patternUnits="userSpaceOnUse"><path d="M46 0H0V46" fill="none" stroke="#9DB6F0" stroke-opacity="0.2" stroke-width="0.6" /></pattern>
           </defs>
           <!-- night chart: a pool of blue light over the sea and a faint latitude/longitude grid, fading at the edges -->
-          <g class="seg" style="--a:0;--d:0.14;opacity:var(--t)">
+          <g class="seg" style="--a:0;--d:0.08;opacity:var(--t)">
             <ellipse :cx="phMap.width / 2" :cy="phMap.height / 2" :rx="phMap.width * 0.8" :ry="phMap.height * 0.62" fill="url(#sea-glow)" />
             <rect x="-140" y="-60" :width="phMap.width + 280" :height="phMap.height + 120" fill="url(#chart-grid)" mask="url(#grid-mask)" />
           </g>
           <!-- Philippines: coastline draws itself, then fills with a faint silver -->
-          <path class="seg" style="--a:0.12;--d:0.2;opacity:var(--t)" :d="phMap.d" fill="#B8C8F0" fill-opacity="0.13" fill-rule="evenodd" />
+          <path class="seg" style="--a:0.03;--d:0.1;opacity:var(--t)" :d="phMap.d" fill="#B8C8F0" fill-opacity="0.13" fill-rule="evenodd" />
           <!-- coastline revealed north → south by a sweeping line of light (no stroke-dash: Chrome restarts
                the dash at every island, which scatters fragments) -->
-          <g class="seg" style="--a:0;--d:0.22">
+          <g class="seg" style="--a:0;--d:0.09">
             <path :d="phMap.d" fill="none" stroke="#C9D6F5" stroke-width="1.2" stroke-linejoin="round" style="clip-path: inset(0 0 calc((1 - var(--t)) * 100%) 0)" />
             <rect
               x="-20" :width="phMap.width + 40" height="2" fill="#FFFFFF" filter="url(#glow)"
@@ -465,7 +465,7 @@ const sparks = Array.from({ length: 14 }, (_, i) => {
           <!-- finale: once every group has landed, Manila flares and a wide ring sweeps out over the islands -->
           <circle class="seg manila-flare" style="--a:0.88;--d:0.12" :cx="hub.x" :cy="hub.y" r="16" fill="none" stroke="#FFFFFF" stroke-width="2" />
           <circle class="seg" style="--a:0.86;--d:0.06" :cx="hub.x" :cy="hub.y" r="54" fill="#9DB6F0" filter="url(#glow)" :style="'opacity:calc(var(--t) * 0.55)'" />
-          <g class="seg" style="--a:0.16;--d:0.1">
+          <g class="seg" style="--a:0.02;--d:0.06">
             <circle :cx="hub.x" :cy="hub.y" r="24" fill="#7F9CE0" filter="url(#glow)" :style="'opacity:calc(var(--t) * 0.7)'" />
             <circle :cx="hub.x" :cy="hub.y" r="6" fill="#FFFFFF" :style="'opacity:var(--t)'" />
             <text :x="hub.x - 14" :y="hub.y + 30" text-anchor="end" class="fill-white font-display text-[24px] font-semibold" paint-order="stroke" stroke="#040B24" stroke-width="6" stroke-linejoin="round" :style="'opacity:var(--t)'">{{ hub.name }}</text>

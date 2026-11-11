@@ -38,7 +38,8 @@ export function useAutoplay(rootRef, { idle = 700, firstIdle = 4500, hop = 1100 
 
   // Next move from the current position; `force` skips the idle wait.
   const advance = (force) => {
-    if (raf || document.hidden || !rootRef.value || lenis?.isScrolling) return // let a wheel glide finish
+    // let a visitor's wheel glide finish; a forced step (chained by autoplay's own glide) goes on regardless
+    if (raf || document.hidden || !rootRef.value || (!force && lenis?.isScrolling)) return
     const scenes = [...rootRef.value.querySelectorAll('[data-scene], [data-stop]')]
     if (!scenes.length) return
     const y = window.scrollY
@@ -55,7 +56,8 @@ export function useAutoplay(rootRef, { idle = 700, firstIdle = 4500, hop = 1100 
       const end = start + el.offsetHeight - vh
       // hop to the scene, then play it straight away (no idle pause in between)
       if (y < start - 2) return glide(start, hop, false, () => advance(true))
-      if (y < end - 2) return glide(end, ((end - y) / (end - start)) * Number(el.dataset.play || 5000), true)
+      // play it; when it ends, go straight on to the next (no idle pause between scenes)
+      if (y < end - 2) return glide(end, ((end - y) / (end - start)) * Number(el.dataset.play || 5000), true, () => advance(true))
     }
     // past the last scene: story finished, stay put
   }
