@@ -395,7 +395,7 @@ const sparks = Array.from({ length: 14 }, (_, i) => {
           <div class="mt-6 grid md:mt-8" aria-live="off">
             <div v-for="(b, i) in beats" :key="b.id" class="beat-item [grid-area:1/1]" :class="beat === b.id && 'is-on'" :aria-hidden="beat !== b.id">
               <p class="text-[11px] font-medium tracking-[0.3em] text-muted uppercase md:text-xs"><span class="max-md:hidden">{{ i + 1 }} / {{ beats.length }} · </span>{{ b.names.length }} branches</p>
-              <p class="silver-text mt-1 font-display text-4xl leading-none font-semibold sm:text-5xl md:text-7xl">{{ b.name }}</p>
+              <p class="silver-text mt-1 font-display text-[1.7rem] leading-none font-semibold md:text-[2.6rem]">{{ b.name }}</p>
               <!-- each branch a glass chip that lights up as its line lands -->
               <ul class="mx-auto mt-3 flex max-w-md flex-wrap justify-center gap-1 sm:gap-1.5 md:mx-0 md:mt-4 md:justify-start">
                 <li v-for="n in b.names" :key="n" class="branch-chip" :class="lit(n) && 'is-lit'">{{ n }}</li>
@@ -404,11 +404,11 @@ const sparks = Array.from({ length: 14 }, (_, i) => {
             <!-- the end: all three island groups, lit one after another as Manila flares -->
             <ul class="beat-item mx-auto w-fit self-center [grid-area:1/1] md:mx-0 md:self-start" :class="beat === 'done' && 'is-on'" :aria-hidden="beat !== 'done'">
               <li v-for="(b, k) in beats" :key="b.id" class="isle flex items-baseline justify-between gap-6 border-b border-white/10 py-1.5 last:border-0 md:gap-10 md:py-2" :style="{ '--k': k }">
-                <span class="relative font-display text-[2.1rem] leading-none font-semibold md:text-6xl">
+                <span class="relative font-display text-[1.5rem] leading-none font-semibold md:text-[2.4rem]">
                   <span class="chrome-shadow" aria-hidden="true">{{ b.name }}</span>
                   <span class="chrome-text">{{ b.name }}</span>
                 </span>
-                <span class="text-[11px] font-medium tracking-[0.24em] whitespace-nowrap text-muted uppercase md:text-xs"><span class="chrome-num text-lg md:text-2xl">{{ b.names.length }}</span> branches</span>
+                <span class="text-[11px] font-medium tracking-[0.24em] whitespace-nowrap text-muted uppercase md:text-xs"><span class="chrome-num text-base md:text-xl">{{ b.names.length }}</span> branches</span>
               </li>
             </ul>
           </div>
