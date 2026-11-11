@@ -285,7 +285,11 @@ body {
 .branch-chip::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: rgb(255 255 255 / 0.25); transition: background-color 0.4s ease, box-shadow 0.4s ease; }
 .branch-chip.is-lit { color: #fff; border-color: rgb(255 255 255 / 0.4); background: rgb(80 120 220 / 0.18); box-shadow: 0 0 18px -6px rgb(150 185 255 / 0.8); }
 .branch-chip.is-lit::before { background: #fff; box-shadow: 0 0 6px 1px rgb(170 200 255 / 0.9); }
-@media (max-width: 767px) { .branch-chip { padding: 0.22rem 0.55rem; font-size: 11px; gap: 0.3rem; } }
+/* phones: no pill, just a dot and the name, so a row of nine stays light */
+@media (max-width: 767px) {
+  .branch-chip, .branch-chip.is-lit { padding: 0.15rem 0.35rem; font-size: 12px; gap: 0.3rem; border-color: transparent; background: none; box-shadow: none; }
+  .branch-chip.is-lit { text-shadow: 0 0 12px rgb(150 185 255 / 0.7); }
+}
 .manila-ring { transform-box: fill-box; transform-origin: center; transform: scale(calc(1 + var(--t) * 4)); opacity: calc(min(var(--t) * 12, 1) * (1 - var(--t))); }
 /* the group title swaps per beat */
 /* map beats: all stacked in one cell; the current one rises in out of a blur after the last has left */
