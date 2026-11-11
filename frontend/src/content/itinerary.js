@@ -4,7 +4,7 @@
 import welcomePhoto from '../assets/photos/welcome.webp'
 import museumPhoto from '../assets/photos/museum.webp'
 import binondoPhoto from '../assets/photos/binondo.webp'
-import nightPhoto from '../assets/photos/night.webp'
+import venuePhoto from '../assets/photos/east-ocean-palace.webp'
 import fineArtsPhoto from '../assets/photos/fine-arts.webp'
 import naturalHistoryPhoto from '../assets/photos/natural-history.webp'
 import anthropologyPhoto from '../assets/photos/anthropology.webp'
@@ -14,7 +14,6 @@ export const credits = [
   'Manila Bay sunset — Vyacheslav Argenberg, CC BY 4.0',
   'National Museum of the Philippines — Judgefloro, CC0',
   'Chinatown Arch, Manila — Richmond Chi, CC BY-SA 4.0',
-  'Manila Bay at night — Ralff Nestor Nacor, CC BY-SA 4.0',
   'National Museum of Fine Arts — PhiliptheNumber1, CC BY 4.0',
   'National Museum of Natural History — RoyKabanlit, CC BY-SA 4.0',
   'National Museum of Anthropology — Ralff Nestor Nacor, CC BY-SA 4.0',
@@ -273,6 +272,9 @@ export const itinerary = [
     parts: [
       {
         title: 'Registration & Pre-event', range: '2:00 – 4:00 PM',
+        images: [{
+          title: 'East Ocean Palace', place: 'Parañaque City', image: venuePhoto,
+        }],
         stops: [
           // one 2-hour block in the organisers' schedule: no separate times for the two
           { time: '14:00', type: 'gather', title: 'Registration and pre-event activities' },
@@ -333,5 +335,5 @@ export const journey = [
   { when: 'Dec 3–4', title: 'Royu Tour', area: 'Registered participants', blurb: 'A plant tour for those who registered: two runs a day, December 3 and 4.' },
   { when: 'Dec 3–4', title: 'FELCO Explores Manila', area: 'Museum or Binondo', blurb: 'The National Museum or Binondo, morning or afternoon: one trip per person.', images: [museumPhoto, binondoPhoto] },
   { when: 'Dec 4', title: 'Zen Office Tour', area: '11th floor', blurb: 'Open to all. Details to follow.' },
-  { when: 'Dec 5', title: 'Silver Horizons Night', area: 'East Ocean Palace', blurb: 'The 25th anniversary celebration, 2:00 to 11:00 PM.', images: [nightPhoto] },
+  { when: 'Dec 5', title: 'Silver Horizons Night', area: 'East Ocean Palace', blurb: 'The 25th anniversary celebration, 2:00 to 11:00 PM.', images: [venuePhoto] },
 ]

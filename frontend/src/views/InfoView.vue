@@ -7,6 +7,7 @@ import Sparkle from '../components/Sparkle.vue'
 import HorizonGlow from '../components/HorizonGlow.vue'
 import SectionHead from '../components/SectionHead.vue'
 import { event } from '../content/event.js'
+import venuePhoto from '../assets/photos/east-ocean-palace.webp'
 import { tips, faq, contact } from '../content/info.js'
 
 const mapEmbed = `https://www.google.com/maps?q=${encodeURIComponent(event.mapQuery)}&output=embed`
@@ -81,6 +82,11 @@ const glints = [
       <div class="mx-auto max-w-5xl">
         <SectionHead id="venue-h" eyebrow="Venue" :title="event.venue" />
         <div class="invite-card mt-10 grid overflow-hidden rounded-3xl md:grid-cols-[1fr_1.5fr]">
+          <!-- the venue at night, across the top of the card, so it's easy to spot on arrival -->
+          <div class="relative aspect-[16/10] border-b border-white/10 sm:aspect-[2/1] md:col-span-2">
+            <img :src="venuePhoto" alt="East Ocean Palace at night, its lit sign over the entrance" class="absolute inset-0 size-full object-cover object-[center_72%]" loading="lazy" />
+            <span class="absolute inset-x-0 bottom-0 h-1/3 bg-linear-to-t from-[#0B1534]/80 to-transparent" aria-hidden="true" />
+          </div>
           <div class="flex flex-col justify-center p-7 md:p-10">
             <p class="text-xs font-medium tracking-[0.24em] text-[#AEB9CF] uppercase">Where</p>
             <p class="mt-2 text-2xl font-semibold text-white">{{ event.venue }}</p>
