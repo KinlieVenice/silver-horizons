@@ -1,0 +1,241 @@
+{
+  "itinerary": [
+    {
+      "date": "2026-12-02",
+      "title": "Welcome to Manila",
+      "area": "Manila",
+      "blurb": "Arrive, settle in, and meet colleagues from every branch.",
+      "image": "welcome",
+      "credit": "Manila Bay sunset — Vyacheslav Argenberg, CC BY 4.0",
+      "stops": [
+        {
+          "time": "09:00",
+          "type": "flight",
+          "title": "Airport pick-up",
+          "place": "NAIA Terminal [TBC]",
+          "note": "Look for the Silver Horizons welcome team at arrivals."
+        },
+        {
+          "time": "13:00",
+          "type": "hotel",
+          "title": "Hotel check-in",
+          "place": "[Hotel name]",
+          "note": "Room assignments to follow."
+        },
+        {
+          "time": "18:30",
+          "type": "meal",
+          "title": "Welcome dinner",
+          "place": "[Venue]",
+          "note": "Meet colleagues from every branch.",
+          "image": "welcome"
+        }
+      ]
+    },
+    {
+      "date": "2026-12-03",
+      "title": "National Museum of the Philippines",
+      "area": "Ermita, Manila",
+      "blurb": "A day among the nation’s art, history and natural heritage.",
+      "image": "museum",
+      "credit": "National Museum of the Philippines — Judgefloro, CC0",
+      "stops": [
+        {
+          "time": "08:00",
+          "type": "bus",
+          "title": "Assembly at hotel lobby",
+          "place": "[Hotel name]",
+          "note": "Buses depart 8:15 sharp."
+        },
+        {
+          "time": "09:00",
+          "type": "tour",
+          "title": "[Museum tour, first gallery]",
+          "place": "National Museum, Manila",
+          "note": "[Tour details to follow.]",
+          "image": "museum"
+        },
+        {
+          "time": "12:30",
+          "type": "meal",
+          "title": "Lunch",
+          "place": "[Restaurant]",
+          "note": "[Details to follow.]"
+        },
+        {
+          "time": "14:00",
+          "type": "tour",
+          "title": "[Museum tour, second gallery]",
+          "place": "National Museum, Manila",
+          "note": "[Tour details to follow.]"
+        },
+        {
+          "time": "18:00",
+          "type": "free",
+          "title": "Free evening",
+          "place": "Your choice",
+          "note": "Rest or explore on your own."
+        }
+      ]
+    },
+    {
+      "date": "2026-12-04",
+      "title": "Binondo",
+      "area": "Binondo, Manila",
+      "blurb": "Manila’s historic Chinatown: old streets, temples, and a food crawl to remember.",
+      "image": "binondo",
+      "credit": "Chinatown Arch, Manila — Richmond Chi, CC BY-SA 4.0",
+      "stops": [
+        {
+          "time": "08:30",
+          "type": "bus",
+          "title": "Assembly at hotel lobby",
+          "place": "[Hotel name]",
+          "note": "[Departure details to follow.]"
+        },
+        {
+          "time": "09:30",
+          "type": "tour",
+          "title": "[Binondo heritage walk]",
+          "place": "Binondo, Manila",
+          "note": "[Route to follow.]",
+          "image": "binondo"
+        },
+        {
+          "time": "11:30",
+          "type": "meal",
+          "title": "[Food crawl]",
+          "place": "Binondo, Manila",
+          "note": "[Stops to follow.]"
+        },
+        {
+          "time": "15:00",
+          "type": "free",
+          "title": "Free afternoon",
+          "place": "Your choice",
+          "note": "Rest up for the big night."
+        }
+      ]
+    },
+    {
+      "date": "2026-12-05",
+      "title": "Silver Horizons Night",
+      "area": "Parañaque City",
+      "blurb": "The 25th anniversary and Christmas party at East Ocean Palace.",
+      "image": "night",
+      "credit": "Manila Bay at night — Ralff Nestor Nacor, CC BY-SA 4.0",
+      "stops": [
+        {
+          "time": "10:00",
+          "type": "free",
+          "title": "Free morning",
+          "place": "Hotel",
+          "note": "Brunch and prep time."
+        },
+        {
+          "time": "15:30",
+          "type": "bus",
+          "title": "Bus departure to venue",
+          "place": "Hotel lobby",
+          "note": "[Details to follow.]"
+        },
+        {
+          "time": "17:00",
+          "type": "party",
+          "title": "Silver Horizons anniversary & Christmas party",
+          "place": "East Ocean Palace, Parañaque City",
+          "note": "The anniversary and Christmas party. Program to follow.",
+          "image": "night"
+        }
+      ]
+    }
+  ],
+  "program": {
+    "date": "2026-12-05",
+    "stops": [
+      {
+        "time": "17:00",
+        "type": "gather",
+        "title": "Registration & cocktails",
+        "place": "Foyer",
+        "note": "Placeholder."
+      },
+      {
+        "time": "18:00",
+        "type": "mic",
+        "title": "Opening",
+        "place": "Main hall",
+        "note": "Placeholder."
+      },
+      {
+        "time": "18:30",
+        "type": "meal",
+        "title": "Dinner",
+        "place": "Main hall",
+        "note": "Placeholder."
+      },
+      {
+        "time": "19:30",
+        "type": "party",
+        "title": "25 years of FELCO",
+        "place": "Main hall",
+        "note": "Placeholder."
+      },
+      {
+        "time": "20:30",
+        "type": "award",
+        "title": "Awards & raffle",
+        "place": "Main hall",
+        "note": "Placeholder."
+      },
+      {
+        "time": "21:30",
+        "type": "party",
+        "title": "Christmas party",
+        "place": "Main hall",
+        "note": "Placeholder."
+      }
+    ]
+  },
+  "tips": [
+    {
+      "title": "Weather",
+      "body": "December in Manila is warm and mostly dry. Pack light clothes and a light jacket for air-conditioned venues."
+    },
+    {
+      "title": "Getting around",
+      "body": "Traffic can be heavy. Follow bus call times; [transport details to follow]."
+    },
+    {
+      "title": "What to bring",
+      "body": "Company ID, valid government ID, chargers, comfortable walking shoes, [more to follow]."
+    },
+    {
+      "title": "Money",
+      "body": "Carry some cash in pesos; most malls and restaurants accept cards."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Who do I contact if my flight is delayed?",
+      "a": "[Contact details to follow.]"
+    },
+    {
+      "q": "Is there a dress code for the party?",
+      "a": "[Dress code details to follow.]"
+    },
+    {
+      "q": "Are meals covered during the trip?",
+      "a": "[Details to follow.]"
+    },
+    {
+      "q": "Can I bring a companion?",
+      "a": "[Details to follow.]"
+    }
+  ],
+  "contact": {
+    "group": "Corporate Communications Group",
+    "line": "For questions or concerns, please feel free to reach out to the Corporate Communications Group.",
+    "email": "[email to follow]"
+  }
+}

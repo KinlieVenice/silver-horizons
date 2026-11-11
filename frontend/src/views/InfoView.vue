@@ -7,7 +7,9 @@ import Sparkle from '../components/Sparkle.vue'
 import HorizonGlow from '../components/HorizonGlow.vue'
 import SectionHead from '../components/SectionHead.vue'
 import { event } from '../content/event.js'
-import { tips, faq, contact } from '../content/info.js'
+import { content } from '../lib/session.js'
+
+const { tips, faq, contact } = content // loaded after sign-in, before any page renders
 
 const mapEmbed = `https://www.google.com/maps?q=${encodeURIComponent(event.mapQuery)}&output=embed`
 const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.mapQuery)}`

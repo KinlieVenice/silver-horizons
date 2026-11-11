@@ -9,8 +9,10 @@ import Ribbon from '../components/Ribbon.vue'
 import Sparkle from '../components/Sparkle.vue'
 import HorizonGlow from '../components/HorizonGlow.vue'
 import TimelineStop from '../components/TimelineStop.vue'
-import { itinerary } from '../content/itinerary.js'
+import { content } from '../lib/session.js'
 import { defaultDayIndex, nextStopIndex, formatDay, formatTime, manilaDate } from '../lib/schedule.js'
+
+const itinerary = content.itinerary // loaded after sign-in, before any page renders
 
 // ---- banner: the trip at a glance, built from the itinerary itself
 const md = (d, opts) => new Date(`${d}T12:00:00+08:00`).toLocaleDateString('en-US', { timeZone: 'Asia/Manila', ...opts })

@@ -2,6 +2,7 @@
      Desktop: wordmark left · glass pill center.
      Phone: glass pill at the bottom; tucks away while scrolling down, returns on scroll up and at the footer.
      Home: fades in with the opening.
+     Sign out: a glass button, top-right on desktop, bottom-left on phones (tucks with the pill).
      Back to top: a glass button fixed bottom-right, shown once the first screen is scrolled past.
      translateZ(0) on the phone pill and the button: own compositing layer, so iOS Safari can't hand their
      taps to an iframe underneath (Info's Google Map). -->
@@ -11,6 +12,7 @@ import { useRoute } from 'vue-router'
 import NavPill from './NavPill.vue'
 import wordmark from '../assets/brand/silver-horizons-wordmark.webp'
 import { lenis } from '../lib/smoothScroll.js'
+import { session, signOut } from '../lib/session.js'
 
 const links = [
   { to: '/', label: 'Home' },
@@ -66,6 +68,11 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
         <img :src="wordmark" alt="" class="h-11 w-auto drop-shadow-[0_2px_12px_rgb(0_0_0/0.6)]" />
       </RouterLink>
       <div class="pointer-events-auto absolute left-1/2 -translate-x-1/2"><NavPill :links="links" /></div>
+      <button type="button" class="pointer-events-auto grid size-11 place-items-center rounded-full border border-white/12 bg-navy-950/55 text-white/85 shadow-[0_10px_40px_-12px_rgb(0_0_0/0.8),inset_0_1px_0_rgb(255_255_255/0.06)] backdrop-blur-xl transition-colors hover:border-white/40 hover:text-white active:scale-95" :title="`Sign out (${session.user?.email})`" aria-label="Sign out" @click="signOut">
+        <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 16l4-4-4-4M14 12H4" />
+      </svg>
+      </button>
     </nav>
   </header>
 
@@ -77,6 +84,11 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
     aria-label="Main"
   >
     <div class="pointer-events-auto" :class="intro && 'intro-after'"><NavPill :links="links" compact /></div>
+    <button type="button" class="pointer-events-auto absolute bottom-0.5 left-3 grid size-11 place-items-center rounded-full border border-white/12 bg-navy-950/55 text-white/85 shadow-[0_10px_40px_-12px_rgb(0_0_0/0.8),inset_0_1px_0_rgb(255_255_255/0.06)] backdrop-blur-xl transition-colors hover:border-white/40 hover:text-white active:scale-95" :class="intro && 'intro-after'" aria-label="Sign out" @click="signOut">
+      <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 16l4-4-4-4M14 12H4" />
+      </svg>
+    </button>
   </nav>
 
   <!-- Back to top -->

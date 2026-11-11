@@ -8,7 +8,9 @@ import Sparkle from '../components/Sparkle.vue'
 import HorizonGlow from '../components/HorizonGlow.vue'
 import { KIND } from '../lib/kinds.js'
 import { event } from '../content/event.js'
-import { program } from '../content/program.js'
+import { content } from '../lib/session.js'
+
+const program = content.program // loaded after sign-in, before any page renders
 import { nextStopIndex, formatTime, manilaDate } from '../lib/schedule.js'
 
 const now = ref(new Date())

@@ -9,7 +9,7 @@ import Ribbon from '../components/Ribbon.vue'
 import Sparkle from '../components/Sparkle.vue'
 import HorizonGlow from '../components/HorizonGlow.vue'
 import { event } from '../content/event.js'
-import { itinerary } from '../content/itinerary.js'
+import { content } from '../lib/session.js'
 import { phMap } from '../content/phMap.js'
 import { branches, groups, hub } from '../content/branches.js'
 import { formatDay } from '../lib/schedule.js'
@@ -17,6 +17,7 @@ import { useScenes, seg } from '../lib/useScenes.js'
 import { useAutoplay } from '../lib/useAutoplay.js'
 import { scrollLock, settle } from '../lib/smoothScroll.js'
 
+const itinerary = content.itinerary // loaded after sign-in, before any page renders
 const root = ref()
 const progress = useScenes(root)
 const autoplay = useAutoplay(root) // idle visitors: story plays on by itself
