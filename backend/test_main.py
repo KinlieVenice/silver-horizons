@@ -64,7 +64,27 @@ def test_callback_signs_in_company_accounts_only(monkeypatch):
     r = c.get("/auth/callback", follow_redirects=False)
     assert r.headers["location"] == "/itinerary"
     assert c.get("/api/me").json()["email"] == "juan@fireflyelectric.com"
-    assert "itinerary" in c.get("/api/content").json()
+    monkeypatch.setattr(m, "event_content", lambda: {"itinerary": [{"date": "2026-12-05"}], "people": []})
+    content = c.get("/api/content").json()
+    assert content["itinerary"][0]["date"] == "2026-12-05" and "faq" in content  # database + static parts
 
     assert c.post("/auth/logout").status_code == 204
     assert c.get("/api/me").status_code == 401
+
+
+def test_content_503_when_database_down(monkeypatch):
+    """Signed in, but the event database is unreachable: a clear 503, not a half-empty site."""
+    import app.main as m
+
+    async def authorize_access_token(request):
+        return {"userinfo": {"email": "juan@fireflyelectric.com", "email_verified": True, "hd": "fireflyelectric.com"}}
+
+    def down():
+        raise OSError("can't connect")
+
+    monkeypatch.setattr(m.oauth.google, "authorize_access_token", authorize_access_token)
+    monkeypatch.setattr(m, "event_content", down)
+    c = TestClient(app)
+    c.get("/auth/callback", follow_redirects=False)
+    assert c.get("/api/me").status_code == 200
+    assert c.get("/api/content").status_code == 503

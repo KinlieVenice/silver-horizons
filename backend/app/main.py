@@ -10,12 +10,18 @@ Only verified Google accounts on ALLOWED_DOMAIN (the Workspace `hd` claim AND th
 
 import json
 import os
+import time
+from datetime import datetime
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 from authlib.integrations.starlette_client import OAuth, OAuthError
 from fastapi import Depends, FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse, Response
+from starlette.concurrency import run_in_threadpool
 from starlette.middleware.sessions import SessionMiddleware
+
+from app import evt
 
 
 def env(name: str, default: str | None = None) -> str:
@@ -31,7 +37,10 @@ FRONTEND_URL = env("FRONTEND_URL", "").rstrip("/")
 # explicit callback URL when behind a proxy/other host; default: derived from the incoming request
 REDIRECT_URI = os.environ.get("OAUTH_REDIRECT_URI")
 
+# what isn't in the database yet (tips, FAQ, contact, Home's film strip, credits, day titles)
 CONTENT = json.loads((Path(__file__).parent / "content.json").read_text(encoding="utf-8"))
+EVENT_ID = int(env("EVENT_ID", "1"))  # the event the site shows
+CACHE_SECONDS = int(env("CONTENT_CACHE_SECONDS", "60"))
 
 app = FastAPI(title="Silver Horizons API", docs_url=None, redoc_url=None, openapi_url=None)
 app.add_middleware(
@@ -118,6 +127,28 @@ async def me(user: dict = Depends(current_user)):
     return user
 
 
+# ponytail: one in-process cache for everyone (no guests/assignments yet, so everyone sees the same itinerary);
+# per-person results once assignments apply. An edit in the database shows within CACHE_SECONDS.
+_cache = {"at": 0.0, "data": None}
+
+
+def event_content() -> dict:
+    if _cache["data"] is None or time.monotonic() - _cache["at"] > CACHE_SECONDS:
+        rows = evt.load(EVENT_ID)
+        _cache["data"] = {
+            "itinerary": evt.build_itinerary(rows, CONTENT.get("day_titles", {})),
+            # reveal_at is Manila time; checked when the cache refreshes, so a reveal shows within CACHE_SECONDS
+            "people": evt.build_people(rows, datetime.now(ZoneInfo("Asia/Manila")).replace(tzinfo=None)),
+        }
+        _cache["at"] = time.monotonic()
+    return _cache["data"]
+
+
 @app.get("/api/content")
 async def content(user: dict = Depends(current_user)):
-    return CONTENT
+    try:
+        from_db = await run_in_threadpool(event_content)
+    except Exception as exc:  # database unreachable: a clear 503 rather than a half-empty site
+        raise HTTPException(status_code=503, detail="Event data is unavailable right now") from exc
+    static = {k: v for k, v in CONTENT.items() if k != "day_titles"}
+    return {**static, **from_db}
