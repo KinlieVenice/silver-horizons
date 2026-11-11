@@ -47,7 +47,7 @@
       "area": "Manila",
       "blurb": "Everyone in Manila by December 3, from every branch.",
       "images": [
-        "welcome"
+        "naia"
       ]
     },
     {
@@ -83,13 +83,13 @@
     }
   ],
   "credits": [
-    "Manila Bay sunset — Vyacheslav Argenberg, CC BY 4.0",
     "National Museum of the Philippines — Judgefloro, CC0",
     "Chinatown Arch, Manila — Richmond Chi, CC BY-SA 4.0",
     "National Museum of Fine Arts — PhiliptheNumber1, CC BY 4.0",
     "National Museum of Natural History — RoyKabanlit, CC BY-SA 4.0",
     "National Museum of Anthropology — Ralff Nestor Nacor, CC BY-SA 4.0",
-    "Plaza San Lorenzo Ruiz, Binondo — patrickroque01, CC BY-SA 4.0"
+    "Plaza San Lorenzo Ruiz, Binondo — patrickroque01, CC BY-SA 4.0",
+    "NAIA Terminal 3 — Manila International Airport Authority, public domain"
   ],
   "day_titles": {
     "2026-12-03": "Welcome to Manila",
