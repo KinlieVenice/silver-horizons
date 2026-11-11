@@ -65,7 +65,8 @@ const shown = computed(() => {
   const s = q.value.trim().toLowerCase()
   return s ? list.value.filter((p) => `${p.name} ${p.branch}`.toLowerCase().includes(s)) : list.value
 })
-const initials = (name) => name.split(' ').filter((w) => /^[A-ZÑ]/.test(w)).map((w) => w[0]).slice(0, 2).join('')
+// first and last name's initials (Shirley De Jesus → SJ)
+const initials = (name) => { const w = name.split(' '); return w[0][0] + (w.length > 1 ? w.at(-1)[0] : '') }
 </script>
 
 <template>
